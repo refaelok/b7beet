@@ -1,3 +1,6 @@
+[![Discord](https://discordapp.com/api/servers/212532127475040257/widget.png?style=button)](https://discord.gg/gC8YasD)
+
+
 # b7beet
 
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.0.0-rc.0.
