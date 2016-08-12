@@ -6,7 +6,7 @@ export class FamilyController {
 
 }
 
-export default angular.module('b7beetApp.family', [uiRouter])
+export default angular.module('b7beetApp.family', [])
   .config(routing)
   .component('family', {
     template: require('./family.html'),

@@ -1,11 +1,10 @@
-'use strict';
+import angular from 'angular';
 
-Class FamilyListController() 
-  this.message = 'World';
-}
+export class FamilyListComponent {}
 
-angular.module('b7beetApp.family')
-	.component('familyList', {
-    template: require('./family.html'),
-    controller: FamilyListController
+export default angular.module('directives.familyList', [])
+  .component('familyList', {
+    template: require('./familyList.html'),
+    controller: FamilyListComponent
   })
+  .name;

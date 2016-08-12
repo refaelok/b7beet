@@ -23,11 +23,11 @@ import admin from './admin';
 import navbar from '../components/navbar/navbar.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
-import family from './family/family.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
-
+import family from './family/family.component'
+import familyList from '../components/familyList/familyList.component'
 import './app.scss';
 
 angular.module('b7beetApp', [
@@ -36,7 +36,7 @@ angular.module('b7beetApp', [
     // ngMessages,
 
     // ngValidationMatch,
-    _Auth, account, admin, navbar, footer, main, family, constants, socket, util
+    _Auth, account, admin, navbar, footer, main, family, familyList, constants, socket, util
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
