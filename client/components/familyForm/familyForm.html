@@ -1,0 +1,56 @@
+<div class="container-fluid">
+	<form lass="form-horizontal">
+	<fieldset>
+	<legend>Form Name</legend>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+					  <input  type="text" ng-model="$ctrl.model.family.name" placeholder="Family name" class="form-control input-md" required="">
+					  <input  type="text" ng-model="$ctrl.model.family.address" placeholder="Address" class="form-control input-md" required="">
+				    <textarea ng-model="$ctrl.model.family.details" class="form-control">Additional data</textarea>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<input  type="text" ng-model="$ctrl.model.family.contact.name" placeholder="Contact's name" class="form-control input-md" required="">
+						<input  type="text" ng-model="$ctrl.model.family.contact.phone" placeholder="Contact's phone" class="form-control input-md" required="">
+						<textarea ng-model="$ctrl.model.family.contact.details" class="form-control">Contact's additional data</textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group form-inline">
+						<div class="btn-group">
+								<label 	ng-repeat="role in $ctrl.model.familyRoles"
+								 				class="btn btn-primary"
+												ng-model="$ctrl.model.familyMember.role"
+												uib-btn-radio="'{{role}}'" uncheckable>
+													{{role}}
+								</label>
+						</div>
+						<input  type="text" ng-model="$ctrl.model.familyMember.name" placeholder="Name" class="form-control input-md" required="">
+						<input  type="text" ng-model="$ctrl.model.familyMember.phone" placeholder="Phone" class="form-control input-md" required="">
+						<input  type="text" ng-model="$ctrl.model.familyMember.age" placeholder="Age" class="form-control input-md" required="">
+						<button ng-click="$ctrl.addAnotherFamilYMember()" type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+						    Add another
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<!-- TODO: Add table -->
+					{{$ctrl.model.family.familyTree}}
+					<button ng-click="$ctrl.createNewFamily()" type="button" class="btn btn-primary save-new-family-btn" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+							Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	</fieldset>
+</form>
+</div>

@@ -23,20 +23,18 @@ import admin from './admin';
 import navbar from '../components/navbar/navbar.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
-import family from './family/family.component';
+import familyModule from './family/family.module';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
-
 import './app.scss';
 
 angular.module('b7beetApp', [
     // ngAnimate,
     ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter, uiBootstrap,
     // ngMessages,
-
     // ngValidationMatch,
-    _Auth, account, admin, navbar, footer, main, family, constants, socket, util
+    _Auth, account, admin, navbar, footer, main, familyModule, constants, socket, util
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

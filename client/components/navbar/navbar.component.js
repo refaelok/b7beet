@@ -4,6 +4,10 @@ export class NavbarComponent {
   menu = [{
     'title': 'Home',
     'state': 'main'
+  },{
+    state: 'family',
+    title: 'Families',
+    loginRequire: true
   }];
   isLoggedIn: Function;
   isAdmin: Function;
@@ -16,6 +20,10 @@ export class NavbarComponent {
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
+  }
+
+  loginStateCheck(menuItem){
+    return menuItem.loginRequire && this.isLoggedIn();
   }
 
 }

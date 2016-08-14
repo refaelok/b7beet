@@ -1,11 +1,34 @@
 'use strict';
 
-Class FamilyListController() 
-  this.message = 'World';
+export class FamilyListController{
+  constructor() {
+    const ctrl = this;
+    ctrl.model = {};
+    ctrl.model.families = [];
+  }
+
+  $onInit(){
+    // TODO: implement later
+
+  }
+
+  $onChanges(changesObj) {
+    this.model.families = changesObj.families.currentValue
+  }
+
+  familyClicked(family){
+    this.onFamilyClick( { family } )
+  }
 }
 
-angular.module('b7beetApp.family')
-	.component('familyList', {
-    template: require('./family.html'),
-    controller: FamilyListController
-  })
+export default {
+  component: {
+    template: require('./familyList.html'),
+    controller: [FamilyListController],
+    bindings: {
+      families: '<',
+      onFamilyClick: '&'
+    }
+  },
+  name: 'familyList'
+}

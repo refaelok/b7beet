@@ -1,1 +1,21 @@
-<family-list></family-list>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+      <family-list families="$ctrl.families" on-family-click="$ctrl.onFamilyClicked(family)"></family-list>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+      <!-- <family-info></family-info> -->
+		</div>
+		<div class="col-md-2">
+      <new-family on-new-family-button-click="$ctrl.onNewFamilyButtonClick()"></new-family>
+		</div>
+	</div>
+</div>
