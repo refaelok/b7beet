@@ -1,16 +1,13 @@
-[![Discord](https://discordapp.com/api/servers/212532127475040257/widget.png?style=button)](https://discord.gg/gC8YasD)
-
-
 # b7beet
 
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.0.0-rc.0.
+This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.0.1.
 
 ## Getting Started
 
 ### Prerequisites
 
 - [Git](https://git-scm.com/)
-- [Node.js and npm](nodejs.org) Node ^4.4.6, npm ^2.15.5
+- [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
 - [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
 - [MongoDB](https://www.mongodb.org/) - Keep a running daemon with `mongod`
 

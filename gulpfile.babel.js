@@ -1,4 +1,4 @@
-// Generated on 2016-08-08 using generator-angular-fullstack 4.0.0-rc.0
+// Generated on 2016-08-15 using generator-angular-fullstack 4.0.1
 'use strict';
 
 import _ from 'lodash';
@@ -222,6 +222,9 @@ gulp.task('webpack:dist', function() {
     const webpackDistConfig = makeWebpackConfig({ BUILD: true });
     return gulp.src(webpackDistConfig.entry.app)
         .pipe(webpack(webpackDistConfig))
+        .on('error', (err) => {
+          this.emit('end'); // Recover from errors
+        })
         .pipe(gulp.dest(`${paths.dist}/client`));
 });
 
@@ -465,8 +468,7 @@ gulp.task('build', cb => {
         'inject',
         'transpile:server',
         [
-            'build:images',
-            'typings'
+            'build:images'
         ],
         [
             'copy:extras',
@@ -483,11 +485,12 @@ gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**
 
 gulp.task('build:images', () => {
     return gulp.src(paths.client.images)
-        .pipe(plugins.imagemin({
-            optimizationLevel: 5,
-            progressive: true,
-            interlaced: true
-        }))
+        .pipe(plugins.imagemin([
+            plugins.imagemin.optipng({optimizationLevel: 5}),
+            plugins.imagemin.jpegtran({progressive: true}),
+            plugins.imagemin.gifsicle({interlaced: true}),
+            plugins.imagemin.svgo({plugins: [{removeViewBox: false}]})
+        ]))
         .pipe(plugins.rev())
         .pipe(gulp.dest(`${paths.dist}/${clientPath}/assets/images`))
         .pipe(plugins.rev.manifest(`${paths.dist}/${paths.client.revManifest}`, {

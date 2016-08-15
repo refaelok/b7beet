@@ -36,18 +36,29 @@ export class FamilyController {
   addFamily(){
     let ctrl = this;
     return function(family){
-      ctrl.familyService.addNewFamily(family).then(a => {console.log(a);})
+      ctrl.familyService.addNewFamily(family);
+    }
+  }
+
+  removeFamily(){
+    let ctrl = this;
+    return function(family){
+      ctrl.familyService.removeFamily(family)
     }
   }
 
   onFamilyClicked(family){
-    this.$uibModal.open({
+    this.familyInfo = this.$uibModal.open({
       animation: true,
       template: require('../../components/familyInfo/familyInfo.html'),
       size: 'lg',
       controllerAs: '$ctrl',
       controller: ['$uibModalInstance', 'family', function($uibModalInstance, family){
         this.family = family;
+        this.$uibModalInstance = $uibModalInstance;
+        this.removeFamily = function(family){
+          this.$uibModalInstance.close({operation: 'remove', reference: family})
+        }
       }],
       resolve: {
         family: function () {
@@ -55,6 +66,17 @@ export class FamilyController {
         }
       }
     })
+//this.removeFamily.call(this)
+    this.familyInfo.result.then(switchOnOperation.call(this))
+
+    function switchOnOperation(){
+      let ctrl = this;
+      return function(object){
+        if(object.operation === 'remove'){
+          ctrl.removeFamily.call(ctrl)(object.reference)
+        }
+      }
+    }
   }
 }
 

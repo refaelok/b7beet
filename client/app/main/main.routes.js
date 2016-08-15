@@ -6,5 +6,5 @@ export default function routes($stateProvider) {
   $stateProvider.state('main', {
     url: '/',
     template: '<main></main>'
-  })
+  });
 };

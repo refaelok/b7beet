@@ -10,6 +10,15 @@
         <div>Address : {{$ctrl.family.address}}</div>
     	</div>
     	<div class="panel-footer">
+        <button type="button"
+          class="btn btn-primary"
+          ng-model="emptyModal"
+          uib-btn-checkbox
+          btn-checkbox-true="1"
+          btn-checkbox-false="0"
+          ng-click="$ctrl.removeFamily($ctrl.family)">
+        Delete 
+        </button>
     	</div>
     </div>
   </div>
