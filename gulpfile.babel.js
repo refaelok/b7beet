@@ -468,9 +468,6 @@ gulp.task('build', cb => {
         'inject',
         'transpile:server',
         [
-            'build:images'
-        ],
-        [
             'copy:extras',
             'copy:assets',
             'copy:fonts:dist',
