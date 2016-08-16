@@ -6,17 +6,16 @@ import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
 import 'angular-socket-io';
-
+import ngMap from 'ngMap';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 // import ngMessages from 'angular-messages';
 //import ngValidationMatch from 'angular-validation-match';
 
-
 import {
   routeConfig
 } from './app.config';
-
+import 'ng-autocomplete';
 import _Auth from '../components/auth/auth.module';
 import account from './account';
 import admin from './admin';
@@ -35,7 +34,7 @@ angular.module('b7beetApp', [
     // ngAnimate,
     ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter, uiBootstrap,
     // ngMessages,
-
+    ngMap, 'ngAutocomplete',
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
     family

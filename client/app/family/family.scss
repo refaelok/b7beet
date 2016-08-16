@@ -29,3 +29,8 @@
 .family-info-custom{
   margin-bottom: 0px
 }
+
+//this is for google-autocomplete-places
+.pac-container {
+    z-index: 1051 !important;
+}
