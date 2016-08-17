@@ -24,7 +24,7 @@ export class NavbarComponent {
 
   showItem(item){
     if(item.requireLogin){
-      return this.isLoggedIn;
+      return this.isLoggedIn();
     } 
     return true;
   }
