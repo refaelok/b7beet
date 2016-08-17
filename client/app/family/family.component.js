@@ -53,9 +53,18 @@ export class FamilyController {
       template: require('../../components/familyInfo/familyInfo.html'),
       size: 'lg',
       controllerAs: '$ctrl',
-      controller: ['$uibModalInstance', 'family', function($uibModalInstance, family){
+      controller: ['$uibModalInstance', 'family', 'NgMap', '$timeout', function($uibModalInstance, family, NgMap, $timeout){
+        this.NgMap = NgMap;
         this.family = family;
         this.$uibModalInstance = $uibModalInstance;
+        NgMap.getMap()
+        .then(map => {
+          google.maps.event.trigger(map, "resize");
+          map.setZoom(15);
+        })
+        .catch(a => {
+          console.log(a)
+        })
         this.removeFamily = function(family){
           this.$uibModalInstance.close({operation: 'remove', reference: family})
         }
