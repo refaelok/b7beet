@@ -4,11 +4,7 @@ require('shelljs/global');
 var argv = require('minimist')(process.argv.slice(2));
 var branch = argv.branch || 'master';
 
-gitInit();
-
-function gitInit(){
-	exec('git pull origin ' + branch, npmInstall)
-}
+exec('git pull origin ' + branch, npmInstall)
 
 function npmInstall(){
 	exec('npm install', killPm2)
