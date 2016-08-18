@@ -62,6 +62,7 @@ function handleError(res, statusCode) {
   };
 }
 
+
 // Gets a list of Familys
 export function index(req, res) {
   return Family.find().exec()
@@ -79,6 +80,7 @@ export function show(req, res) {
 
 // Creates a new Family in the DB
 export function create(req, res) {
+  req.body.addedBy = req.user._id;
   return Family.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
@@ -89,6 +91,7 @@ export function upsert(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
+  req.body.updatedBy = req.user._id;
   return Family.findOneAndUpdate(req.params.id, req.body, {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
