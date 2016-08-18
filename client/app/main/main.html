@@ -7,15 +7,6 @@
 </header>
 
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">New features soon</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in $ctrl.awesomeThings">
-        <li><a href="#" uib-tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="$ctrl.deleteThing(thing)">&times;</button></a></li>
-      </ul>
-    </div>
-  </div>
-
   <form class="thing-form">
     <label>List</label>
     <p class="input-group">
@@ -25,4 +16,13 @@
       </span>
     </p>
   </form>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Chat :-)</h1>
+      <ul class="nav nav-tabs nav-stacked col-md-12" ng-repeat="thing in $ctrl.awesomeThings | orderBy:'-'">
+        <li><a href="#" uib-tooltip="{{thing.info}}">{{thing.addedBy.name}} : {{thing.name}}<button type="button" class="close" ng-click="$ctrl.deleteThing(thing)">&times;</button></a></li>
+      </ul>
+    </div>
+  </div>
 </div>
