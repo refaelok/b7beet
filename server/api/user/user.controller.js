@@ -4,6 +4,7 @@ import User from './user.model';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
+import { userRoles } from '../../config/environment/shared';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -37,7 +38,7 @@ export function index(req, res) {
 export function create(req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
-  newUser.role = 'user';
+  newUser.role = 'guest';
   newUser.save()
     .then(function(user) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
@@ -120,4 +121,28 @@ export function me(req, res, next) {
  */
 export function authCallback(req, res, next) {
   res.redirect('/');
+}
+
+export function updateUser(req, res){
+  var newRole = String(req.body.newRole);
+  var userToPromote = req.params.id;
+  if(!roleExist(newRole)){
+      return res.status(404).end();
+  }
+  return User.findById(userToPromote).exec()
+  .then(user => {
+    user.role = newRole;
+    return user.save()
+      .then((updated) => {
+        console.log("updated user", updated)
+        delete user.newRole;
+        res.status(204).json(updated);    
+      })
+  });
+
+}
+
+function roleExist(role){
+  if(userRoles.indexOf(role) >= 0) return true;
+  return false;
 }

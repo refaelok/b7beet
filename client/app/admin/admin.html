@@ -3,9 +3,17 @@
   <ul class="list-group user-list">
     <li class="list-group-item" ng-repeat="user in admin.users">
 	    <div class="user-info">
-	        <strong>{{user.name}}</strong><br>
+	        <strong>{{user.name}} {{user.role}}</strong><br>
 	        <span class="text-muted">{{user.email}}</span>
 	    </div>
+
+        <select name="roles" ng-model="user.newRole">
+          <option value="">Current : {{user.role}}</option>
+          <option ng-repeat="role in admin.roles" value="{{role}}">{{role}}</option>
+        </select>
+        &nbsp;
+        <a ng-click="admin.updateRole(user)" class="trash"><span class="fa fa-floppy-o fa-2x"></span></a>
+        &nbsp;
         <a ng-click="admin.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
     </li>
   </ul>
