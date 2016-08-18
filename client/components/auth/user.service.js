@@ -17,6 +17,12 @@ export function UserResource($resource) {
       params: {
         id: 'me'
       }
+    },
+    updateRole: {
+      method: 'PUT',
+      params: {
+        controller: 'promote'    
+      }
     }
   });
 }

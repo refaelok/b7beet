@@ -7,7 +7,8 @@ export class NavbarComponent {
   }, {
     'title': 'Family',
     'state': 'family',
-    requireLogin: true
+    requireLogin: true,
+    minimumPermission : 'user'
   }];
   isLoggedIn: Function;
   isAdmin: Function;
@@ -16,14 +17,22 @@ export class NavbarComponent {
 
   constructor(Auth) {
     'ngInject';
-
+    this.hasRole = Auth.hasRole
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
+    this.menu.forEach((menuItem) => {
+      menuItem.visible = this.showItem(menuItem)
+    })
   }
 
   showItem(item){
     if(item.requireLogin){
+      if(item.minimumPermission){
+        this.hasRole(item.minimumPermission).then(result => {
+          item.visible = result
+        })
+      }
       return this.isLoggedIn();
     } 
     return true;
