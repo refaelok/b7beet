@@ -3,7 +3,9 @@
 export class NavbarComponent {
   menu = [{
     'title': 'Home',
-    'state': 'main'
+    'state': 'main',
+    requireLogin: true,
+    minimumPermission : 'user'
   }, {
     'title': 'Family',
     'state': 'family',
@@ -22,6 +24,7 @@ export class NavbarComponent {
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
     this.menu.forEach((menuItem) => {
+      menuItem.visible = false;
       menuItem.visible = this.showItem(menuItem)
     })
   }

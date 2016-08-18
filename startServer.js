@@ -7,7 +7,7 @@ var branch = argv.branch || 'master';
 exec('git pull origin ' + branch, npmInstall)
 
 function npmInstall(){
-	exec('npm install', killPm2)
+	argv.npm ? exec('npm install', killPm2) : killPm2();
 }
 
 function killPm2(){
