@@ -12,6 +12,7 @@
 
 import jsonpatch from 'fast-json-patch';
 import Thing from './thing.model';
+import User from '../user/user.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -80,9 +81,17 @@ export function show(req, res) {
 
 // Creates a new Thing in the DB
 export function create(req, res) {
-  return Thing.create(req.body)
+  return User.findById(req.user._id).exec()
+  .then(user => {
+    req.body.addedBy = {
+      name: user.name,
+      id: user._id
+    }
+    return Thing.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
+  })
+
 }
 
 // Upserts the given Thing in the DB at the specified ID
