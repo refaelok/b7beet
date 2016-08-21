@@ -84,13 +84,31 @@
     	<div class="panel-footer">
         <button type="button"
           class="btn btn-primary"
-          ng-model="emptyModal"
-          ng-show="$ctrl.hasRole('manager')"
+          ng-model="startRemove"
+          ng-show="$ctrl.hasRole('manager') && !startRemove"
+          uib-btn-checkbox
+          btn-checkbox-true="1"
+          btn-checkbox-false="0">
+        Delete
+        </button>
+        <button type="button"
+          class="btn btn-primary"
+          ng-model="startRemove"
+          ng-show="$ctrl.hasRole('manager') && startRemove"
+          uib-btn-checkbox
+          btn-checkbox-true="0"
+          btn-checkbox-false="1">
+        Cancel remove
+        </button>
+        <button type="button"
+          class="btn btn-danger"
+          ng-model="startRemove"
+          ng-show="$ctrl.hasRole('manager') && startRemove"
           uib-btn-checkbox
           btn-checkbox-true="1"
           btn-checkbox-false="0"
           ng-click="$ctrl.removeFamily($ctrl.family)">
-        Delete
+        Confirm remove
         </button>
         <button type="button"
           class="btn btn-primary"
