@@ -19,7 +19,12 @@ var VolunteerSchema = new mongoose.Schema({
   joinDate: {
     type: Date,
     default: undefined
-  }
+  },
+	email: String,
+	gender: {
+		type: String,
+		num: ['Male', 'Female']
+	}
 });
 
 VolunteerSchema.plugin(timestamps);

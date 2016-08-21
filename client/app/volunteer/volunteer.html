@@ -1,3 +1,21 @@
 <div class="container-fluid">
-hi
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+      <Volunteer-list list="$ctrl.model.volunteerList"></Volunteer-list>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+      <!-- <family-info></family-info> -->
+		</div>
+		<div class="col-md-2">
+      <new-family on-new-family-button-click="$ctrl.onNewFamilyButtonClick()"></new-family>
+		</div>
+	</div>
 </div>

@@ -1,0 +1,14 @@
+<v-pane>
+  <v-pane-header>
+    {{$ctrl.individual.name}} , {{$ctrl.individual.email}} , {{$ctrl.individual.address}}
+  </v-pane-header>
+  <v-pane-content>
+    <p>
+      Started at : {{$ctrl.individual.joinDate}}
+    </p>
+    <p>
+      BirthDate at : {{$ctrl.individual.birthDate}}
+    </p>
+    {{$ctrl.individual.details}}
+  </v-pane-content>
+</v-pane>
