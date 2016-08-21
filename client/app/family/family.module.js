@@ -6,7 +6,7 @@ import familyList from '../../components/familyList/familyList.component';
 import familyIndividual from '../../components/familyIndividual/familyIndividual.component';
 import familyInfo from '../../components/familyInfo/familyInfo.component';
 import newFamily from '../../components/newFamily/newFamily.component';
-import familyService from '../familyService/familyService.service';
+import familyService from '../../components/familyService/familyService.service';
 
 
 export default angular.module('b7beetApp.family', [uiRouter])
