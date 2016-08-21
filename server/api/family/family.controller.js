@@ -10,6 +10,7 @@
 
 'use strict';
 
+import _ from 'lodash';
 import jsonpatch from 'fast-json-patch';
 import Family from './family.model';
 
@@ -19,6 +20,16 @@ function respondWithResult(res, statusCode) {
     if(entity) {
       res.status(statusCode).json(entity);
     }
+  };
+}
+
+function saveUpdates(updates) {
+  return function(entity) {
+    var updated = _.merge(entity, updates);
+    return updated.save()
+      .then(updated => {
+        return updated;
+      });
   };
 }
 
@@ -92,8 +103,10 @@ export function upsert(req, res) {
     delete req.body._id;
   }
   req.body.updatedBy = req.user._id;
-  return Family.findOneAndUpdate(req.params.id, req.body, {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
-
+  // return Family.findOneAndUpdate(req.params.id, req.body, {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+    return Family.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

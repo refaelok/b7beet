@@ -12,6 +12,11 @@ function familyServiceService(networkService) {
   this.removeFamily = function(family){
   	return networkService.DELETE('families', family._id)
   }
+
+  this.updateFamily = function(family){
+    console.log(family);
+    return networkService.PUT('families', family._id, family)
+  }
 	// AngularJS will instantiate a singleton by calling "new" on this function
 }
 

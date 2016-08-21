@@ -8,11 +8,10 @@
 				<div class="col-md-6">
 					<div class="form-group">
 					  	<input  type="text" ng-model="$ctrl.model.family.name" placeholder="Family name" class="form-control input-md" required="">
-						<input 	type="text" 
-							class="form-control input-md" 
-							ng-autocomplete 
+						<input 	type="text"
+							class="form-control input-md"
+							ng-autocomplete
 							ng-model="$ctrl.model.family.address" />
-						{{$ctrl.model.family.address}}
 				    	<textarea ng-model="$ctrl.model.family.details" class="form-control">Additional data</textarea>
 					</div>
 				</div>
@@ -46,7 +45,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12">		
+				<div class="col-md-12">
 					<div ng-repeat="member in $ctrl.model.family.familyTree">
 					Family member {{$index}} : {{member.role}} {{member.name}}  {{member.age}}  {{member.phone}}
 					</div>
