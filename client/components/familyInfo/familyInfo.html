@@ -2,13 +2,34 @@
   <div class="col-md-12">
     <div class="panel panel-primary family-info-custom">
     	<div class="panel-heading">
-    		<h3 class="panel-title">
-          {{$ctrl.family.name}}
+    		<h3 class="panel-title" ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
+          Family name : {{$ctrl.family.name}}
     		</h3>
+        <input
+        type="text"
+        ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
+        ng-model="$ctrl.u_family.name"
+        class="form-control input-md"
+        required="">
     	</div>
+      <div class="panel-body">
+        <h3>Addition data</h3>
+        <p ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
+          {{$ctrl.family.details}}
+        </p>
+        <textarea ng-model="$ctrl.u_family.details" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
+      </div>
     	<div class="panel-body">
-
-        <div>Address : {{$ctrl.family.address}}</div>
+        <div ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
+          Address : {{$ctrl.family.address}}
+        </div>
+        <div>
+          <input 	type="text"
+            class="form-control input-md"
+            ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
+            ng-autocomplete
+            ng-model="$ctrl.u_family.address" />
+        </div>
           <span>Family tree</span>
           <table class="table table-condensed table-hover table-striped">
             <thead>
@@ -24,7 +45,7 @@
                 </th>
                 <th>
                   Role
-                </th>                
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -45,7 +66,17 @@
             </tbody>
           </table>
     	</div>
-      <div>
+      <div class="panel-body" ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
+        <h5>Contact information</h5>
+        <p>Name: {{$ctrl.family.contact.name}} ,  Phone: {{$ctrl.family.contact.phone}}</p>
+        <span>Additional data: {{$ctrl.family.contact.details}}</span>
+      </div>
+      <div class="panel-body" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode">
+        <input  type="text" ng-model="$ctrl.u_family.contact.name" placeholder="Contact's name" class="form-control input-md" required="">
+        <input  type="text" ng-model="$ctrl.u_family.contact.phone" placeholder="Contact's phone" class="form-control input-md" required="">
+        <textarea ng-model="$ctrl.u_family.contact.details" class="form-control">Contact's additional data</textarea>
+      </div>
+      <div ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
         <ng-map  center="{{$ctrl.family.address}}" zoom-to-include-markers="true">
            <marker position="{{$ctrl.family.address}}" animation="Animation.BOUNCE"></marker>
         </ng-map>
@@ -53,12 +84,60 @@
     	<div class="panel-footer">
         <button type="button"
           class="btn btn-primary"
-          ng-model="emptyModal"
+          ng-model="startRemove"
+          ng-show="$ctrl.hasRole('manager') && !startRemove"
+          uib-btn-checkbox
+          btn-checkbox-true="1"
+          btn-checkbox-false="0">
+        Delete
+        </button>
+        <button type="button"
+          class="btn btn-primary"
+          ng-model="startRemove"
+          ng-show="$ctrl.hasRole('manager') && startRemove"
+          uib-btn-checkbox
+          btn-checkbox-true="0"
+          btn-checkbox-false="1">
+        Cancel remove
+        </button>
+        <button type="button"
+          class="btn btn-danger"
+          ng-model="startRemove"
+          ng-show="$ctrl.hasRole('manager') && startRemove"
           uib-btn-checkbox
           btn-checkbox-true="1"
           btn-checkbox-false="0"
           ng-click="$ctrl.removeFamily($ctrl.family)">
-        Delete 
+        Confirm remove
+        </button>
+        <button type="button"
+          class="btn btn-primary"
+          ng-model="$ctrl.inModifyMode"
+          ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode"
+          uib-btn-checkbox
+          btn-checkbox-true="true"
+          btn-checkbox-false="false">
+        Modify
+        </button>
+        <button type="button"
+          class="btn btn-primary"
+          ng-model="$ctrl.inModifyMode"
+          ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
+          ng-click="$ctrl.saveFamily()"
+          uib-btn-checkbox
+          btn-checkbox-true="false"
+          btn-checkbox-false="true">
+        Save
+        </button>
+        <button type="button"
+          class="btn btn-primary"
+          ng-model="$ctrl.inModifyMode"
+          ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
+          ng-click="$ctrl.close()"
+          uib-btn-checkbox
+          btn-checkbox-true="false"
+          btn-checkbox-false="true">
+        Close without saving
         </button>
     	</div>
     </div>

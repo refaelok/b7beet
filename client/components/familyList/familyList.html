@@ -9,6 +9,9 @@
 						<th>
 							Address
 						</th>
+            <th>
+              More details
+            </th>
 					</tr>
 				</thead>
 				<tbody>
@@ -20,7 +23,11 @@
               {{family.address}}
             </td>
             <td>
-              Default
+              <p>
+                {{family.details | limitTo : 20}}
+                <span ng-show="family.details.length > 20">...</span>
+                <a ng-show="family.details.length > 20"> show more</a>
+              </p>
             </td>
           </tr>
 				</tbody>

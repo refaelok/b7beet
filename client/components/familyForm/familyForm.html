@@ -7,18 +7,19 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
+							<h4>Basic information about the family</h4>
 					  	<input  type="text" ng-model="$ctrl.model.family.name" placeholder="Family name" class="form-control input-md" required="">
-						<input 	type="text" 
-							class="form-control input-md" 
-							ng-autocomplete 
+							<input 	type="text"
+							class="form-control input-md"
+							ng-autocomplete
 							ng-model="$ctrl.model.family.address" />
-						{{$ctrl.model.family.address}}
 				    	<textarea ng-model="$ctrl.model.family.details" class="form-control">Additional data</textarea>
 					</div>
 				</div>
 				<div class="col-md-6">
 
 					<div class="form-group">
+						<h4>Information about the contact the referrer</h4>
 						<input  type="text" ng-model="$ctrl.model.family.contact.name" placeholder="Contact's name" class="form-control input-md" required="">
 						<input  type="text" ng-model="$ctrl.model.family.contact.phone" placeholder="Contact's phone" class="form-control input-md" required="">
 						<textarea ng-model="$ctrl.model.family.contact.details" class="form-control">Contact's additional data</textarea>
@@ -27,6 +28,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
+					<h4>Family structure | basic information about family members</h4>
 					<div class="form-group form-inline">
 						<div class="btn-group">
 								<label 	ng-repeat="role in $ctrl.model.familyRoles"
@@ -46,7 +48,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12">		
+				<div class="col-md-12">
 					<div ng-repeat="member in $ctrl.model.family.familyTree">
 					Family member {{$index}} : {{member.role}} {{member.name}}  {{member.age}}  {{member.phone}}
 					</div>
