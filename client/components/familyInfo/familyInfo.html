@@ -3,11 +3,16 @@
     <div class="panel panel-primary family-info-custom">
     	<div class="panel-heading">
     		<h3 class="panel-title">
-          {{$ctrl.family.name}}
+          Family name : {{$ctrl.family.name}}
     		</h3>
     	</div>
+      <div class="panel-body">
+        <h3>Addition data</h3>
+        <p>
+          {{$ctrl.family.details}}
+        </p>
+      </div>
     	<div class="panel-body">
-
         <div>Address : {{$ctrl.family.address}}</div>
           <span>Family tree</span>
           <table class="table table-condensed table-hover table-striped">
@@ -45,6 +50,11 @@
             </tbody>
           </table>
     	</div>
+      <div class="panel-body">
+        <h5>Contact information</h5>
+        <p>Name: {{$ctrl.family.contact.name}} ,  Phone: {{$ctrl.family.contact.phone}}</p>
+        <span>Additional data: {{$ctrl.family.contact.details}}</span>
+      </div>
       <div>
         <ng-map  center="{{$ctrl.family.address}}" zoom-to-include-markers="true">
            <marker position="{{$ctrl.family.address}}" animation="Animation.BOUNCE"></marker>
