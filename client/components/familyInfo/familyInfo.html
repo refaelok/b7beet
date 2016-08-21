@@ -24,7 +24,7 @@
                 </th>
                 <th>
                   Role
-                </th>                
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -54,11 +54,12 @@
         <button type="button"
           class="btn btn-primary"
           ng-model="emptyModal"
+          ng-show="$ctrl.hasRole('manager')"
           uib-btn-checkbox
           btn-checkbox-true="1"
           btn-checkbox-false="0"
           ng-click="$ctrl.removeFamily($ctrl.family)">
-        Delete 
+        Delete
         </button>
     	</div>
     </div>

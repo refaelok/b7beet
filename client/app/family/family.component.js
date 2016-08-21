@@ -1,5 +1,5 @@
 export class FamilyController {
-  constructor($uibModal, familyService, $scope, socket){
+  constructor($uibModal, familyService, $scope, socket, Auth){
     this.familyService = familyService;
     this.$uibModal = $uibModal;
     this.socket = socket;
@@ -53,9 +53,10 @@ export class FamilyController {
       template: require('../../components/familyInfo/familyInfo.html'),
       size: 'lg',
       controllerAs: '$ctrl',
-      controller: ['$uibModalInstance', 'family', 'NgMap', '$timeout', function($uibModalInstance, family, NgMap, $timeout){
+      controller: ['$uibModalInstance', 'family', 'NgMap', 'Auth', function($uibModalInstance, family, NgMap, Auth){
         this.NgMap = NgMap;
         this.family = family;
+        this.hasRole = Auth.hasRoleSync;
         this.$uibModalInstance = $uibModalInstance;
         NgMap.getMap()
         .then(map => {
@@ -75,7 +76,6 @@ export class FamilyController {
         }
       }
     })
-//this.removeFamily.call(this)
     this.familyInfo.result.then(switchOnOperation.call(this))
 
     function switchOnOperation(){
@@ -93,7 +93,7 @@ export default {
   name : 'family',
   component: {
     template: require('./family.html'),
-    controller: ['$uibModal', 'familyService', '$scope', 'socket', FamilyController],
+    controller: ['$uibModal', 'familyService', '$scope', 'socket', 'Auth', FamilyController],
   }
 }
 
