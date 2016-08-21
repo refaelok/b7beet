@@ -136,7 +136,7 @@ export function updateUser(req, res){
       .then((updated) => {
         console.log("updated user", updated)
         delete user.newRole;
-        res.status(204).json(updated);    
+        res.status(204).json(updated);
       })
   });
 
