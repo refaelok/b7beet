@@ -141,6 +141,8 @@ function FamilyFormController($uibModalInstance){
   }
 
   function createNewFamily(){
+    if(this.model.familyMember.name)
+      this.model.family.familyTree.push(this.model.familyMember)
     this.$uibModalInstance.close(this.model.family)
   }
 }
