@@ -27,6 +27,7 @@ import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 
 import family from './family/family.module';
+import volunteer from './volunteer/volunteer.module';
 
 import './app.scss';
 
@@ -37,7 +38,7 @@ angular.module('b7beetApp', [
     ngMap, 'ngAutocomplete',
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    family
+    family,volunteer
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
