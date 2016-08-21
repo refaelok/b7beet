@@ -8,7 +8,7 @@ var usenpm = argv.npm || false;
 exec('git pull origin ' + branch, npmInstall)
 
 function npmInstall(){
-	argv.npm ?  killPm2() : exec('npm install', killPm2) ;
+	usenpm ?  killPm2() : exec('npm install', killPm2) ;
 }
 
 function killPm2(){
