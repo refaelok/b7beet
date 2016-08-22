@@ -1,0 +1,52 @@
+<div class="container-fluid new-volunteer-form">
+	<form lass="form-horizontal">
+    <div class="row">
+      {{$ctrl.model.volunteer}}
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+    				<div class="form-group">
+              <h4>
+                Basic volunteer information
+              </h4>
+              <input  type="text" ng-model="$ctrl.model.volunteer.name" placeholder="volunteer name" class="form-control input-md" required="">
+              <input  type="text" ng-model="$ctrl.model.volunteer.email" placeholder="volunteer email" class="form-control input-md" required="">
+              <div class="btn-group">
+                  <label 	ng-repeat="gender in $ctrl.model.genders"
+                          class="btn btn-primary"
+                          ng-model="$ctrl.model.volunteer.gender"
+                          uib-btn-radio="'{{gender}}'" uncheckable>
+                            {{gender}}
+                  </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+    				<div class="form-group">
+              <h4>
+                Dates and address
+              </h4>
+              <input  type="text" ng-model="$ctrl.model.volunteer.birthDate" placeholder="Birth Date" class="form-control input-md" required="">
+              <input  type="text" ng-model="$ctrl.model.volunteer.joinDate" placeholder="Join Date" class="form-control input-md" required="">
+              <input 	type="text"
+              class="form-control input-md"
+              ng-autocomplete
+              ng-model="$ctrl.model.volunteer.address" />
+            </div>
+          </div>
+          <div class="col-md-4">
+    				<div class="form-group">
+              <h4>
+                More details
+              </h4>
+              <textarea ng-model="$ctrl.model.volunteer.details" class="form-control">Additional data</textarea>
+              <button ng-click="$ctrl.createNewVolunteer()" type="button" class="btn btn-primary save-new-family-btn" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+                  Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

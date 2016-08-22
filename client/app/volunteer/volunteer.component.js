@@ -12,6 +12,10 @@ export class volunteerController {
 
   }
 
+  onNewVolunteerButtonClick(){
+    this.model.showVolunteerForm = true;
+  }
+
 }
 
 export default {

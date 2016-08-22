@@ -3,7 +3,7 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
-      <Volunteer-list list="$ctrl.model.volunteerList"></Volunteer-list>
+			<volunteer-form ng-show="$ctrl.model.showVolunteerForm"></volunteer-form>
 		</div>
 		<div class="col-md-2">
 		</div>
@@ -12,10 +12,18 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
-      <!-- <family-info></family-info> -->
+      <volunteer-list list="$ctrl.model.volunteerList"></volunteer-list>
 		</div>
 		<div class="col-md-2">
-      <new-family on-new-family-button-click="$ctrl.onNewFamilyButtonClick()"></new-family>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+		</div>
+		<div class="col-md-2">
+      <new-volunteer on-new-volunteer-button-click="$ctrl.onNewVolunteerButtonClick()"></new-volunteer>
 		</div>
 	</div>
 </div>
