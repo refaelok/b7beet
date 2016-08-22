@@ -3,7 +3,7 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
-			<volunteer-form ng-show="$ctrl.model.showVolunteerForm"></volunteer-form>
+			<volunteer-form ng-show="$ctrl.model.showVolunteerForm" on-new-volunteer-submit="$ctrl.addNewVolunteer(volunteer)"></volunteer-form>
 		</div>
 		<div class="col-md-2">
 		</div>
@@ -12,7 +12,9 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
-      <volunteer-list list="$ctrl.model.volunteerList"></volunteer-list>
+      <volunteer-list list="$ctrl.model.volunteerList"
+											on-remove-volunteer="$ctrl.removeVolunteer(volunteer)"
+											on-volunteer-modification="$ctrl.modifyVolunteer(volunteer)"></volunteer-list>
 		</div>
 		<div class="col-md-2">
 		</div>

@@ -1,16 +1,24 @@
 export class VolunteerIndividualController{
-  constructor() {
+  constructor(Auth) {
     const ctrl = this;
     ctrl.model = {};
+    ctrl.hasRole = Auth.hasRoleSync
   }
 
   $onInit(){
     // TODO: implement later
-
   }
 
   $onChanges(changesObj) {
     this.model.individual = changesObj.individual.currentValue
+  }
+
+  removeVolunteer(volunteer){
+    this.onDeleteVolunteer({volunteer: this.model.individual})
+  }
+
+  saveVolunteer(){
+    this.onVolunteerModification({volunteer: this.model.individual})
   }
 
 }
@@ -18,9 +26,11 @@ export class VolunteerIndividualController{
 export default {
   component: {
     template: require('./volunteerIndividual.html'),
-    controller: [VolunteerIndividualController],
+    controller: ['Auth', VolunteerIndividualController],
     bindings: {
-      individual: '<'
+      individual: '<',
+      onDeleteVolunteer: '&',
+      onVolunteerModification: '&'
     }
   },
   name: 'volunteerIndividual'

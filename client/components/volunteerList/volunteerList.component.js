@@ -24,14 +24,24 @@ export class VolunteerListController{
     // console.log('collapse:', index, id);
   };
 
+  removeVolunteer(volunteer){
+    this.onRemoveVolunteer({volunteer: volunteer});
+  }
+
+  modifyVolunteer(volunteer){
+    this.onVolunteerModification({volunteer: volunteer})
+  }
+
 }
 
 export default {
   component: {
     template: require('./volunteerList.html'),
-    controller: ['$scope', VolunteerListController],
+    controller: ['$scope', 'Auth', VolunteerListController],
     bindings: {
-      list: '<'
+      list: '<',
+      onRemoveVolunteer: '&',
+      onVolunteerModification: '&'
     }
   },
   name: 'volunteerList'
