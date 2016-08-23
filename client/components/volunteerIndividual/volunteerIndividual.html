@@ -3,68 +3,89 @@
     {{$ctrl.individual.name}} , {{$ctrl.individual.email}} , {{$ctrl.individual.address}}
   </v-pane-header>
   <v-pane-content>
-    <div ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode">
-      <p class="input-group">
-        <input  type="text" ng-model="$ctrl.model.volunteer.name" placeholder="volunteer name" class="form-control input-md input-border-radius-5" required="">
-      </p>
-      <p class="input-group">
-        <input  type="text" ng-model="$ctrl.model.volunteer.email" placeholder="volunteer email" class="form-control input-md input-border-radius-5" required="">
-      </p>
-      <p class="input-group">
-        <input 	type="text"
-        class="form-control input-md"
-        ng-autocomplete
-        ng-model="$ctrl.model.volunteer.address" />
-      </p>
+
+    <div class="row" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode">
+      <div class="col-md-4">
+        <p class="input-group">
+          <input  type="text" ng-model="$ctrl.model.u_individual.name" placeholder="volunteer name" class="form-control" required="">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
+          </span>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <p class="input-group">
+          <input  type="text" ng-model="$ctrl.model.u_individual.email" placeholder="volunteer email" class="form-control" required="">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ><i class="glyphicon glyphicon-envelope"></i></button>
+          </span>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <p class="input-group">
+          <input 	type="text"
+          class="form-control"
+          ng-autocomplete
+          ng-model="$ctrl.model.u_individual.address" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ><i class="glyphicon glyphicon-screenshot"></i></button>
+          </span>
+        </p>
+      </div>
     </div>
 
+    <div class="row"  ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode">
+      <div class="col-md-4">
+          <p class="input-group">
+            <input 	type="text"
+                    class="form-control "
+                    placeholder="Join date YYYY-MM-DD"
+                    uib-datepicker-popup="{{format}}"
+                    ng-model="$ctrl.model.u_individual.joinDate"
+                    is-open="$ctrl.model.calendar.joinDate.isOpen"
+                    datepicker-options="$ctrl.model.calendar.joinDate"
+                    ng-required="true"
+                    close-text="Close"
+                    alt-input-formats="altInputFormats"  />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.joinDate.isOpen = !$ctrl.model.calendar.joinDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+      </div>
+      <div class="col-md-4">
+          <p class="input-group">
+            <input 	type="text"
+                    class="form-control"
+                    placeholder="Birthdate YYYY-MM-DD"
+                    uib-datepicker-popup="{{format}}"
+                    ng-model="$ctrl.model.u_individual.birthDate"
+                    is-open="$ctrl.model.calendar.birthDate.isOpen"
+                    datepicker-options="$ctrl.model.calendar.birthDate"
+                    ng-required="true"
+                    close-text="Close"
+                    alt-input-formats="altInputFormats"  />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.birthDate.isOpen = !$ctrl.model.calendar.birthDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
     <p ng-show="$ctrl.individual.joinDate && !$ctrl.inModifyMode">
       Started at : {{$ctrl.individual.joinDate}}
     </p>
-    <div class="panel-body" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode">
-      <p class="input-group">
-        <input 	type="text"
-                class="form-control"
-                placeholder="Join date YYYY-MM-DD"
-                uib-datepicker-popup="{{format}}"
-                ng-model="$ctrl.model.volunteer.joinDate"
-                is-open="$ctrl.model.calendar.joinDate.isOpen"
-                datepicker-options="$ctrl.model.calendar.joinDate"
-                ng-required="true"
-                close-text="Close"
-                alt-input-formats="altInputFormats"  />
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.joinDate.isOpen = !$ctrl.model.calendar.joinDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
-      </p>
-    </div>
+
     <p ng-show="$ctrl.individual.birthDate && !$ctrl.inModifyMode">
       BirthDate at : {{$ctrl.individual.birthDate}}
     </p>
-    <div class="panel-body" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode">
-      <p class="input-group">
-        <input 	type="text"
-                class="form-control"
-                placeholder="Birthdate YYYY-MM-DD"
-                uib-datepicker-popup="{{format}}"
-                ng-model="$ctrl.model.volunteer.birthDate"
-                is-open="$ctrl.model.calendar.birthDate.isOpen"
-                datepicker-options="$ctrl.model.calendar.birthDate"
-                ng-required="true"
-                close-text="Close"
-                alt-input-formats="altInputFormats"  />
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.birthDate.isOpen = !$ctrl.model.calendar.birthDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
-      </p>
-    </div>
 
-
-    <div ng-show="$ctrl.inModifyMode">
+    <div ng-show="!$ctrl.inModifyMode">
       {{$ctrl.individual.details}}
     </div>
-    <textarea ng-model="$ctrl.model.volunteer.details" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
-
+    <p ng-show="$ctrl.inModifyMode">
+      <textarea ng-model="$ctrl.model.u_individual.details" placeholder="Addition data" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
+    </p>
     <button type="button"
       class="btn btn-primary"
       ng-model="startRemove"

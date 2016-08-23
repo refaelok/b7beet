@@ -10,6 +10,7 @@
 
 'use strict';
 
+import _ from 'lodash';
 import jsonpatch from 'fast-json-patch';
 import Volunteer from './volunteer.model';
 
@@ -20,6 +21,16 @@ function respondWithResult(res, statusCode) {
       return res.status(statusCode).json(entity);
     }
     return null;
+  };
+}
+
+function saveUpdates(updates) {
+  return function(entity) {
+    var updated = _.merge(entity, updates);
+    return updated.save()
+      .then(updated => {
+        return updated;
+      });
   };
 }
 
@@ -90,10 +101,18 @@ export function upsert(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Volunteer.findOneAndUpdate(req.params.id, req.body, {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  //wont emit event
+  // return Volunteer.findOneAndUpdate(req.params.id, req.body, {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  //
+  //   .then(respondWithResult(res))
+  //   .catch(handleError(res));
 
+    return Volunteer.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
+
 }
 
 // Updates an existing Volunteer in the DB

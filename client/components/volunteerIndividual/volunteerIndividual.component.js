@@ -2,6 +2,7 @@ export class VolunteerIndividualController{
   constructor(Auth) {
     const ctrl = this;
     ctrl.model = {};
+    ctrl.model.u_individual = _.cloneDeep(this.individual)
     ctrl.hasRole = Auth.hasRoleSync
   }
 
@@ -14,11 +15,11 @@ export class VolunteerIndividualController{
   }
 
   removeVolunteer(volunteer){
-    this.onDeleteVolunteer({volunteer: this.model.individual})
+    this.onDeleteVolunteer({volunteer: this.individual})
   }
 
   saveVolunteer(){
-    this.onVolunteerModification({volunteer: this.model.individual})
+    this.onVolunteerModification({volunteer: this.model.u_individual})
   }
 
 }
