@@ -13,11 +13,7 @@ export class VolunteerFormController{
         /**
          * @return {Date} [max date is today , birthDate cannot be in the future]
          */
-        maxDate: Date.now(),
-        /**
-         * @param {Date}  [min date is 18 year from now, calculated by 301556926 * 10^10 : one year in milliseconds times 18 years ]
-         */
-        minDate: new Date(Date.now() - 3.1556926 * Math.pow(10, 10) * 18)
+        maxDate: Date.now()
       },
       joinDate: {
         inlineOptions: {
