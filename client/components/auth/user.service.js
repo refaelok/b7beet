@@ -21,7 +21,7 @@ export function UserResource($resource) {
     updateRole: {
       method: 'PUT',
       params: {
-        controller: 'promote'    
+        controller: 'promote'
       }
     }
   });

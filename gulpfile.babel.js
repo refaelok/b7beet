@@ -1,4 +1,4 @@
-// Generated on 2016-08-15 using generator-angular-fullstack 4.0.1
+// Generated on 2016-08-21 using generator-angular-fullstack 4.0.1
 'use strict';
 
 import _ from 'lodash';
@@ -467,6 +467,9 @@ gulp.task('build', cb => {
         ],
         'inject',
         'transpile:server',
+        [
+            'build:images'
+        ],
         [
             'copy:extras',
             'copy:assets',

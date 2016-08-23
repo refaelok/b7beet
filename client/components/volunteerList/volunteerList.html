@@ -1,0 +1,10 @@
+<div class="row">
+<v-accordion class="vAccordion--default" multiple id="accordionA" onexpand="$ctrl.expandCallback(index, id)" oncollapse="$ctrl.collapseCallback(index, id)">
+  <input  type="text" ng-model="volunteerSearch" ng-show="$ctrl.list.length > 10" placeholder="Search" class="form-control input-md" required="">
+  <volunteer-individual
+  ng-repeat="volunteer in $ctrl.list | filter:volunteerSearch track by $index"
+  individual="volunteer"
+  on-delete-volunteer="$ctrl.removeVolunteer(volunteer)"
+  on-volunteer-modification="$ctrl.modifyVolunteer(volunteer)"></volunteer-individual>
+</v-accordion>
+</div>

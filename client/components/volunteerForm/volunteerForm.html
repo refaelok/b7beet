@@ -1,0 +1,87 @@
+<div class="container-fluid volunteer-card">
+	<form lass="form-horizontal">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+    				<div class="form-group">
+              <h4>
+                Basic volunteer information
+              </h4>
+							<p class="input-group">
+              		<input  type="text" ng-model="$ctrl.model.volunteer.name" placeholder="volunteer name" class="form-control input-md input-border-radius-5" required="">
+							</p>
+							<p class="input-group">
+		              <input  type="text" ng-model="$ctrl.model.volunteer.email" placeholder="volunteer email" class="form-control input-md input-border-radius-5" required="">
+							</p>
+              <div class="btn-group margin-top-5">
+                  <label 	ng-repeat="gender in $ctrl.model.genders"
+                          class="btn btn-primary"
+                          ng-model="$ctrl.model.volunteer.gender"
+                          uib-btn-radio="'{{gender}}'" uncheckable>
+                            {{gender}}
+                  </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+    				<div class="form-group">
+              <h4>
+                Dates and address
+              </h4>
+
+							<p class="input-group">
+								<input 	type="text"
+												class="form-control"
+												placeholder="Birthdate YYYY-MM-DD"
+												uib-datepicker-popup="{{format}}"
+												ng-model="$ctrl.model.volunteer.birthDate"
+												is-open="$ctrl.model.calendar.birthDate.isOpen"
+												datepicker-options="$ctrl.model.calendar.birthDate"
+												ng-required="true"
+												close-text="Close"
+												alt-input-formats="altInputFormats"  />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.birthDate.isOpen = !$ctrl.model.calendar.birthDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</p>
+
+
+							<p class="input-group">
+								<input 	type="text"
+												class="form-control"
+												placeholder="Joindate YYYY-MM-DD"
+												uib-datepicker-popup="{{format}}"
+												ng-model="$ctrl.model.volunteer.joinDate"
+												is-open="$ctrl.model.calendar.joinDate.isOpen"
+												datepicker-options="$ctrl.model.calendar.joinDate"
+												ng-required="true"
+												close-text="Close"
+												alt-input-formats="altInputFormats"  />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.joinDate.isOpen = !$ctrl.model.calendar.joinDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</p>
+
+              <input 	type="text"
+              class="form-control input-md"
+              ng-autocomplete
+              ng-model="$ctrl.model.volunteer.address" />
+            </div>
+          </div>
+          <div class="col-md-4">
+    				<div class="form-group">
+              <h4>
+                More details
+              </h4>
+              <textarea ng-model="$ctrl.model.volunteer.details" class="form-control">Additional data</textarea>
+              <button ng-click="$ctrl.createNewVolunteer()" type="button" class="btn btn-primary save-new-volunteer-button" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+                  Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

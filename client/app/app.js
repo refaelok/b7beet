@@ -1,7 +1,7 @@
 'use strict';
 
 import angular from 'angular';
-// import ngAnimate from 'angular-animate';
+import ngAnimate from 'angular-animate';
 import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
@@ -25,19 +25,21 @@ import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
+import accordion from 'v-accordion';
 
 import family from './family/family.module';
+import volunteer from './volunteer/volunteer.module';
 
 import './app.scss';
 
 angular.module('b7beetApp', [
-    // ngAnimate,
+    ngAnimate,
     ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter, uiBootstrap,
     // ngMessages,
-    ngMap, 'ngAutocomplete',
+    ngMap, 'ngAutocomplete',accordion,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    family
+    family,volunteer
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

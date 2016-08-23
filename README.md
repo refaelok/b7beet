@@ -1,4 +1,5 @@
-[![Stories in Ready](https://badge.waffle.io/olsynt/b7beet.png?label=ready&title=Ready)](https://waffle.io/olsynt/b7beet)
+-[![Stories in Ready](https://badge.waffle.io/olsynt/b7beet.png?label=ready&title=Ready)](https://waffle.io/olsynt/b7beet)
+
 # b7beet
 
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.0.1.

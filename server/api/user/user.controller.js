@@ -134,9 +134,8 @@ export function updateUser(req, res){
     user.role = newRole;
     return user.save()
       .then((updated) => {
-        console.log("updated user", updated)
         delete user.newRole;
-        res.status(204).json(updated);    
+        res.status(204).json(updated);
       })
   });
 
