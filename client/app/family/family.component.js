@@ -15,7 +15,6 @@ export class FamilyController {
       .then(families => {
         this.families = families;
         this.socket.syncUpdates('family', this.families,(a,b,c) => {
-          console.log(a,b,c);
         });
       })
   }

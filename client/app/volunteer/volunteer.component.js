@@ -15,7 +15,6 @@ export class volunteerController {
       .then(list => {
         this.model.volunteerList = list;
         this.socket.syncUpdates('volunteer', this.model.volunteerList,(a,b,c) => {
-          console.log(a,b,c);
         });
       })
   }
