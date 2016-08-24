@@ -14,6 +14,9 @@
 							<p class="input-group">
 		              <input  type="text" ng-model="$ctrl.model.volunteer.email" placeholder="volunteer email" class="form-control input-md input-border-radius-5" required="">
 							</p>
+							<p class="input-group">
+									<input  type="text" ng-model="$ctrl.model.volunteer.phoneNumber" placeholder="volunteer phone number" class="form-control input-md input-border-radius-5" required="">
+							</p>
               <div class="btn-group margin-top-5">
                   <label 	ng-repeat="gender in $ctrl.model.genders"
                           class="btn btn-primary"
@@ -74,7 +77,9 @@
               <h4>
                 More details
               </h4>
-              <textarea ng-model="$ctrl.model.volunteer.details" class="form-control">Additional data</textarea>
+              	<textarea ng-model="$ctrl.model.volunteer.details" class="form-control" placeholder="Additional data"></textarea>
+								<p></p>
+								<textarea ng-model="$ctrl.model.volunteer.preference" class="form-control" placeholder="preference (route)"></textarea>
               <button ng-click="$ctrl.createNewVolunteer()" type="button" class="btn btn-primary save-new-volunteer-button" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
                   Save
               </button>

@@ -13,7 +13,7 @@
       * DELETE  /api/GIVIN_URL/GIVIN_ID
       */
      buildPath: function() {
-       var baseUri = ($location.$$host == 'localhost') ? "http://localhost:3000/" : "";
+       var baseUri = ($location.$$host == 'localhost') ? "http://localhost:" + $location.port() : "";
        var path = (baseUri.slice(-1) == "/") ? "api/" : "/api/";
        return baseUri + path;
      },

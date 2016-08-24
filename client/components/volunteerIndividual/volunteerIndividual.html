@@ -1,6 +1,23 @@
 <v-pane class="volunteer-card">
   <v-pane-header>
-    {{$ctrl.individual.name}} , {{$ctrl.individual.email}} , {{$ctrl.individual.address}}
+    <span ng-show="$ctrl.individual.name">
+      Name: {{$ctrl.individual.name}}
+    </span>
+    <span ng-show="$ctrl.individual.name && $ctrl.individual.phoneNumber">
+      ,
+    </span>
+    <span ng-show="$ctrl.individual.phoneNumber">
+      Phone number: {{$ctrl.individual.phoneNumber}}
+    </span>
+    <span ng-show="$ctrl.individual.address && $ctrl.individual.phoneNumber">
+      ,
+    </span>
+    <span ng-show="$ctrl.individual.address">
+      Address: {{$ctrl.individual.address}}
+    </span>
+    <span ng-hide="$ctrl.individual.address && $ctrl.individual.phoneNumber && $ctrl.individual.name">
+      Basic details are not present
+    </span>
   </v-pane-header>
   <v-pane-content>
 
@@ -70,22 +87,40 @@
           </p>
       </div>
       <div class="col-md-4">
+        <p class="input-group">
+            <input  type="text" ng-model="$ctrl.u_individual.phoneNumber" placeholder="Volunteer phone number" class="form-control" required="">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ><i class="glyphicon glyphicon-phone"></i></button>
+            </span>
+        </p>
       </div>
     </div>
     <p ng-show="$ctrl.individual.joinDate && !$ctrl.inModifyMode">
-      Started at : {{$ctrl.individual.joinDate}}
+      Started at : {{$ctrl.individual.joinDate | date:'MM/dd/yyyy' }}
     </p>
 
     <p ng-show="$ctrl.individual.birthDate && !$ctrl.inModifyMode">
-      BirthDate at : {{$ctrl.individual.birthDate}}
+      BirthDate at : {{$ctrl.individual.birthDate| date:'MM/dd/yyyy' }}
     </p>
 
-    <div ng-show="!$ctrl.inModifyMode">
-      {{$ctrl.individual.details}}
+    <div ng-show="!$ctrl.inModifyMode && $ctrl.individual.email">
+      Email: {{$ctrl.individual.email}}
+    </div>
+
+    <div ng-show="!$ctrl.inModifyMode && $ctrl.individual.details">
+      Additional details: {{$ctrl.individual.details}}
     </div>
     <p ng-show="$ctrl.inModifyMode">
       <textarea ng-model="$ctrl.model.u_individual.details" placeholder="Addition data" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
     </p>
+
+    <div ng-show="!$ctrl.inModifyMode && $ctrl.individual.preference">
+      Preferences: {{$ctrl.individual.preference}}
+    </div>
+    <p ng-show="$ctrl.inModifyMode">
+      <textarea ng-model="$ctrl.model.u_individual.preference" placeholder="Addition data" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
+    </p>
+
     <button type="button"
       class="btn btn-primary"
       ng-model="startRemove"
