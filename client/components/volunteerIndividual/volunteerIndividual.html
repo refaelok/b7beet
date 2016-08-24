@@ -114,11 +114,11 @@
       <textarea ng-model="$ctrl.model.u_individual.details" placeholder="Addition data" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
     </p>
 
-    <div ng-show="!$ctrl.inModifyMode && $ctrl.individual.preferrence">
-      Preferrences: {{$ctrl.individual.preferrence}}
+    <div ng-show="!$ctrl.inModifyMode && $ctrl.individual.preference">
+      Preferences: {{$ctrl.individual.preference}}
     </div>
     <p ng-show="$ctrl.inModifyMode">
-      <textarea ng-model="$ctrl.model.u_individual.preferrence" placeholder="Addition data" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
+      <textarea ng-model="$ctrl.model.u_individual.preference" placeholder="Addition data" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
     </p>
 
     <button type="button"
