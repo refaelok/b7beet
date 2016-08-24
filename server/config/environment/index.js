@@ -36,8 +36,6 @@ var all = {
     session: 'b7beet-secret'
   },
 
-  docker: process.env.DOCKER || false,
-
   // MongoDB connection options
   mongo: {
     options: {

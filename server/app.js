@@ -11,8 +11,7 @@ import config from './config/environment';
 import http from 'http';
 
 // Connect to MongoDB
-console.log("Connectiong to mongo " , config.docker ? config.mongo.containerUri : config.mongo.uri);
-mongoose.connect(config.docker ? config.mongo.containerUri : config.mongo.uri, config.mongo.options);
+mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
   console.error('MongoDB connection error: ' + err);
   process.exit(-1);

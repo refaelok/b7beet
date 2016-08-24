@@ -1,1 +1,0 @@
-DOCKER=true sulp serve
