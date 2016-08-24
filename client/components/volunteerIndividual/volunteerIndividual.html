@@ -56,7 +56,7 @@
           <p class="input-group">
             <input 	type="text"
                     class="form-control "
-                    placeholder="Join date YYYY-MM-DD"
+                    placeholder="Joindate YYYY-MM-DD"
                     uib-datepicker-popup="{{format}}"
                     ng-model="$ctrl.model.u_individual.joinDate"
                     is-open="$ctrl.model.calendar.joinDate.isOpen"
@@ -64,6 +64,7 @@
                     ng-required="true"
                     close-text="Close"
                     alt-input-formats="altInputFormats"  />
+
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.joinDate.isOpen = !$ctrl.model.calendar.joinDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
@@ -88,7 +89,7 @@
       </div>
       <div class="col-md-4">
         <p class="input-group">
-            <input  type="text" ng-model="$ctrl.u_individual.phoneNumber" placeholder="Volunteer phone number" class="form-control" required="">
+            <input  type="text" ng-model="$ctrl.model.u_individual.phoneNumber" placeholder="Volunteer phone number" class="form-control" required="">
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ><i class="glyphicon glyphicon-phone"></i></button>
             </span>
@@ -118,7 +119,7 @@
       Preferences: {{$ctrl.individual.preference}}
     </div>
     <p ng-show="$ctrl.inModifyMode">
-      <textarea ng-model="$ctrl.model.u_individual.preference" placeholder="Addition data" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
+      <textarea ng-model="$ctrl.model.u_individual.preference" placeholder="Preference (route)" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
     </p>
 
     <button type="button"
