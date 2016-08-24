@@ -24,7 +24,9 @@ var VolunteerSchema = new mongoose.Schema({
 	gender: {
 		type: String,
 		num: ['Male', 'Female']
-	}
+	},
+	preference: String,
+	phoneNumber: String
 });
 
 VolunteerSchema.plugin(timestamps);
