@@ -73,11 +73,11 @@
       </div>
     </div>
     <p ng-show="$ctrl.individual.joinDate && !$ctrl.inModifyMode">
-      Started at : {{$ctrl.individual.joinDate}}
+      Started at : {{$ctrl.individual.joinDate | date:'MM/dd/yyyy' }}
     </p>
 
     <p ng-show="$ctrl.individual.birthDate && !$ctrl.inModifyMode">
-      BirthDate at : {{$ctrl.individual.birthDate}}
+      BirthDate at : {{$ctrl.individual.birthDate| date:'MM/dd/yyyy' }}
     </p>
 
     <div ng-show="!$ctrl.inModifyMode">
