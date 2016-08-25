@@ -29,6 +29,7 @@ import accordion from 'v-accordion';
 
 import family from './family/family.module';
 import volunteer from './volunteer/volunteer.module';
+import eventModule from './event/event.module';
 
 import './app.scss';
 
@@ -39,7 +40,7 @@ angular.module('b7beetApp', [
     ngMap, 'ngAutocomplete',accordion,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    family,volunteer
+    family, volunteer, eventModule
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
