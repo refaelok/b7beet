@@ -41,7 +41,7 @@
                   Phone
                 </th>
                 <th>
-                  Age
+                  Birth Date
                 </th>
                 <th>
                   Role
@@ -56,8 +56,11 @@
                 <td>
                   {{member.phone}}
                 </td>
-                <td>
-                  {{member.age}}
+                <td ng-show="member.birthDate">
+                  {{member.birthDate | date:'MM/dd/yyyy'}}
+                </td>
+                <td ng-show="member.age">
+                  Age: {{member.age}}
                 </td>
                 <td>
                   {{member.role}}

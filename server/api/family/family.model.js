@@ -20,7 +20,7 @@ var FamilySchema = new mongoose.Schema({
 	familyTree: [{
 		name: String,
 		role: String,
-		age: Number,
+		birthDate: Date,
 		phone: String
 	}],
 	addedBy: {
