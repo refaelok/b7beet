@@ -146,7 +146,7 @@ function FamilyFormController($uibModalInstance) {
   ctrl.model.familyMember = {
     name: null,
     role: null,
-    age: null,
+    birthDate: null,
     phone: null
   }
 
@@ -160,7 +160,7 @@ function FamilyFormController($uibModalInstance) {
       this.model.familyMember = {
         name: null,
         role: null,
-        age: null,
+        birthDate: null,
         phone: null
       }
     } else {
