@@ -70,6 +70,12 @@
 				</div>
 				<div class="col-md-12">
 					<!-- TODO: Add table -->
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="$ctrl.model.family.inWaitingList">
+							Add to waiting list 
+						</label>
+					</div>
 					<button ng-click="$ctrl.createNewFamily()" type="button" class="btn btn-primary save-new-family-btn" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
 							Save
 					</button>

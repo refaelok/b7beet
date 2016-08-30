@@ -30,6 +30,10 @@ var FamilySchema = new mongoose.Schema({
 	updatedBy: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
+	},
+	inWaitingList: {
+		type: Boolean,
+		default: false
 	}
 
 });
