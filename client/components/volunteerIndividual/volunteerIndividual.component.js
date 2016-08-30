@@ -4,7 +4,6 @@ export class VolunteerIndividualController{
     ctrl.model = {};
     ctrl.model.u_individual = _.cloneDeep(this.individual)
     ctrl.hasRole = Auth.hasRoleSync
-    console.log(this.individual);
     if(ctrl.model.u_individual.joinDate)
       ctrl.model.u_individual.joinDate = new Date(ctrl.model.u_individual.joinDate);
     if(ctrl.model.u_individual.birthDate)
