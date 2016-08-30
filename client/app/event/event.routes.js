@@ -7,5 +7,13 @@ export default function routes($stateProvider) {
   .state('event', {
     url: '/event',
     template: '<event></event>'
+  })
+  .state('event/:id', {
+    url: '/event/:id',
+    template: ':id'
+  })
+  .state('newEvent', {
+    url: '/event/new',
+    template: 'newEvent'
   });
 };

@@ -16,6 +16,11 @@ export class NavbarComponent {
         state: 'volunteer',
         requireLogin: true,
         minimumPermission: 'user'
+    }, {
+      title: 'Events',
+      state: 'event',
+      requireLogin: true,
+      minimumPermission: 'user'
     }];
 
     isLoggedIn: Function;
