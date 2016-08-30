@@ -38,9 +38,24 @@
 													{{role}}
 								</label>
 						</div>
-						<input  type="text" ng-model="$ctrl.model.familyMember.name" placeholder="Name" class="form-control input-md" required="">
-						<input  type="text" ng-model="$ctrl.model.familyMember.phone" placeholder="Phone" class="form-control input-md" required="">
-						<input  type="text" ng-model="$ctrl.model.familyMember.age" placeholder="Age" class="form-control input-md" required="">
+						<input  type="text" ng-model="$ctrl.model.familyMember.name" placeholder="Name" class="form-control input-md custom-width-family-tree" required="">
+						<input  type="text" ng-model="$ctrl.model.familyMember.phone" placeholder="Phone" class="form-control input-md custom-width-family-tree" required="">
+						<!-- <input  type="text" ng-model="$ctrl.model.familyMember.age" placeholder="Age" class="form-control input-md" required=""> -->
+						<p class="input-group custom-margin-family-tree">
+							<input 	type="text"
+											class="form-control"
+											placeholder="Birthdate YYYY-MM-DD"
+											uib-datepicker-popup="{{format}}"
+											ng-model="$ctrl.model.familyMember.birthDate"
+											is-open="$ctrl.model.calendar.birthDate.isOpen"
+											datepicker-options="$ctrl.model.calendar.birthDate"
+											ng-required="true"
+											close-text="Close"
+											alt-input-formats="altInputFormats"  />
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="$ctrl.model.calendar.birthDate.isOpen = !$ctrl.model.calendar.birthDate.isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</p>
 						<button ng-click="$ctrl.addAnotherFamilYMember()" type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
 						    Add another
 						</button>
@@ -55,6 +70,12 @@
 				</div>
 				<div class="col-md-12">
 					<!-- TODO: Add table -->
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="$ctrl.model.family.inWaitingList">
+							Add to waiting list 
+						</label>
+					</div>
 					<button ng-click="$ctrl.createNewFamily()" type="button" class="btn btn-primary save-new-family-btn" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
 							Save
 					</button>

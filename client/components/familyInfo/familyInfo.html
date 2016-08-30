@@ -4,6 +4,7 @@
     	<div class="panel-heading">
     		<h3 class="panel-title" ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
           Family name : {{$ctrl.family.name}}
+          <span ng-show="$ctrl.family.inWaitingList" class="waiting-list-family"> In waiting list since : {{$ctrl.family.createdAt | date:'MM/dd/yyyy'}} </span>
     		</h3>
         <input
         type="text"
@@ -41,7 +42,7 @@
                   Phone
                 </th>
                 <th>
-                  Age
+                  Birth Date
                 </th>
                 <th>
                   Role
@@ -56,8 +57,14 @@
                 <td>
                   {{member.phone}}
                 </td>
-                <td>
-                  {{member.age}}
+                <td ng-show="member.birthDate">
+                  {{member.birthDate | date:'MM/dd/yyyy'}}
+                </td>
+                <td ng-show="member.age">
+                  Age: {{member.age}}
+                </td>
+                <td ng-show="!member.age && !member.birthDate">
+                  Unknown
                 </td>
                 <td>
                   {{member.role}}
@@ -138,6 +145,14 @@
           btn-checkbox-true="false"
           btn-checkbox-false="true">
         Close without saving
+        </button>
+        <button type="button" class="btn"
+         ng-class="{'btn-info': $ctrl.family.inWaitingList, 'btn-danger': !$ctrl.family.inWaitingList}"
+         ng-model="$ctrl.u_family.inWaitingList"
+         ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
+         uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+            <span ng-show="$ctrl.u_family.inWaitingList">Remove from waiting list</span>
+            <span ng-show="!$ctrl.u_family.inWaitingList">Add to waiting list</span>
         </button>
     	</div>
     </div>
