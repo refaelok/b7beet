@@ -63,6 +63,9 @@
                 <td ng-show="member.age">
                   Age: {{member.age}}
                 </td>
+                <td ng-show="!member.age && !member.birthDate">
+                  Unknown
+                </td>
                 <td>
                   {{member.role}}
                 </td>
