@@ -148,11 +148,11 @@
         </button>
         <button type="button" class="btn"
          ng-class="{'btn-info': $ctrl.family.inWaitingList, 'btn-danger': !$ctrl.family.inWaitingList}"
-         ng-model="$ctrl.family.inWaitingList"
+         ng-model="$ctrl.u_family.inWaitingList"
          ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
          uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-            <span ng-show="$ctrl.family.inWaitingList">Remove from waiting list</span>
-            <span ng-show="!$ctrl.family.inWaitingList">Add to waiting list</span>
+            <span ng-show="$ctrl.u_family.inWaitingList">Remove from waiting list</span>
+            <span ng-show="!$ctrl.u_family.inWaitingList">Add to waiting list</span>
         </button>
     	</div>
     </div>
