@@ -20,7 +20,7 @@ var FamilySchema = new mongoose.Schema({
 	familyTree: [{
 		name: String,
 		role: String,
-		age: Number,
+		birthDate: Date,
 		phone: String
 	}],
 	addedBy: {
@@ -30,6 +30,10 @@ var FamilySchema = new mongoose.Schema({
 	updatedBy: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
+	},
+	inWaitingList: {
+		type: Boolean,
+		default: false
 	}
 
 });

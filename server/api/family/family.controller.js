@@ -103,6 +103,7 @@ export function upsert(req, res) {
     delete req.body._id;
   }
   req.body.updatedBy = req.user._id;
+  console.log(req.body);
   // return Family.findOneAndUpdate(req.params.id, req.body, {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
     return Family.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
