@@ -4,7 +4,7 @@
     	<div class="panel-heading">
     		<h3 class="panel-title" ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
           Family name : {{$ctrl.family.name}}
-          <span ng-show="$ctrl.family.inWaitingList" class="wating-list-family"> In waiting list since : {{$ctrl.family.createdAt | date:'MM/dd/yyyy'}} </span>
+          <span ng-show="$ctrl.family.inWaitingList" class="waiting-list-family"> In waiting list since : {{$ctrl.family.createdAt | date:'MM/dd/yyyy'}} </span>
     		</h3>
         <input
         type="text"
@@ -151,8 +151,8 @@
          ng-model="$ctrl.family.inWaitingList"
          ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
          uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-            <span ng-show="$ctrl.family.inWaitingList">Remove from wating list</span>
-            <span ng-show="!$ctrl.family.inWaitingList">In wating list</span>
+            <span ng-show="$ctrl.family.inWaitingList">Remove from waiting list</span>
+            <span ng-show="!$ctrl.family.inWaitingList">Add to waiting list</span>
         </button>
     	</div>
     </div>
