@@ -1,8 +1,36 @@
-.statistic-events{
+.statistics-events{
   height: 45vh;
   margin-bottom: 10px;
 }
 
-.statistic-map-container{
+
+.statistics-events > .row:first-child {
+  height: 20vh;
+  max-height: 20vh;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+}
+.statistics-events > .row:nth-child(2) {
+}
+
+.statistics-events > .row:nth-child(2) > div > textarea {
+  position: relative;
+  top: 14vh;
+}
+
+.statistics-map-container{
+  padding: 0 0 0 0;
+}
+
+.map{
   height: 45vh;
+  width: 100%;
+}
+
+.list-holder > div > label {
+  width: 100%;
+}
+
+.list-holder > div > label > span {
+  float: right;
 }

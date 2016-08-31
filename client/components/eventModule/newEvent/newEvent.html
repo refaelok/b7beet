@@ -1,29 +1,58 @@
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-3 list-holder">
       family list goes here
 			<input type="text" class="form-control" ng-model="familyQuery">
 			<div ng-repeat="family in $ctrl.families | filter:familyQuery | filter:{checked: '!true'}  track by $index">
-				{{family.name}}
-				<input type="checkbox" ng-model="family.checked"><br>
+			  <label ng-mouseover="family.mouseover = true;" ng-mouseleave="family.mouseover = false;">
+					<input type="checkbox"  ng-model="family.checked"  ng-disabled="family.mouseoverDetails">
+					{{$index}} - {{family.name}}
+					<span ng-show="family.mouseover" ng-click="$ctrl.test()" ng-mouseover="family.mouseoverDetails = true;" ng-mouseleave="family.mouseoverDetails = false;">
+						Show details
+					</span>
+				</label>
+
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="row">
-				<div class="col-md-12 statistic-events">
-          pre saved data goes here
-					<div ng-repeat="volunteer in $ctrl.volunteers | filter: {checked: 'true'} track by $index">
-						{{volunteer.name}}
+				<div class="col-md-12 statistics-events">
+					pre saved data goes here
+					<div class="row sta">
+						<div class="col-md-6">
+							<div ng-repeat="f in filtredFemilies = ($ctrl.families | filter : {checked: 'true'})">
+							</div>
+							Total families : {{filtredFemilies.length}}
+							<div class="input-group" ng-repeat="family in $ctrl.families | filter: {checked: 'true'} track by $index">
+								{{family.name}}
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default button-costum-height" ng-click="family.checked = false;">
+										<i class="glyphicon glyphicon-remove">
+										</i>
+									</button>
+								</span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div ng-repeat="v in filtredVolunteers = ($ctrl.volunteers | filter : {checked: 'true'})">
+							</div>
+							Total volunteers : {{filtredVolunteers.length}}
+							<div class="input-group" ng-repeat="volunteer in $ctrl.volunteers | filter: {checked: 'true'} track by $index">
+								{{volunteer.name}}
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default button-costum-height" ng-click="volunteer.checked = false;">
+										<i class="glyphicon glyphicon-remove">
+										</i>
+									</button>
+								</span>
+							</div>
+						</div>
 					</div>
-					<div ng-repeat="family in $ctrl.families | filter: {checked: 'true'} track by $index">
-						{{family.name}}
+					<div class="row">
+							<div class="col-md-12">
+								<textarea ng-model="$ctrl.additionalDetails" class="form-control" placeholder="Additional data (notes)"></textarea>
+							</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 statistic-map-container">
-					<ng-map  center="0,0" zoom-to-include-markers="true">
-					</ng-map>
 				</div>
 			</div>
 		</div>
@@ -31,9 +60,24 @@
       volunteers list goes here
 			<input type="text" class="form-control" ng-model="volunteerQuery">
 			<div ng-repeat="volunteer in $ctrl.volunteers | filter:volunteerQuery | filter:{checked: '!true'} track by $index">
-				{{$index}} - {{volunteer.name}}
-				<input type="checkbox" ng-model="volunteer.checked">
+			  <label>
+					<input type="checkbox" ng-model="volunteer.checked">
+					{{$index}} - {{volunteer.name}}
+				</label>
 			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 statistics-map-container">
+			<ng-map  center="31.2509633,34.7953221" zoom="14" class="map">
+				<marker
+				ng-repeat="family in $ctrl.families  | filter: {checked: 'true'} track by $index"
+				position="{{family.address}}" ></marker>
+				<marker
+				ng-repeat="volunteer in $ctrl.volunteers  | filter: {checked: 'true'} track by $index"
+				position="{{volunteer.address}}"
+				icon="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0078ff"></marker>
+			</ng-map>
 		</div>
 	</div>
 </div>

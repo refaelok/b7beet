@@ -2,7 +2,10 @@
 
 export class NewEventController{
   constructor(){
-    console.log(this);
+    const ctrl = this;
+  }
+
+  test(){
   }
 
 }
@@ -10,7 +13,7 @@ export class NewEventController{
 export default {
   component: {
     template: require('./newEvent.html'),
-    controller: NewEventController,
+    controller: [NewEventController],
     bindings: {
       families: '<',
       volunteers: '<'

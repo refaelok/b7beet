@@ -20,7 +20,7 @@ export class eventController {
 
   this.familyService.getAllFamilies()
     .then(families => {
-      this.families = families;
+      this.model.families = families;
       this.socket.syncUpdates('family', this.families,(a,b,c) => {
       });
     })

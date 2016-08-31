@@ -37,7 +37,7 @@ angular.module('b7beetApp', [
     ngAnimate,
     ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter, uiBootstrap,
     // ngMessages,
-    ngMap, 'ngAutocomplete',accordion,
+    ngMap, 'ngAutocomplete', accordion,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
     family, volunteer, eventModule
