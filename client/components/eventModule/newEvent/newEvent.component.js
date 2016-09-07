@@ -1,32 +1,50 @@
 'use strict';
 
 export class NewEventController{
-  constructor(){
+  constructor(NgMap){
     const ctrl = this;
+    ctrl.NgMap = NgMap;
     ctrl.costumMarker = {
       lat: undefined,
       lng: undefined,
       isShown: false
     }
+
+    NgMap.getMap().then(function(map) {
+      ctrl.showCustomMarker = function(evt,object) {
+        ctrl.clickedMarker = object;
+        map.customMarkers[0].setVisible(true);
+        map.customMarkers[0].setPosition(this.getPosition());
+      };
+      ctrl.closeCustomMarker = function(evt) {
+        this.style.display = 'none';
+      };
+    });
   }
 
-  test(){
-  }
-
-  openCustomMarker(marker, ctrl){
-    ctrl.costumMarker.lat = marker.latLng.lat();
-    ctrl.costumMarker.lng = marker.latLng.lng();
-    ctrl.costumMarker.isShown = true;
-  }
-
-  closeCustomMarker(marker, ctrl){
-    console.log(ctrl);
-    ctrl.costumMarker.isShown = false;
+  // openCustomMarker(marker, ctrl){
+  //   ctrl.costumMarker.lat = marker.latLng.lat();
+  //   ctrl.costumMarker.lng = marker.latLng.lng();
+  //   ctrl.costumMarker.isShown = true;
+  //   console.log(ctrl.costumMarker.isShown);
+  // }
+  // closeMarker(oldCard){
+  //   // this.costumMarker.isShown = false;
+  //   this.style.display = 'none';
+  //   // console.log(this.costumMarker.isShown);
+  // }
+  //
+  markerClicked(object){
+    console.log(object);
   }
 
   mapClicked(){
-    console.log(this.costumMarker.isShown);
     this.costumMarker.isShown && (()=> {console.log(123); this.costumMarker.isShown = false;})()
+  }
+
+
+  getFamilyOrVolunteer(){
+    return '123'
   }
 
 }
@@ -34,7 +52,7 @@ export class NewEventController{
 export default {
   component: {
     template: require('./newEvent.html'),
-    controller: [NewEventController],
+    controller: ['NgMap', NewEventController],
     bindings: {
       families: '<',
       volunteers: '<'

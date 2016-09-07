@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<div class="row">
+	<div class="row" >
 		<div class="col-md-3 list-holder">
       family list goes here
 			<input type="text" class="form-control" ng-model="familyQuery">
@@ -73,20 +73,20 @@
 				<marker
 				ng-repeat="family in $ctrl.families  | filter: {checked: 'true'} track by $index"
 				position="{{family.address}}"
-				on-click="$ctrl.openCustomMarker($ctrl)"></marker>
+				on-click="$ctrl.showCustomMarker(family)"></marker>
+
 				<marker
 				ng-repeat="volunteer in $ctrl.volunteers  | filter: {checked: 'true'} track by $index"
 				position="{{volunteer.address}}"
 				icon="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0078ff"
-				on-click="$ctrl.openCustomMarker($ctrl)"></marker>
+				on-click="$ctrl.showCustomMarker(volunteer)"></marker>
+
 				<custom-marker
-				ng-show="$ctrl.costumMarker.isShown"
+				on-click="$ctrl.closeCustomMarker()"
 				position="{{$ctrl.costumMarker.lat}} , {{$ctrl.costumMarker.lng}}">
-					<div 	class="costum-marker" on-click="$ctrl.closeCustomMarker($ctrl)">
-						My Name is Obama, and people call me as Mr. President.<br/>
-						We live in this house.<br/>
-						<br/>
-						If you want to visit us, please click <a href="https://www.whitehouse.gov">here</a>
+
+					<card data="$ctrl.clickedMarker"></card>
+
 				</custom-marker>
 			</ng-map>
 		</div>

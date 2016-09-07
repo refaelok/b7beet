@@ -30,6 +30,8 @@ import accordion from 'v-accordion';
 import family from './family/family.module';
 import volunteer from './volunteer/volunteer.module';
 import eventModule from './event/event.module';
+import cardModule from '../components/card/card.module';
+console.log(cardModule);
 
 import './app.scss';
 
@@ -37,7 +39,7 @@ angular.module('b7beetApp', [
     ngAnimate,
     ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter, uiBootstrap,
     // ngMessages,
-    ngMap, 'ngAutocomplete', accordion,
+    ngMap, 'ngAutocomplete', accordion, cardModule,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
     family, volunteer, eventModule

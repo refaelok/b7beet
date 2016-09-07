@@ -1,0 +1,19 @@
+.ol-card{
+  background: #fff;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+}
+
+.ol-card > .card-head {
+  background-color: #03A9F4;
+  height: 3em;
+}
+
+.ol-card > .card-head > span > a {
+  background-color: #03A9F4;
+  float: right;
+}
+
+
+.ol-card > .card-body{
+  height: auto;
+}

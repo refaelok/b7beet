@@ -37,7 +37,7 @@ function Socket(socketFactory) {
         var oldItem = _.find(array, {
           _id: item._id
         });
-        var index = array.indexOf(oldItem);
+        var index = array && array.indexOf(oldItem);
         var event = 'created';
 
         // replace oldItem if it exists
