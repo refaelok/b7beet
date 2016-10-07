@@ -15,13 +15,17 @@ var FamilySchema = new mongoose.Schema({
 		phone: String,
 		details: String
 	},
+	phone: {
+		type: String
+	},
 	address: mongoose.Schema.Types.Mixed,
 	details: String,
 	familyTree: [{
 		name: String,
 		role: String,
 		birthDate: Date,
-		phone: String
+		phone: String,
+		additionalData: String
 	}],
 	addedBy: {
 		type: mongoose.Schema.Types.ObjectId,
