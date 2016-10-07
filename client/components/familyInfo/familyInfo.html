@@ -4,7 +4,8 @@
     	<div class="panel-heading">
     		<h3 class="panel-title" ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
           Family name : {{$ctrl.family.name}}
-          <span ng-show="$ctrl.family.inWaitingList" class="waiting-list-family"> In waiting list since : {{$ctrl.family.createdAt | date:'MM/dd/yyyy'}} </span>
+          <span ng-show="$ctrl.family.inWaitingList" class="float-rigth"> In waiting list since : {{$ctrl.family.createdAt | date:'MM/dd/yyyy'}} </span>
+          <span ng-show="!$ctrl.family.inWaitingList" class="float-rigth"> Total family members : {{$ctrl.family.familyTree.length}} </span>
     		</h3>
         <input
         type="text"
