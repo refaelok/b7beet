@@ -15,6 +15,9 @@ var FamilySchema = new mongoose.Schema({
 		phone: String,
 		details: String
 	},
+	phone: {
+		type: String
+	},
 	address: mongoose.Schema.Types.Mixed,
 	details: String,
 	familyTree: [{
