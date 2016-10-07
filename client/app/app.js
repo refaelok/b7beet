@@ -11,6 +11,8 @@ import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 // import ngMessages from 'angular-messages';
 //import ngValidationMatch from 'angular-validation-match';
+import angularFx from 'ng-fx';
+import mdIcons from 'angular-material-icons';
 
 import {
   routeConfig
@@ -31,7 +33,6 @@ import family from './family/family.module';
 import volunteer from './volunteer/volunteer.module';
 import eventModule from './event/event.module';
 import cardModule from '../components/card/card.module';
-console.log(cardModule);
 
 import './app.scss';
 
@@ -39,7 +40,7 @@ angular.module('b7beetApp', [
     ngAnimate,
     ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter, uiBootstrap,
     // ngMessages,
-    ngMap, 'ngAutocomplete', accordion, cardModule,
+    ngMap, 'ngAutocomplete', accordion, cardModule, angularFx, mdIcons,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
     family, volunteer, eventModule

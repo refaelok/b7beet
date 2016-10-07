@@ -49,3 +49,22 @@
   background-color: #03A9F4;
   height: 3em;
 }
+
+.stick-to-left {
+  position: absolute;
+  top: 20em;
+  z-index: 50;
+}
+
+.stick-to-right {
+  position: absolute;
+  top: 20em;
+  right: 0;
+  z-index: 50;
+}
+
+.side-button {
+  margin-bottom: 2px;
+  width: 50px;
+  background-color: #C51162;
+}

@@ -1,7 +1,17 @@
 <div class="container-fluid">
 	<div class="row" >
-		<div class="col-md-3 list-holder">
-      family list goes here
+		<div class="stick-to-left row">
+			<div class="col-md-3">
+				<ng-md-icon icon="{{$ctrl.icons.families.shape}}" style="{{$ctrl.icons.families.color}}" size="52" ng-click="$ctrl.toggleFamilies()"></ng-md-icon>
+			</div>
+		</div>
+		<div class="stick-to-right row">
+			<div class="col-md-3">
+				<ng-md-icon icon="{{$ctrl.icons.volunteers.shape}}" style="{{$ctrl.icons.volunteers.color}}"  size="52" ng-click="$ctrl.toggleVolunteers()"></ng-md-icon>
+			</div>
+		</div>
+		<!-- family list -->
+		<div class="col-md-3 list-holder fx-bounce-left fx-dur-680 fx-ease-none" ng-show="$ctrl.showFamilies">
 			<input type="text" class="form-control" ng-model="familyQuery">
 			<div ng-repeat="family in $ctrl.families | filter:familyQuery | filter:{checked: '!true'}  track by $index">
 			  <label ng-mouseover="family.mouseover = true;" ng-mouseleave="family.mouseover = false;">
@@ -14,10 +24,9 @@
 
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div ng-class="$ctrl.setStatisticsClass()">
 			<div class="row">
 				<div class="col-md-12 statistics-events">
-					pre saved data goes here
 					<div class="row sta">
 						<div class="col-md-6">
 							<div ng-repeat="f in filtredFemilies = ($ctrl.families | filter : {checked: 'true'})">
@@ -49,15 +58,19 @@
 						</div>
 					</div>
 					<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-8">
 								<textarea ng-model="$ctrl.additionalDetails" class="form-control" placeholder="Additional data (notes)"></textarea>
+							</div>
+							<div class="col-md-3">
+								<button type="button" class="btn btn-default">
+									Suggest routes
+								</button>
 							</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
-      volunteers list goes here
+		<div class="col-md-3 fx-bounce-right fx-dur-680 fx-ease-none" ng-show="$ctrl.showVolunteers">
 			<input type="text" class="form-control" ng-model="volunteerQuery">
 			<div ng-repeat="volunteer in $ctrl.volunteers | filter:volunteerQuery | filter:{checked: '!true'} track by $index">
 			  <label>
@@ -72,22 +85,17 @@
 			<ng-map  center="31.2509633,34.7953221" zoom="14" class="map" ng-click="$ctrl.mapClicked()">
 				<marker
 				ng-repeat="family in $ctrl.families  | filter: {checked: 'true'} track by $index"
+				id={{family.id}}
 				position="{{family.address}}"
 				on-click="$ctrl.showCustomMarker(family)"></marker>
 
 				<marker
 				ng-repeat="volunteer in $ctrl.volunteers  | filter: {checked: 'true'} track by $index"
 				position="{{volunteer.address}}"
+				id={{volunteer.id}}
 				icon="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0078ff"
 				on-click="$ctrl.showCustomMarker(volunteer)"></marker>
 
-				<custom-marker
-				on-click="$ctrl.closeCustomMarker()"
-				position="{{$ctrl.costumMarker.lat}} , {{$ctrl.costumMarker.lng}}">
-
-					<card data="$ctrl.clickedMarker"></card>
-
-				</custom-marker>
 			</ng-map>
 		</div>
 	</div>
