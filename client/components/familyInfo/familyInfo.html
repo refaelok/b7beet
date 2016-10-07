@@ -4,7 +4,8 @@
     	<div class="panel-heading">
     		<h3 class="panel-title" ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
           Family name : {{$ctrl.family.name}}
-          <span ng-show="$ctrl.family.inWaitingList" class="waiting-list-family"> In waiting list since : {{$ctrl.family.createdAt | date:'MM/dd/yyyy'}} </span>
+          <span ng-show="$ctrl.family.inWaitingList" class="float-rigth"> In waiting list since : {{$ctrl.family.createdAt | date:'MM/dd/yyyy'}} </span>
+          <span ng-show="!$ctrl.family.inWaitingList" class="float-rigth"> Total family members : {{$ctrl.family.familyTree.length}} </span>
     		</h3>
         <input
         type="text"
@@ -20,9 +21,17 @@
         </p>
         <textarea ng-model="$ctrl.u_family.details" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" class="form-control">Additional data</textarea>
       </div>
-    	<div class="panel-body">
+      <div class="panel-body" ng-show="$ctrl.family.phone || $ctrl.inModifyMode">
+        <h3>Home phone</h3>
+        <p ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
+          {{$ctrl.family.phone}}
+        </p>
+        <input type="text" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" ng-model="$ctrl.u_family.phone" placeholder="Family home phone" class="form-control input-md" />
+      </div>
+    	<div class="panel-body" ng-show="$ctrl.family.address || $ctrl.inModifyMode">
+        <h3>Address</h3>
         <div ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
-          Address : {{$ctrl.family.address}}
+          {{$ctrl.family.address}}
         </div>
         <div>
           <input 	type="text"
@@ -47,6 +56,9 @@
                 <th>
                   Role
                 </th>
+                <th>
+                  Additional data
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -67,7 +79,10 @@
                   Unknown
                 </td>
                 <td>
-                  {{member.role}}
+                  {{member.role || 'No role present'}}
+                </td>
+                <td>
+                  {{member.additionalData || 'No data present'}}
                 </td>
               </tr>
             </tbody>
@@ -83,7 +98,7 @@
         <input  type="text" ng-model="$ctrl.u_family.contact.phone" placeholder="Contact's phone" class="form-control input-md" required="">
         <textarea ng-model="$ctrl.u_family.contact.details" class="form-control">Contact's additional data</textarea>
       </div>
-      <div ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode">
+      <div ng-show="$ctrl.hasRole('member') && !$ctrl.inModifyMode && $ctrl.family.address">
         <ng-map  center="{{$ctrl.family.address}}" zoom-to-include-markers="true">
            <marker position="{{$ctrl.family.address}}" animation="Animation.BOUNCE"></marker>
         </ng-map>
