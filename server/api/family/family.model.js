@@ -24,7 +24,8 @@ var FamilySchema = new mongoose.Schema({
 		name: String,
 		role: String,
 		birthDate: Date,
-		phone: String
+		phone: String,
+		additionalData: String
 	}],
 	addedBy: {
 		type: mongoose.Schema.Types.ObjectId,

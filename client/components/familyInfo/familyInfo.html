@@ -55,6 +55,9 @@
                 <th>
                   Role
                 </th>
+                <th>
+                  Additional data
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -75,7 +78,10 @@
                   Unknown
                 </td>
                 <td>
-                  {{member.role}}
+                  {{member.role || 'No role present'}}
+                </td>
+                <td>
+                  {{member.additionalData || 'No data present'}}
                 </td>
               </tr>
             </tbody>
