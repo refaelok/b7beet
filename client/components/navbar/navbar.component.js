@@ -16,26 +16,29 @@ export class NavbarComponent {
         state: 'volunteer',
         requireLogin: true,
         minimumPermission: 'user'
-    }, {
-      title: 'Events',
-      state: 'event',
-      requireLogin: true,
-      minimumPermission: 'user'
     }];
 
     isLoggedIn: Function;
     isAdmin: Function;
     getCurrentUser: Function;
     isCollapsed = true;
-
-    constructor(Auth) {
+    constructor(Auth, $state) {
         'ngInject';
         this.hasRoleSync = Auth.hasRoleSync
         this.isLoggedIn = Auth.isLoggedInSync;
         this.isAdmin = Auth.isAdminSync;
         this.getCurrentUser = Auth.getCurrentUserSync;
-
+        this.$state = $state;
+        this.toggleDropDownEvent = false;
     }
+
+     toggleDropDown(){
+       this.toggleDropDownEvent = !this.toggleDropDownEvent;
+     }
+
+     sref(to){
+       this.$state.go(to) && this.toggleDropDown()
+     }
 
     showMenutItem(item) {
         if (item.requireLogin && this.isLoggedIn()) {

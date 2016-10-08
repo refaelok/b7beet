@@ -9,17 +9,28 @@
       </button>
       <a href="/" class="navbar-brand">b7beet</a>
     </div>
-    <div uib-collapse="$ctrl.isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+    <div   class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li ng-repeat="item in $ctrl.menu" ui-sref-active="active" ng-show="$ctrl.showMenutItem(item)">
-            <a ui-sref="{{item.state}}">{{item.title}}</a>
+          <a ui-sref="{{item.state}}">{{item.title}}</a>
+        </li>
+        <li class="dropdown" ng-class="{'open': $ctrl.toggleDropDownEvent}">
+          <a href="#" class="dropdown-toggle" ng-click="$ctrl.toggleDropDown()">Events <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a ng-click='$ctrl.sref("event.new")'>Create new event</a></li>
+            <li><a  ng-click='$ctrl.sref("event.list")'>View past</a></li>
+            <li><a  ng-click='$ctrl.sref("event.current")'>View current</a></li>
+            <li><a  ng-click='$ctrl.sref("event.upcoming")'>View feature</a></li>
+          </ul>
         </li>
         <li ng-show="$ctrl.isAdmin()" ui-sref-active="active"><a ui-sref="admin">Admin</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li ng-hide="$ctrl.isLoggedIn()" ui-sref-active="active"><a ui-sref="signup">Sign up</a></li>
         <li ng-hide="$ctrl.isLoggedIn()" ui-sref-active="active"><a ui-sref="login">Login</a></li>
-        <li ng-show="$ctrl.isLoggedIn()"><p class="navbar-text">Hello {{ $ctrl.getCurrentUser().name }}</p> </li>
+        <li ng-show="$ctrl.isLoggedIn()">
+          <p class="navbar-text">Hello {{ $ctrl.getCurrentUser().name }}</p>
+        </li>
         <li ng-show="$ctrl.isLoggedIn()" ui-sref-active="active"><a ui-sref="settings"><span class="glyphicon glyphicon-cog"></span></a></li>
         <li ng-show="$ctrl.isLoggedIn()"><a ui-sref="logout">Logout</a></li>
       </ul>

@@ -1,9 +1,28 @@
 'use strict';
 
+import familyInfo from '../../familyInfo/familyInfo.component';
+
 export class NewEventController{
-  constructor(NgMap){
+  constructor(NgMap, $timeout, $uibModal, familyService, eventService){
     const ctrl = this;
-    this.showFamilies = this.showVolunteers = true;
+    eventService.getAllFamilies()
+    .then((families) => {
+      this.families = families;
+      return families;
+    })
+    .then(() => {
+      return eventService.getAllVolunteers()
+    })
+    .then(volunteers => {
+      this.volunteers = volunteers;
+    })
+    // this.volunteers = eventService.getAllVolunteers();
+    this.familyService = familyService;
+    this.eventService = eventService;
+    this.$uibModal = $uibModal;
+    this.$timeout = $timeout;
+    this.showFamilies = this.showVolunteers = false;
+    this.statisticsClass = 'col-md-6 col-md-offset-3';
     this.icons = {
       families: {
         shape: 'fast_rewind',
@@ -32,32 +51,44 @@ export class NewEventController{
     });
   }
 
-  // openCustomMarker(marker, ctrl){
-  //   ctrl.costumMarker.lat = marker.latLng.lat();
-  //   ctrl.costumMarker.lng = marker.latLng.lng();
-  //   ctrl.costumMarker.isShown = true;
-  //   console.log(ctrl.costumMarker.isShown);
-  // }
-  // closeMarker(oldCard){
-  //   // this.costumMarker.isShown = false;
-  //   this.style.display = 'none';
-  //   // console.log(this.costumMarker.isShown);
-  // }
-  //
-  markerClicked(object){
-    console.log(object);
+  suggetRoutes(){
+    const chosenFamilies = [];
+    const chosenVolunteers = [];
+    _.forEach(this.families, (family) => {
+      family.checked && chosenFamilies.push(family)
+    })
+
+    _.forEach(this.volunteers, (volunteers) => {
+      volunteers.checked && chosenVolunteers.push(volunteers)
+    })
+
   }
 
   mapClicked(){
     this.costumMarker.isShown && (()=> {console.log(123); this.costumMarker.isShown = false;})()
   }
 
+  showFamilyDetails(family){
+    this.familyService.setFamily(family);
+    this.familyInfo = this.$uibModal.open({
+      animation: true,
+      template: '<family-info></family-info>',
+      size: 'lg',
+      controllerAs: '$ctrl',
+      controller: familyInfo.component.controller,
+      resolve: {
+        family: function() {
+          return family;
+        }
+      }
+    })
+  }
 
-  setStatisticsClass(){
-    if(this.showFamilies && this.showVolunteers) return 'col-md-6';
-    else if(!this.showFamilies && !this.showVolunteers)    return 'col-md-6 col-md-offset-3';
-    else if(!this.showFamilies && this.showVolunteers) return 'col-md-8 col-md-offset-1';
-    else return 'col-md-9';
+  updateStatisticsClass(){
+      if(this.showFamilies && this.showVolunteers) this.statisticsClass = 'col-md-6';
+      else if(!this.showFamilies && !this.showVolunteers)    this.statisticsClass = 'col-md-6 col-md-offset-3';
+      else if(!this.showFamilies && this.showVolunteers) this.statisticsClass = 'col-md-8 col-md-offset-1';
+      else this.statisticsClass = 'col-md-9';
   }
 
   toggleFamilies(){
@@ -65,12 +96,15 @@ export class NewEventController{
     if(this.showFamilies){
       this.icons.families.shape = 'fast_rewind';
       this.icons.families.color = 'fill: #2196F3';
+      this.updateStatisticsClass();
     }
     else {
       this.icons.families.shape = 'group';
       this.icons.families.color = 'fill: #9C27B0';
+      this.$timeout(() => {
+        this.updateStatisticsClass();
+      }, 1000);
     }
-
   }
 
   toggleVolunteers(){
@@ -78,22 +112,23 @@ export class NewEventController{
     if(this.showVolunteers){
        this.icons.volunteers.shape = 'fast_forward';
        this.icons.volunteers.color = 'fill: #2196F3';
+       this.updateStatisticsClass();
      }
     else {
       this.icons.volunteers.shape = 'account_box';
       this.icons.volunteers.color = 'fill: #9C27B0';
+      this.$timeout(() => {
+        this.updateStatisticsClass();
+      }, 1000);
     }
   }
-
 }
 
 export default {
   component: {
     template: require('./newEvent.html'),
-    controller: ['NgMap', NewEventController],
+    controller: ['NgMap', '$timeout','$uibModal' ,'familyService', 'eventService', NewEventController],
     bindings: {
-      families: '<',
-      volunteers: '<'
     }
   },
   name: 'newEvent'

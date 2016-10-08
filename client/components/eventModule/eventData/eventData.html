@@ -1,0 +1,38 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 event-data-box">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>
+            <span>
+              Date : {{$ctrl.event.createdAt}}
+              Event is status : {{$ctrl.event.state}}
+            </span>
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Event managers : </h2>
+          <h3>Additional data</h3>
+        </div>
+        <div class="col-md-6">
+          <h3>Families</h3>
+        </div>
+        <div class="col-md-6">
+          <h3>Volunteers</h3>
+        </div>
+        <div class="col-md-12">
+          <h3>Routes</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <ng-map id="eventDataMap" >
+          </ng-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

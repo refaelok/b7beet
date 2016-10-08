@@ -1,0 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500);
+
+.stick-to-bottom {
+  bottom: 0;
+  position: absolute;
+}
+body > div > event-module > div.ng-scope > event-past-list > div > div:nth-child(1) > div > input {
+  margin: 20px;
+  width: 600px;
+}

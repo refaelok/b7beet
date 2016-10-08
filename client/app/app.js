@@ -33,6 +33,7 @@ import family from './family/family.module';
 import volunteer from './volunteer/volunteer.module';
 import eventModule from './event/event.module';
 import cardModule from '../components/card/card.module';
+import loaderModule from '../components/loader/loader.module';
 
 import './app.scss';
 
@@ -43,7 +44,7 @@ angular.module('b7beetApp', [
     ngMap, 'ngAutocomplete', accordion, cardModule, angularFx, mdIcons,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    family, volunteer, eventModule
+    family, volunteer, eventModule, loaderModule
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

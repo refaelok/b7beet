@@ -6,14 +6,26 @@ export default function routes($stateProvider) {
   $stateProvider
   .state('event', {
     url: '/event',
-    template: '<event></event>'
+    template: '<event-module></event-module>',
   })
-  .state('event/:id', {
-    url: '/event/:id',
-    template: ':id'
+  .state('event.new', {
+    url: '/new',
+    template: '<new-event></new-event>'
   })
-  .state('newEvent', {
-    url: '/event/new',
-    template: 'newEvent'
+  .state('event.list', {
+    url: '/list',
+    template: '<event-past-list></event-past-list>'
+  })
+  .state('event.current', {
+    url: '/current',
+    template: '<event-data></event-data>'
+  })
+  .state('event.upcoming', {
+    url: '/upcoming',
+    template: '<event-data></event-data>'
+  })
+  .state('event.id', {
+    url: '/:id',
+    template: '<event-data></event-data>'
   });
 };

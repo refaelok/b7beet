@@ -1,8 +1,11 @@
 .statistics-events{
-  height: 45vh;
+  height: 40vh;
   margin-bottom: 10px;
 }
 
+.height-40 {
+  height: 40vh;
+}
 
 .statistics-events > .row:first-child {
   height: 20vh;
@@ -15,6 +18,51 @@
 
 .statistics-events > .row:nth-child(2) > div > textarea {
   position: relative;
+  top: 14vh;
+  height: 3em
+}
+.statistics-events > .row:nth-child(2) > div > button {
+  position: relative;
+  top: 14vh;
+  height: 3em;
+  -moz-box-shadow:inset 0px 1px 0px 0px #efdcfb;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #efdcfb;
+	box-shadow:inset 0px 1px 0px 0px #efdcfb;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfbdfa), color-stop(1, #bc80ea));
+	background:-moz-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+	background:-webkit-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+	background:-o-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+	background:-ms-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+	background:linear-gradient(to bottom, #dfbdfa 5%, #bc80ea 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfbdfa', endColorstr='#bc80ea',GradientType=0);
+	background-color:#dfbdfa;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #c584f3;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #9752cc;
+}
+
+
+.statistics-events > .row:nth-child(2) > div > button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bc80ea), color-stop(1, #dfbdfa));
+	background:-moz-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+	background:-webkit-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+	background:-o-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+	background:-ms-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+	background:linear-gradient(to bottom, #bc80ea 5%, #dfbdfa 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bc80ea', endColorstr='#dfbdfa',GradientType=0);
+	background-color:#bc80ea;
+}
+.statistics-events > .row:nth-child(2) > div > button:active {
+	position:relative;
   top: 14vh;
 }
 
@@ -52,13 +100,13 @@
 
 .stick-to-left {
   position: absolute;
-  top: 20em;
+  top: 40em;
   z-index: 50;
 }
 
 .stick-to-right {
   position: absolute;
-  top: 20em;
+  top: 40em;
   right: 0;
   z-index: 50;
 }
@@ -67,4 +115,13 @@
   margin-bottom: 2px;
   width: 50px;
   background-color: #C51162;
+}
+
+.height-45 {
+  height: 45vh;
+  overflow-y: scroll;
+}
+
+.cursor-pointer {
+	cursor:pointer;
 }

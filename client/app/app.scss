@@ -16,6 +16,19 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   padding: 0.2em 0;
 }
 
+div.navbar-collapse.collapse {
+  display: block;
+  overflow: hidden;
+  max-height: 0px;
+  -webkit-transition: max-height .3s ease;
+  -moz-transition: max-height .3s ease;
+  -o-transition: max-height .3s ease;
+  transition: max-height .3s ease;
+}
+div.navbar-collapse.collapse.in {
+  max-height: 2000px;
+}
+
 // Component styles are injected through gulp
 /* inject:scss */
 @import 'admin/admin';
@@ -24,9 +37,13 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 @import 'main/main';
 @import 'volunteer/volunteer';
 @import '../components/card/card';
+@import '../components/eventModule/eventCover/eventCover';
+@import '../components/eventModule/eventData/eventData';
+@import '../components/eventModule/eventPastList/eventPastList';
 @import '../components/eventModule/newEvent/newEvent';
 @import '../components/familyForm/familyForm';
 @import '../components/footer/footer';
+@import '../components/loader/loader';
 @import '../components/modal/modal';
 @import '../components/newFamily/newFamily';
 @import '../components/newVolunteer/newVolunteer';

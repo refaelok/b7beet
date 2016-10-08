@@ -14,10 +14,16 @@ function familyServiceService(networkService) {
   }
 
   this.updateFamily = function(family){
-    console.log(family);
     return networkService.PUT('families', family._id, family)
   }
-	// AngularJS will instantiate a singleton by calling "new" on this function
+
+  this.setFamily = (family) => {
+    this.family = family;
+  }
+
+  this.getFamily = () => {
+    return this.family;
+  }
 }
 
 export default {

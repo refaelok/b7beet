@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<div class="row" >
+	<div class="row height-40" >
 		<div class="stick-to-left row">
 			<div class="col-md-3">
 				<ng-md-icon icon="{{$ctrl.icons.families.shape}}" style="{{$ctrl.icons.families.color}}" size="52" ng-click="$ctrl.toggleFamilies()"></ng-md-icon>
@@ -10,21 +10,21 @@
 				<ng-md-icon icon="{{$ctrl.icons.volunteers.shape}}" style="{{$ctrl.icons.volunteers.color}}"  size="52" ng-click="$ctrl.toggleVolunteers()"></ng-md-icon>
 			</div>
 		</div>
-		<!-- family list -->
-		<div class="col-md-3 list-holder fx-bounce-left fx-dur-680 fx-ease-none" ng-show="$ctrl.showFamilies">
+		<!-- families list -->
+		<div class="height-45 col-md-3 list-holder fx-bounce-left fx-dur-680 fx-ease-none" ng-show="$ctrl.showFamilies">
 			<input type="text" class="form-control" ng-model="familyQuery">
 			<div ng-repeat="family in $ctrl.families | filter:familyQuery | filter:{checked: '!true'}  track by $index">
 			  <label ng-mouseover="family.mouseover = true;" ng-mouseleave="family.mouseover = false;">
 					<input type="checkbox"  ng-model="family.checked"  ng-disabled="family.mouseoverDetails">
 					{{$index}} - {{family.name}}
-					<span ng-show="family.mouseover" ng-click="$ctrl.test()" ng-mouseover="family.mouseoverDetails = true;" ng-mouseleave="family.mouseoverDetails = false;">
+					<span ng-show="family.mouseover" ng-click="$ctrl.showFamilyDetails(family)" ng-mouseover="family.mouseoverDetails = true;" ng-mouseleave="family.mouseoverDetails = false;">
 						Show details
 					</span>
 				</label>
 
 			</div>
 		</div>
-		<div ng-class="$ctrl.setStatisticsClass()">
+		<div ng-class="$ctrl.statisticsClass">
 			<div class="row">
 				<div class="col-md-12 statistics-events">
 					<div class="row sta">
@@ -35,10 +35,7 @@
 							<div class="input-group" ng-repeat="family in $ctrl.families | filter: {checked: 'true'} track by $index">
 								{{family.name}}
 								<span class="input-group-btn">
-									<button type="button" class="btn btn-default button-costum-height" ng-click="family.checked = false;">
-										<i class="glyphicon glyphicon-remove">
-										</i>
-									</button>
+									<ng-md-icon class="cursor-pointer" icon="close" ng-click="family.checked = false;"></ng-md-icon>
 								</span>
 							</div>
 						</div>
@@ -49,10 +46,7 @@
 							<div class="input-group" ng-repeat="volunteer in $ctrl.volunteers | filter: {checked: 'true'} track by $index">
 								{{volunteer.name}}
 								<span class="input-group-btn">
-									<button type="button" class="btn btn-default button-costum-height" ng-click="volunteer.checked = false;">
-										<i class="glyphicon glyphicon-remove">
-										</i>
-									</button>
+									<ng-md-icon class="cursor-pointer" icon="close" ng-click="volunteer.checked = false;"></ng-md-icon>
 								</span>
 							</div>
 						</div>
@@ -62,7 +56,7 @@
 								<textarea ng-model="$ctrl.additionalDetails" class="form-control" placeholder="Additional data (notes)"></textarea>
 							</div>
 							<div class="col-md-3">
-								<button type="button" class="btn btn-default">
+								<button type="button" class="btn btn-default" ng-click="$ctrl.suggetRoutes()">
 									Suggest routes
 								</button>
 							</div>
@@ -70,7 +64,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3 fx-bounce-right fx-dur-680 fx-ease-none" ng-show="$ctrl.showVolunteers">
+		<!-- volunteers list -->
+		<div class="col-md-3 height-45 fx-bounce-right fx-dur-680 fx-ease-none" ng-show="$ctrl.showVolunteers">
 			<input type="text" class="form-control" ng-model="volunteerQuery">
 			<div ng-repeat="volunteer in $ctrl.volunteers | filter:volunteerQuery | filter:{checked: '!true'} track by $index">
 			  <label>
@@ -85,14 +80,13 @@
 			<ng-map  center="31.2509633,34.7953221" zoom="14" class="map" ng-click="$ctrl.mapClicked()">
 				<marker
 				ng-repeat="family in $ctrl.families  | filter: {checked: 'true'} track by $index"
-				id={{family.id}}
 				position="{{family.address}}"
 				on-click="$ctrl.showCustomMarker(family)"></marker>
 
 				<marker
+				no-watcher="true"
 				ng-repeat="volunteer in $ctrl.volunteers  | filter: {checked: 'true'} track by $index"
 				position="{{volunteer.address}}"
-				id={{volunteer.id}}
 				icon="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0078ff"
 				on-click="$ctrl.showCustomMarker(volunteer)"></marker>
 

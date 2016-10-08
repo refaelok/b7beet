@@ -1,36 +1,35 @@
 export class eventController {
-  constructor($scope, socket, familyService, volunteerService) {
+  constructor($scope, eventService, $state) {
     const ctrl = this;
-    ctrl.volunteerService = volunteerService;
-    ctrl.familyService = familyService;
+    this.$state = $state;
+    this.eventService = eventService;
     ctrl.$scope = $scope;
-    ctrl.socket = socket;
     ctrl.model = {}
     ctrl.model.volunteerList = [];
     ctrl.model.families = [];
 
   }
   $onInit() {
-    this.volunteerService.getAllVolunteers()
+    this.eventService.getAllVolunteers()
       .then(list => {
         this.model.volunteerList = list;
-        this.socket.syncUpdates('volunteer', this.model.volunteerList,(a,b,c) => {
-        });
       })
 
-  this.familyService.getAllFamilies()
+  this.eventService.getAllFamilies()
     .then(families => {
       this.model.families = families;
-      this.socket.syncUpdates('family', this.families,(a,b,c) => {
-      });
     })
+  }
+
+  newEvent(){
+    return this.$state.go('event.new')
   }
 }
 
 export default {
-  name: 'event',
+  name: 'eventModule',
   component: {
     template: require('./event.html'),
-    controller: ['$scope', 'socket', 'familyService', 'volunteerService', eventController],
+    controller: ['$scope', 'eventService', '$state', eventController],
   }
 }
