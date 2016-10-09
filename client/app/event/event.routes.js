@@ -25,8 +25,12 @@ export default function routes($stateProvider) {
     template: '<event-data></event-data>'
   })
   .state('event.routes', {
-    url: '/routes/:families/:volunteers',
-    template: '<event-sketch></event-sketch>'
+    url: '/routes',
+    template: '<event-sketch></event-sketch>',
+    params: {
+      families: null,
+      volunteers: null
+    }
   })
   .state('event.id', {
     url: '/:id',

@@ -1,1 +1,32 @@
-skatch
+<div class="container-fluid">
+  <div class="row routes-holder">
+    <div class="col-md-2">
+      Families
+    </div>
+    <div class="col-md-8">
+      <div class="row route-holder">
+        <div class="col-md-6" ng-repeat="route in $ctrl.routes">
+          <event-route data="route"></event-route>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      Volunteers
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <ng-map class="map-route-holder"></ng-map>
+    </div>
+  </div>
+</div>
+<div class="stick-to-left row">
+	<div class="col-md-3">
+		<ng-md-icon icon="{{$ctrl.icons.families.shape}}" style="{{$ctrl.icons.families.color}}" size="52" ng-click="$ctrl.toggleFamilies()"></ng-md-icon>
+	</div>
+</div>
+<div class="stick-to-right row">
+	<div class="col-md-3">
+		<ng-md-icon icon="{{$ctrl.icons.volunteers.shape}}" style="{{$ctrl.icons.volunteers.color}}"  size="52" ng-click="$ctrl.toggleVolunteers()"></ng-md-icon>
+	</div>
+</div>

@@ -7,6 +7,7 @@ import eventPastList from '../../components/eventModule/eventPastList/eventPastL
 import eventCover from '../../components/eventModule/eventCover/eventCover.component';
 import eventData from '../../components/eventModule/eventData/eventData.component';
 import eventSketch from '../../components/eventModule/eventSketch/eventSketch.component';
+import eventRoute from '../../components/eventModule/eventRoute/eventRoute.component';
 // import eventIndividual from '../../components/eventIndividual/eventIndividual.component';
 // import eventForm from '../../components/eventForm/eventForm.component';
 import newevent from '../../components/eventModule/newEvent/newEvent.component';
@@ -20,6 +21,7 @@ export default angular.module('b7beetApp.event', [uiRouter, 'dndLists'])
   .component(eventPastList.name, eventPastList.component)
   .component(eventCover.name, eventCover.component)
   .component(eventSketch.name, eventSketch.component)
+  .component(eventRoute.name, eventRoute.component)
   // .component(eventIndividual.name, eventIndividual.component)
   // .component(eventForm.name, eventForm.component)
   .component(newevent.name, newevent.component)
