@@ -19,14 +19,13 @@ export default class SignupController {
   $state;
 
   /*@ngInject*/
-  constructor(Auth, $state) {
+  constructor(Auth, $state, $scope) {
     this.Auth = Auth;
     this.$state = $state;
   }
 
   register(form) {
     this.submitted = true;
-
     if (form.$valid) {
       return this.Auth.createUser({
           name: this.user.name,

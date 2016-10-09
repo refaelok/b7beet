@@ -22,15 +22,15 @@ export default class LoginController {
   $state;
 
   /*@ngInject*/
-  constructor(Auth, $state) {
+  constructor(Auth, $state, $scope) {
     this.Auth = Auth;
     this.$state = $state;
-    angular.element(document).find('body').css('background','#673AB7')
+
   }
 
   login(form) {
     this.submitted = true;
-
+    debugger;
     if (form.$valid) {
       this.Auth.login({
           email: this.user.email,
