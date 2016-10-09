@@ -131,7 +131,7 @@ function FamilyFormController($uibModalInstance) {
   const ctrl = this;
   ctrl.$uibModalInstance = $uibModalInstance;
   ctrl.model = {};
-  ctrl.model.familyRoles = ['Parent', 'Child']
+  ctrl.model.familyRoles = ['Other', 'Child']
   ctrl.model.family = {
     name: null,
     address: null,
