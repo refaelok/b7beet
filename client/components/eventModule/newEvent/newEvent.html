@@ -1,15 +1,5 @@
 <div class="container-fluid">
-	<div class="row height-40" >
-		<div class="stick-to-left row">
-			<div class="col-md-3">
-				<ng-md-icon icon="{{$ctrl.icons.families.shape}}" style="{{$ctrl.icons.families.color}}" size="52" ng-click="$ctrl.toggleFamilies()"></ng-md-icon>
-			</div>
-		</div>
-		<div class="stick-to-right row">
-			<div class="col-md-3">
-				<ng-md-icon icon="{{$ctrl.icons.volunteers.shape}}" style="{{$ctrl.icons.volunteers.color}}"  size="52" ng-click="$ctrl.toggleVolunteers()"></ng-md-icon>
-			</div>
-		</div>
+	<div class="row height-45" >
 		<!-- families list -->
 		<div class="height-45 col-md-3 list-holder fx-bounce-left fx-dur-680 fx-ease-none" ng-show="$ctrl.showFamilies">
 			<input type="text" class="form-control" ng-model="familyQuery">
@@ -92,5 +82,15 @@
 
 			</ng-map>
 		</div>
+	</div>
+</div>
+<div class="stick-to-left row">
+	<div class="col-md-3">
+		<ng-md-icon icon="{{$ctrl.icons.families.shape}}" style="{{$ctrl.icons.families.color}}" size="52" ng-click="$ctrl.toggleFamilies()"></ng-md-icon>
+	</div>
+</div>
+<div class="stick-to-right row">
+	<div class="col-md-3">
+		<ng-md-icon icon="{{$ctrl.icons.volunteers.shape}}" style="{{$ctrl.icons.volunteers.color}}"  size="52" ng-click="$ctrl.toggleVolunteers()"></ng-md-icon>
 	</div>
 </div>

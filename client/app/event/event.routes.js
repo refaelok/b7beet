@@ -24,6 +24,10 @@ export default function routes($stateProvider) {
     url: '/upcoming',
     template: '<event-data></event-data>'
   })
+  .state('event.routes', {
+    url: '/routes',
+    template: '<event-sketch></event-sketch>'
+  })
   .state('event.id', {
     url: '/:id',
     template: '<event-data></event-data>'

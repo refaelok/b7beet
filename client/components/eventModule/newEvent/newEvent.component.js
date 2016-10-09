@@ -3,8 +3,9 @@
 import familyInfo from '../../familyInfo/familyInfo.component';
 
 export class NewEventController{
-  constructor(NgMap, $timeout, $uibModal, familyService, eventService){
+  constructor(NgMap, $timeout, $uibModal, familyService, eventService, $state){
     const ctrl = this;
+    this.$state = $state;
     eventService.getAllFamilies()
     .then((families) => {
       this.families = families;
@@ -61,6 +62,8 @@ export class NewEventController{
     _.forEach(this.volunteers, (volunteers) => {
       volunteers.checked && chosenVolunteers.push(volunteers)
     })
+
+    this.$state.go('event.routes', {families: chosenFamilies, volunteers: chosenVolunteers})
 
   }
 
@@ -127,7 +130,7 @@ export class NewEventController{
 export default {
   component: {
     template: require('./newEvent.html'),
-    controller: ['NgMap', '$timeout','$uibModal' ,'familyService', 'eventService', NewEventController],
+    controller: ['NgMap', '$timeout','$uibModal' ,'familyService', 'eventService', '$state', NewEventController],
     bindings: {
     }
   },
