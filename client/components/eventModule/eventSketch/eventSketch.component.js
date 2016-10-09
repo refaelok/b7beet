@@ -3,8 +3,9 @@
 import familyInfo from '../../familyInfo/familyInfo.component';
 
 export class EventSketchController{
-  constructor(NgMap, familyService, eventService, $state){
+  constructor(NgMap, familyService, eventService, $state, $stateParams){
     const ctrl = this;
+    console.log($stateParams);
   }
 
 }
@@ -12,7 +13,7 @@ export class EventSketchController{
 export default {
   component: {
     template: require('./eventSketch.html'),
-    controller: ['NgMap', 'familyService', 'eventService', '$state', EventSketchController],
+    controller: ['NgMap', 'familyService', 'eventService', '$state', '$stateParams', EventSketchController],
     bindings: {
     }
   },

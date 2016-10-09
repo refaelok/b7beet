@@ -62,7 +62,7 @@ export class NewEventController{
     _.forEach(this.volunteers, (volunteers) => {
       volunteers.checked && chosenVolunteers.push(volunteers)
     })
-
+    debugger;
     this.$state.go('event.routes', {families: chosenFamilies, volunteers: chosenVolunteers})
 
   }
