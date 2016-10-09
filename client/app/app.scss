@@ -31,6 +31,7 @@ div.navbar-collapse.collapse.in {
 
 // Component styles are injected through gulp
 /* inject:scss */
+@import 'account/login/login';
 @import 'admin/admin';
 @import 'event/event';
 @import 'family/family';

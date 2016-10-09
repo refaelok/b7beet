@@ -1,0 +1,146 @@
+.login-signup-container {
+  background: #673AB7;
+  height: 95%;
+  width: 100%;
+  position: absolute;
+  top: 5vh;
+}
+
+.title-login-signup {
+  color: #ffffff;
+  font-family: 'Enriqueta', arial, serif;
+  line-height: 1.25;
+  margin: 0 0 10px;
+  padding-top: 50px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.height-20 {
+  top: 20vh;
+}
+
+.form-login {
+  top: 200px;
+  width: 400px;
+  height: auto;
+  background: #edeff1;
+  margin: 10px auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.form-login > input[type="text"] {
+  display: block;
+  width: 309px;
+  height: 35px;
+  margin: 15px auto;
+  background: #fff;
+  border: 0;
+  padding: 5px;
+  font-size: 16px;
+  border: 2px solid #fff;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.form-login > input[type="email"]:focus {
+  border: 2px solid #E040FB;
+}
+
+.form-login > input[type="email"] {
+  display: block;
+  width: 309px;
+  height: 35px;
+  margin: 15px auto;
+  background: #fff;
+  border: 0;
+  padding: 5px 5px 10px;
+  font-size: 16px;
+  border: 2px solid #fff;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.form-login > input[type="password"]:focus {
+  border: 2px solid #E040FB;
+}
+
+.form-login > input[type="password"] {
+  display: block;
+  width: 309px;
+  height: 35px;
+  margin: 15px auto;
+  background: #fff;
+  border: 0;
+  padding: 5px 5px 10px;
+  font-size: 16px;
+  border: 2px solid #fff;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.form-login > input[type="text"]:focus {
+  border: 2px solid #E040FB;
+}
+
+.form-login > input[type="submit"] {
+  display: block;
+  background: #D1C4E9;
+  width: 314px;
+  padding: 12px;
+  cursor: pointer;
+  border: 0;
+  margin: auto;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+
+.form-login > input[type="submit"]:hover {
+  background: #E040FB;
+}
+
+.form-login > a {
+  text-align: center;
+  font-family: Arial;
+  color: gray;
+  display: block;
+  margin: 20px auto 0;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.form-login > a:hover {
+  color: #E040FB;
+}
+
+::-webkit-input-placeholder {
+  color: gray;
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: gray;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: gray;
+}
+
+:-ms-input-placeholder {
+  color: gray;
+}
