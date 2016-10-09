@@ -1,5 +1,6 @@
 'use strict';
 // @flow
+import angular from 'angular';
 
 type User = {
   name: string;
@@ -24,6 +25,7 @@ export default class LoginController {
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
+    angular.element(document).find('body').css('background','#673AB7')
   }
 
   login(form) {
