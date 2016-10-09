@@ -19,7 +19,7 @@ export default class SignupController {
   $state;
 
   /*@ngInject*/
-  constructor(Auth, $state, $scope) {
+  constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
   }

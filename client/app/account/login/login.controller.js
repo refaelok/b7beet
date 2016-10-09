@@ -1,7 +1,5 @@
 'use strict';
 // @flow
-import angular from 'angular';
-
 type User = {
   name: string;
   email: string;
@@ -22,7 +20,7 @@ export default class LoginController {
   $state;
 
   /*@ngInject*/
-  constructor(Auth, $state, $scope) {
+  constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
 
@@ -30,7 +28,6 @@ export default class LoginController {
 
   login(form) {
     this.submitted = true;
-    debugger;
     if (form.$valid) {
       this.Auth.login({
           email: this.user.email,
