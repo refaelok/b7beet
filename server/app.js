@@ -11,9 +11,10 @@ import config from './config/environment';
 import http from 'http';
 
 // Connect to MongoDB
-mongoose.connect(config.mongo.uri, config.mongo.options);
+mongoose.connect('mongo', config.mongo.options);
 mongoose.connection.on('error', function(err) {
-  console.error('MongoDB connection error: ' + err);
+  console.log("test");
+  console.error('MongoDB connection error: ' + err , config.mongo.uri);
   process.exit(-1);
 });
 
