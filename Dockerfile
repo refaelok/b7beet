@@ -6,12 +6,12 @@ RUN apt-get install -y nodejs nodejs-legacy npm
 RUN apt-get clean
 RUN npm install -g npm
 RUN npm install --global gulp
-COPY ./package.json /src/
 
-RUN cd src && npm install
+COPY ./package.json /src/
+RUN cd /src && npm install
 
 COPY . /src
 
-WORKDIR src/
+WORKDIR /src/
 
-CMD ["gulp", "serve"]
+CMD ["gulp", "serve:docker"]
