@@ -31,7 +31,7 @@ export class EventSketchController {
     ctrl.model = {};
     ctrl.socket = socket;
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('events');
+      socket.unsyncUpdates('routes');
     });
     ctrl.selectedRoute = null;
     ctrl.model.map = {
@@ -42,6 +42,7 @@ export class EventSketchController {
       center: [31.2509633, 34.7953221]
     }
     ctrl.$timeout = $timeout;
+    ctrl.NgMap = NgMap;
     ctrl.Notification = Notification;
     ctrl.showDetailsAboutRoute = false;
     eventService.disableFabNewEvent();
@@ -52,81 +53,62 @@ export class EventSketchController {
     ctrl.nonAttachedVolunteers = [];
     ctrl.families = $stateParams.families;
     ctrl.volunteers = $stateParams.volunteers;
+    ctrl.$stateParams = $stateParams;
+    ctrl.$state = $state;
 
-    if (!$stateParams.families || !$stateParams.volunteers || $stateParams.families.length == 0 || $stateParams.volunteers.length == 0) {
-      eventService.getSketchEvent()
+  }
+
+  $onInit() {
+    const ctrl = this;
+    this.triggerResize()
+    if (!this.$stateParams.families || !this.$stateParams.volunteers || this.$stateParams.families.length == 0 || this.$stateParams.volunteers.length == 0) {
+      this.eventService.getSketchEvent()
         .then(sketch => {
-          if(!sketch){
-            return $state.go('event.new')
+          if (!sketch) {
+            return this.$state.go('event.new')
           }
           ctrl.eventSketch = sketch;
           ctrl.routes = sketch.routes
-          ctrl.nonAttachedVolunteers = sketch.nonAttachedVolunteers;
-          ctrl.nonAttachhedFamilies = sketch.nonAttachhedFamilies;
           ctrl.isLoading = false;
+          syncRoutes.call(this)
           return
         })
     } else {
-      eventService.createSketch()
+      this.eventService.createSketch()
         .then(eventSketch => {
           ctrl.isLoading = false;
           ctrl.eventSketch = eventSketch;
           let len = ctrl.families.length > ctrl.volunteers.length ? ctrl.volunteers.length : ctrl.families.length
-          for (var i = 0; i < len; i++) {
-            ctrl.eventService.attachRouteToEvent(eventSketch, {
-                families: [ctrl.families.shift()],
-                volunteers: [ctrl.volunteers.shift()]
-              })
-              .then(route => {
-                ctrl.routes.push(route)
-              })
-          }
-          eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
-          .then(console.log)
-          ctrl.families && ctrl.families.forEach(_ => ctrl.nonAttachhedFamilies.push(ctrl.families.shift()))
-          ctrl.volunteers && ctrl.volunteers.forEach(_ => ctrl.nonAttachedVolunteers.push(ctrl.volunteers.shift()))
+          this.eventService.clusterize(ctrl.families, ctrl.volunteers)
+          // for (var i = 0; i < len; i++) {
+          //   ctrl.eventService.attachRouteToEvent(eventSketch, {
+          //       families: [ctrl.families.shift()],
+          //       volunteers: [ctrl.volunteers.shift()]
+          //     })
+          //     .then(route => {
+          //       ctrl.routes.push(route)
+          //     })
+          // }
+          // syncRoutes.call(this)
+          // this.eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
+          // ctrl.families && ctrl.families.forEach(_ => ctrl.eventSketch.nonAttachhedFamilies.push(ctrl.families.shift()))
+          // ctrl.volunteers && ctrl.volunteers.forEach(_ => ctrl.eventSketch.nonAttachedVolunteers.push(ctrl.volunteers.shift()))
         })
     }
 
-
-
-    // let cache = eventService.getCacheSketch();
-    // if ((!$stateParams.families || !$stateParams.volunteers || $stateParams.families.length == 0 || $stateParams.volunteers.length == 0) && (!cache || cache.routes.length == 0)) {
-    //   $state.go('event.new')
-    // } else {
-
-    // ctrl.nonAttachhedFamilies = ctrl.nonAttachhedFamilies.concat(data.families)
-    // ctrl.nonAttachedVolunteers = ctrl.nonAttachedVolunteers.concat(data.volunteers)
-    //this.updateCache();
-    //   } else {
-    //     data = cache;
-    //     ctrl.routes = data.routes;
-    //     ctrl.nonAttachhedFamilies =  data.nonAttachhedFamilies
-    //     ctrl.nonAttachedVolunteers = data.nonAttachedVolunteers
-    //   }
-    // }
-    // ctrl.isLoading = false; //change to true
+    function syncRoutes() {
+      this.socket.syncUpdates('route', this.eventSketch.routes, (event, object, array) => {
+        (event === 'updated' || event === 'created') && (() => {
+          this.eventService.getRouteById(object._id).then((route) => {
+            let index = _.findIndex(this.eventSketch.routes, ['_id', object._id])
+            index > -1 && (() => {
+              this.eventSketch.routes[index] = route
+            })()
+          })
+        })()
+      });
+    }
   }
-
-  // $onInit(){
-  //   this.eventService.getSketchEvent()
-  //   .then(event => {
-  //     this.eventSketch = event;
-  //     this.socket.syncUpdates('events', this.eventSketch,(a,b,c) => {
-  //       console.log('syncUpdates:events', a,b,c);
-  //     });
-  //     return event._id
-  //   })
-  //   .then(sketchId => {
-  //     return this.eventService.getRoutesForSketch(sketchId)
-  //   })
-  //   .then(routes => {
-  //     this.socket.syncUpdates('routes', this.eventSketch.routes,(a,b,c) => {
-  //       console.log('syncUpdates:routes', a,b,c);
-  //     });
-  //   })
-  //
-  // }
 
   updateStatisticsClass() {
     if (this.showFamilies && this.showVolunteers) this.routesClass = 'col-md-8';
@@ -151,24 +133,20 @@ export class EventSketchController {
   }
 
   addEmptyRoute() {
-    this.routes.unshift(Object.assign({}, emptyRoute))
+    // this.routes.unshift(Object.assign({}, emptyRoute))
+    this.eventService.attachRouteToEvent(this.eventSketch, emptyRoute)
   }
 
-  updateCache() {
-    this.eventService.setCacheSketch({
-      routes: this.routes,
-      nonAttachhedFamilies: this.nonAttachhedFamilies,
-      nonAttachedVolunteers: this.nonAttachedVolunteers
-    })
-  }
+
 
   saveEvent() {}
 
   onRemoveRoute(families, volunteers, index) {
+    this.routes[index].$delete()
     this.routes.splice(index, 1)
-    this.nonAttachhedFamilies = this.nonAttachhedFamilies.concat(families)
-    this.nonAttachedVolunteers = this.nonAttachedVolunteers.concat(volunteers)
-      //this.updateCache();
+    this.eventSketch.nonAttachhedFamilies = this.eventSketch.nonAttachhedFamilies.concat(families)
+    this.eventSketch.nonAttachedVolunteers = this.eventSketch.nonAttachedVolunteers.concat(volunteers)
+    this.eventService.updateNonAttachedFamiliesAndVolunteers(this.eventSketch._id, this.eventSketch.nonAttachhedFamilies, this.eventSketch.nonAttachedVolunteers);
   }
 
   toggleVolunteers() {
@@ -188,27 +166,35 @@ export class EventSketchController {
 
   //index that was drop from the out route
   dropNonAttachedVolunteerSuccessHandler($event, index) {
-    this.nonAttachedVolunteers.splice(index, 1)
-      //this.updateCache();
+    this.eventSketch.nonAttachedVolunteers.splice(index, 1)
+    this.eventService.updateSketch(this.eventSketch._id, {
+      nonAttachedVolunteers: this.eventSketch.nonAttachedVolunteers
+    });
   }
 
   //The droped volunteer comes here
   onDropNonAttachedVolunteer($event, volunteer) {
-    this.nonAttachedVolunteers.push(volunteer);
-    //this.updateCache();
+    this.eventSketch.nonAttachedVolunteers.push(volunteer);
+    this.eventService.updateSketch(this.eventSketch._id, {
+      nonAttachedVolunteers: this.eventSketch.nonAttachedVolunteers
+    });
   }
 
   //index that was drop from the out route
   dropNonAttachedFamilySuccessHandler($event, index) {
-    this.nonAttachhedFamilies.splice(index, 1);
-    //this.updateCache();
+    this.eventSketch.nonAttachhedFamilies.splice(index, 1);
+    this.eventService.updateSketch(this.eventSketch._id, {
+      nonAttachhedFamilies: this.eventSketch.nonAttachhedFamilies
+    });
 
   }
 
   //The droped family comes here
   onDropNonAttachedFamily($event, family) {
-    this.nonAttachhedFamilies.push(family);
-    //this.updateCache();
+    this.eventSketch.nonAttachhedFamilies.push(family);
+    this.eventService.updateSketch(this.eventSketch._id, {
+      nonAttachhedFamilies: this.eventSketch.nonAttachhedFamilies
+    });
   }
 
   sendRoute(index) {
@@ -228,7 +214,6 @@ export class EventSketchController {
     } else {
       this.routes[index] = updatedRoute;
     }
-    this.updateCache()
   }
 
   showDetails(index) {
@@ -240,13 +225,23 @@ export class EventSketchController {
         stopover: true
       })
     })
+
     this.model.map.destination = this.selectedRoute.volunteers[0].address;
+    this.triggerResize()
   }
 
   closeRouteDetailsDialog() {
     this.showDetailsAboutRoute = !this.showDetailsAboutRoute;
     this.model.map.wayPoints = [];
     this.model.map.destination = null;
+  }
+
+  triggerResize(){
+    this.NgMap.getMap({id: 'routesMap'})
+      .then(map => {
+        google.maps.event.trigger(map, "resize");
+        map.setZoom(14);
+      })
   }
 
 }

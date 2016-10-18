@@ -1,6 +1,6 @@
 'use strict';
 
-function familyServiceService(networkService) {
+function familyServiceService(networkService, locationService) {
   this.getAllFamilies = function() {
     return networkService.GET('families');
   }
@@ -10,7 +10,14 @@ function familyServiceService(networkService) {
   }
 
   this.addNewFamily = function(family) {
-    return networkService.POST('families', family)
+    return locationService.getLocationByAddress(family.address).then(location => {
+      let address = {
+        name: family.address,
+        latlng: location
+      }
+      family.address = address
+      return networkService.POST('families', family)
+    })
   }
 
   this.removeFamily = function(family) {
@@ -31,6 +38,6 @@ function familyServiceService(networkService) {
 }
 
 export default {
-  service: ['networkService', familyServiceService],
+  service: ['networkService', 'locationService', familyServiceService],
   name: 'familyService'
 }

@@ -28,17 +28,17 @@
         </p>
         <input type="text" ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode" ng-model="$ctrl.u_family.phone" placeholder="Family home phone" class="form-control input-md" />
       </div>
-    	<div class="panel-body" ng-show="$ctrl.family.address || $ctrl.inModifyMode">
+    	<div class="panel-body" ng-show="$ctrl.family.address.name || $ctrl.inModifyMode">
         <h3>Address</h3>
         <div ng-show="!$ctrl.inModifyMode">
-          {{$ctrl.family.address}}
+          {{$ctrl.family.address.name}}
         </div>
         <div>
           <input 	type="text"
             class="form-control input-md"
             ng-show="$ctrl.hasRole('member') && $ctrl.inModifyMode"
             ng-autocomplete
-            ng-model="$ctrl.u_family.address" />
+            ng-model="$ctrl.u_family.address.name" />
         </div>
           <span>Family tree</span>
           <table class="table table-condensed table-hover table-striped">
@@ -98,9 +98,9 @@
         <input  type="text" ng-model="$ctrl.u_family.contact.phone" placeholder="Contact's phone" class="form-control input-md" required="">
         <textarea ng-model="$ctrl.u_family.contact.details" class="form-control">Contact's additional data</textarea>
       </div>
-      <div ng-show="!$ctrl.inModifyMode && $ctrl.family.address">
-        <ng-map id="familyInfoMap" center="{{$ctrl.family.address}}" zoom-to-include-markers="true">
-           <marker position="{{$ctrl.family.address}}" animation="Animation.BOUNCE"></marker>
+      <div ng-show="!$ctrl.inModifyMode && $ctrl.family.address.name">
+        <ng-map id="familyInfoMap" center="{{$ctrl.family.address.name}}" zoom-to-include-markers="true">
+           <marker position="{{$ctrl.family.address.name}}" animation="Animation.BOUNCE"></marker>
         </ng-map>
       </div>
     	<div class="panel-footer">

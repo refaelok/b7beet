@@ -12,11 +12,38 @@
 
 import jsonpatch from 'fast-json-patch';
 import Route from './route.model';
+import Event from '../event/event.model';
+import _ from 'lodash';
+import mongoose from 'mongoose';
+
+
+function saveUpdates(updates) {
+  return function(route) {
+    var updated = _.merge(route, updates);
+    let families = [],
+      volunteers = [];
+    updates.families && updates.families.forEach(f => {
+      families.push(mongoose.Types.ObjectId(f._id))
+    })
+    updates.volunteers && updates.volunteers.forEach(v => {
+      volunteers.push(mongoose.Types.ObjectId(v._id))
+    })
+    return updated.save()
+      .then(updated => {
+        return updated.update({
+          $set: {
+            families: families,
+            volunteers: volunteers
+          }
+        });
+      });
+  };
+}
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
-    if(entity) {
+    if (entity) {
       return res.status(statusCode).json(entity);
     }
     return null;
@@ -27,7 +54,7 @@ function patchUpdates(patches) {
   return function(entity) {
     try {
       jsonpatch.apply(entity, patches, /*validate*/ true);
-    } catch(err) {
+    } catch (err) {
       return Promise.reject(err);
     }
 
@@ -37,7 +64,7 @@ function patchUpdates(patches) {
 
 function removeEntity(res) {
   return function(entity) {
-    if(entity) {
+    if (entity) {
       return entity.remove()
         .then(() => {
           res.status(204).end();
@@ -48,7 +75,7 @@ function removeEntity(res) {
 
 function handleEntityNotFound(res) {
   return function(entity) {
-    if(!entity) {
+    if (!entity) {
       res.status(404).end();
       return null;
     }
@@ -59,6 +86,7 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
+    console.error('err', err);
     res.status(statusCode).send(err);
   };
 }
@@ -72,7 +100,10 @@ export function index(req, res) {
 
 // Gets a single Route from the DB
 export function show(req, res) {
-  return Route.findById(req.params.id).exec()
+  return Route.findById(req.params.id)
+    .populate('volunteers')
+    .populate('families')
+    .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -87,19 +118,26 @@ export function create(req, res) {
 
 // Upserts the given Route in the DB at the specified ID
 export function upsert(req, res) {
-  if(req.body._id) {
+  console.log('updates', req.body);
+  if (req.body._id) {
     delete req.body._id;
   }
-  console.log(req.body);
-  return Route.findOneAndUpdate(req.params.id, req.body, {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
-
+  return Route.findOneAndUpdate(req.params.id, req.body, {
+      upsert: true,
+      setDefaultsOnInsert: true,
+      runValidators: true
+    }).exec()
+    .then(e => {
+      console.log('after', e);
+      return e;
+    })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Updates an existing Route in the DB
 export function patch(req, res) {
-  if(req.body._id) {
+  if (req.body._id) {
     delete req.body._id;
   }
   return Route.findById(req.params.id).exec()
@@ -113,13 +151,39 @@ export function patch(req, res) {
 export function destroy(req, res) {
   return Route.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
+    .then(removeFromEvent)
     .then(removeEntity(res))
     .catch(handleError(res));
 }
 
-export function showByParent(req, res){
-  return Route.find({parent: req.params.id}).exec()
-  .then(handleEntityNotFound(res))
-  .then(respondWithResult(res))
-  .catch(handleError(res));
+export function showByParent(req, res) {
+  return Route.find({
+      parent: req.params.id
+    }).exec()
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+export function addToSet(req, res) {
+  return Route.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(saveUpdates(req.body))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+function removeFromEvent(routeToRemove) {
+  if (!routeToRemove) return null
+
+  return Event.update({
+    _id: mongoose.Types.ObjectId(routeToRemove.parent)
+  }, {
+    $pull: {
+      routes: mongoose.Types.ObjectId(routeToRemove._id)
+    }
+  })
+  .then(_ => {
+    return routeToRemove
+  })
 }

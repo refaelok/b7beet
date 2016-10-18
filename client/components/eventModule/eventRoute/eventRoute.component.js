@@ -6,7 +6,6 @@ export class EventRouteController {
   constructor() {
     if (!this.data.families) this.data.families = []
     if (!this.data.volunteers) this.data.volunteers = []
-    console.log(this);
   }
 
   $onInit() {}
@@ -15,6 +14,8 @@ export class EventRouteController {
   //index that was drop from the out route
   dropFamilySuccessHandler($event, index) {
     this.data.families.splice(index, 1)
+    if(this.data.families.length === 0 && this.data.volunteers.length === 0)
+      return this.removeRoute()
     this.data.$update();
     this.onUpdate({updatedRoute: this.data});
   }
@@ -29,12 +30,16 @@ export class EventRouteController {
   //index that was drop from the out route
   dropVolunteerSuccessHandler($event, index) {
     this.data.volunteers.splice(index, 1)
+    if(this.data.families.length === 0 && this.data.volunteers.length === 0)
+      return this.removeRoute()
+    this.data.$update();
     this.onUpdate({updatedRoute: this.data});
   }
 
   //The droped volunteer comes here
   onDropVolunteer($event, volunteer) {
     this.data.volunteers.push(volunteer)
+    this.data.$update();
     this.onUpdate({updatedRoute: this.data});
   }
 

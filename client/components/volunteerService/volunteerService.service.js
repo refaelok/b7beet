@@ -1,6 +1,6 @@
 'use strict';
 
-function volunteerServiceService(networkService) {
+function volunteerServiceService(networkService, locationService) {
   this.getAllVolunteers = function() {
     return networkService.GET('volunteers');
   }
@@ -10,7 +10,14 @@ function volunteerServiceService(networkService) {
   }
 
   this.addNewVolunteer = function(volunteer) {
-    return networkService.POST('volunteers', volunteer)
+    return locationService.getLocationByAddress(volunteer.address).then(location => {
+      let address = {
+        name: volunteer.address,
+        latlng: location
+      }
+      volunteer.address = address
+      return networkService.POST('volunteers', volunteer)
+    })
   }
 
   this.removeVolunteer = function(volunteer) {
@@ -24,6 +31,6 @@ function volunteerServiceService(networkService) {
 }
 
 export default {
-  service: ['networkService', volunteerServiceService],
+  service: ['networkService', 'locationService', volunteerServiceService],
   name: 'volunteerService'
 }

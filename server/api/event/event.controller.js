@@ -29,6 +29,7 @@ function respondWithResult(res, statusCode) {
 function saveUpdates(updates) {
   return function(entity) {
     var updated = _.merge(entity, updates);
+    console.log('saveUpdates');
     return updated.save()
       .then(updated => {
         console.log('doc saved', updated);
@@ -111,7 +112,6 @@ export function create(req, res) {
       state: 'sketch'
     }).exec()
     .then(routes => {
-      console.log(routes);
       routes.forEach(route => route.remove())
     })
   return Event.create(req.body)
@@ -169,12 +169,13 @@ export function attachRoute(req, res) {
     .then(handleEntityNotFound(res))
     .then(sketch => {
       if (sketch) {
-        req.body.route.parent = req.body.sketchId;
+        req.body.route.parent = mongoose.Types.ObjectId(req.params.sketch);
         return Promise.all([Route.create(req.body.route), sketch]);
       }
       return null;
     })
     .then(pushRouteToEvent)
+    .then(findAnPopulate)
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -182,15 +183,39 @@ export function attachRoute(req, res) {
 function pushRouteToEvent(routeEventPair) {
   let sketch = routeEventPair[1];
   let route = routeEventPair[0];
-  sketch.routes.push(route._id);
+  sketch.routes.push(mongoose.Types.ObjectId(route._id));
   sketch.save()
-  return route;
+  return route
+}
+
+function findAnPopulate(route) {
+  return Route.findById(route._id)
+    .populate('volunteers')
+    .populate('families')
+    .exec()
 }
 
 function convertStringsToObjectIds(data) {
   return function(eventEntity) {
-      data.nonAttachedVolunteers && data.nonAttachedVolunteers.map(v_id => eventEntity.nonAttachedVolunteers.push(mongoose.Types.ObjectId(v_id)))
-      data.nonAttachhedFamilies && data.nonAttachhedFamilies.map(f_id => eventEntity.nonAttachhedFamilies.push(mongoose.Types.ObjectId(f_id)))
-      return eventEntity.save().then(a => {console.log('saved' , a); return a;})
+    if (!eventEntity) return null;
+    let nonAttachhedFamilies = [],
+      nonAttachedVolunteers = [];
+
+    data.nonAttachedVolunteers && data.nonAttachedVolunteers.forEach(v => nonAttachedVolunteers.push(mongoose.Types.ObjectId(v._id)))
+    data.nonAttachhedFamilies && data.nonAttachhedFamilies.forEach(f => nonAttachhedFamilies.push(mongoose.Types.ObjectId(f._id)))
+    return eventEntity.update({
+        $set: {
+          nonAttachedVolunteers: data.nonAttachedVolunteers ? nonAttachedVolunteers : eventEntity.nonAttachedVolunteers,
+          nonAttachhedFamilies: data.nonAttachhedFamilies ? nonAttachhedFamilies : eventEntity.nonAttachhedFamilies
+        }
+      })
+      .exec()
+      .then(result => {
+        return Event.findById(eventEntity._id).exec()
+      })
+      // eventEntity.nonAttachhedFamilies = nonAttachhedFamilies;
+      // eventEntity.nonAttachedVolunteers = nonAttachedVolunteers;
+      // console.log('convertStringsToObjectIds:2');
+      // return eventEntity.save()
   }
 }

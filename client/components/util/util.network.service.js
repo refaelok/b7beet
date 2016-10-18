@@ -38,7 +38,10 @@
        })
      },
      UPDATE: {},
-     SHOW: {}
+     SHOW: {},
+     make: function(opt){
+       return $http(opt)
+     }
    };
 
    return Util;

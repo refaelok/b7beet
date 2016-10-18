@@ -1,14 +1,7 @@
 'use strict';
+import kMeans from 'node-kmeans';
+function eventService(networkService, familyService, volunteerService, locationService) {
 
-function eventService(networkService, familyService, volunteerService, CacheFactory) {
-  this.sketchCache = null;
-  if (!CacheFactory.get('sketchCache')) {
-    // or CacheFactory('bookCache', { ... });
-    this.sketchCache = CacheFactory.createCache('sketchCache', {
-      deleteOnExpire: 'aggressive',
-      recycleFreq: 60000
-    });
-  }
   this.getAllVolunteers = volunteerService.getAllVolunteers;
   this.getAllFamilies = familyService.getAllFamilies;
   this.fabCreateNewEvent = true;
@@ -38,7 +31,6 @@ function eventService(networkService, familyService, volunteerService, CacheFact
   this.getEventsByState = function(state) {
     return networkService.GET('events/byState/' + state)
   }
-
   this.getSketchEvent = function() {
     return this.getEventsByState('sketch')
       .then(events => {
@@ -48,39 +40,16 @@ function eventService(networkService, familyService, volunteerService, CacheFact
       .then(attachNonAttachhedFamilies)
       .then(attachNonAttachedVolunteers)
   }
+  this.getRoutesForSketch = function(sketchId) {
+    return networkService.GET('routes/parent/' + sketchId)
+  }
+  this.updateNonAttachedFamiliesAndVolunteers = function(sketchId, families, volunteers) {
+    return networkService.PUT('events', sketchId, {
+      nonAttachhedFamilies: families,
+      nonAttachedVolunteers: volunteers
+    })
+  }
 
-  this.getCacheSketch = function() {
-    let keys = this.sketchCache.keys();
-    let sketch = {
-      routes: [],
-      nonAttachedVolunteers: [],
-      nonAttachhedFamilies: []
-    };
-    keys.forEach(key => {
-      if (/families/.test(key)) {
-        sketch.nonAttachhedFamilies.push(this.sketchCache.get(key))
-      } else if (/volunteers/.test(key)) {
-        sketch.nonAttachedVolunteers.push(this.sketchCache.get(key))
-      } else if (/routes/.test(key)) {
-        sketch.routes.push(this.sketchCache.get(key))
-      } else {
-        throw key
-      }
-    })
-    return sketch;
-  }
-  this.setCacheSketch = function(sketch) {
-    this.sketchCache.removeAll()
-    sketch.routes.forEach(route => {
-      this.sketchCache.put('/routes/' + route._id, route)
-    })
-    sketch.nonAttachhedFamilies.forEach(family => {
-      this.sketchCache.put('/families/' + family._id, family)
-    })
-    sketch.nonAttachedVolunteers.forEach(volunteer => {
-      this.sketchCache.put('/volunteers/' + volunteer._id, volunteer)
-    })
-  }
   this.createSketch = function(routes, nonAttachedVolunteers, nonAttachhedFamilies) {
     return networkService.POST('events', {
       state: 'sketch'
@@ -91,13 +60,27 @@ function eventService(networkService, familyService, volunteerService, CacheFact
         route: justCreatedRoute
       })
       .then(route => {
-        route.$update = () => {
-          return networkService.PUT('routes', route._id, this)
-        }
-        return route;
+        return makeResource(route)
       })
-      .then(attachFamilies)
-      .then(attachVolunteers)
+  }
+  this.updateSketch = function(sketchId, data) {
+    return networkService.PUT('events', sketchId, data)
+  }
+
+  this.clusterize = function(families, volunteers){
+    let vectors = new Array();
+    families.forEach(f => {
+      let ll = f.address.latlng;
+      vectors.push([ll.lat, ll.lng, f])
+    })
+    volunteers.forEach(v => {
+      let ll = v.address.latlng;
+      vectors.push([ll.lat, ll.lng, v])
+    })
+    kMeans.clusterize(vectors, {k: 4}, (err,res) => {
+      if (err) console.error(err);
+      else console.log('%o',res);
+    });
   }
 
   function attachFamilies(route) {
@@ -134,7 +117,7 @@ function eventService(networkService, familyService, volunteerService, CacheFact
     }
     let p = [];
     for (var i = 0; i < sketch.routes.length; i++) {
-      p.push(getRouteById(sketch.routes[i]).then(attachFamilies).then(attachVolunteers))
+      p.push(getRouteById(sketch.routes[i]) /*.then(attachFamilies).then(attachVolunteers)*/ )
     }
     return Promise.all(p).then((results) => {
       sketch.routes = results
@@ -147,13 +130,10 @@ function eventService(networkService, familyService, volunteerService, CacheFact
       return
     }
     return networkService.GET('routes/' + id).then(route => {
-        route.$update = function(){
-          console.log(route);
-          return networkService.PUT('routes',route._id,route)
-        }
-      return route
+      return makeResource(route)
     })
   }
+  this.getRouteById = getRouteById
 
   function attachNonAttachhedFamilies(sketch) {
     if (!sketch) {
@@ -183,26 +163,18 @@ function eventService(networkService, familyService, volunteerService, CacheFact
     })
   }
 
-  this.getRoutesForSketch = function(sketchId) {
-    return networkService.GET('routes/parent/' + sketchId)
-  }
-  this.updateNonAttachedFamiliesAndVolunteers = function(sketchId, families, volunteers) {
-    let nonAttachhedFamilies = [];
-    let nonAttachedVolunteers = [];
-    families.forEach(f => {
-      nonAttachhedFamilies.push(f._id)
-    })
-    volunteers.forEach(v => {
-      nonAttachedVolunteers.push(v._id)
-    })
-    return networkService.PUT('events', sketchId, {
-      nonAttachhedFamilies,
-      nonAttachedVolunteers
-    })
+  function makeResource(route) {
+    route.$update = function() {
+      return networkService.PUT('routes/push', route._id, route)
+    }
+    route.$delete = function() {
+      return networkService.DELETE('routes', route._id)
+    }
+    return route
   }
 }
 
 export default {
-  service: ['networkService', 'familyService', 'volunteerService', 'CacheFactory', eventService],
+  service: ['networkService', 'familyService', 'volunteerService', 'locationService', eventService],
   name: 'eventService'
 }

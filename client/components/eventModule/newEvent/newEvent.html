@@ -80,13 +80,13 @@
 			<ng-map  center="31.2509633,34.7953221" zoom="14" class="map" ng-click="$ctrl.mapClicked()">
 				<marker
 				ng-repeat="family in $ctrl.families  | filter: {checked: 'true'} track by $index"
-				position="{{family.address}}"
+				position="{{family.address.name}}"
 				on-click="$ctrl.showCustomMarker(family)"></marker>
 
 				<marker
 				no-watcher="true"
 				ng-repeat="volunteer in $ctrl.volunteers  | filter: {checked: 'true'} track by $index"
-				position="{{volunteer.address}}"
+				position="{{volunteer.address.name}}"
 				icon="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0078ff"
 				on-click="$ctrl.showCustomMarker(volunteer)"></marker>
 

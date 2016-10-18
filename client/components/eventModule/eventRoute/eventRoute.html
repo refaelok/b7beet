@@ -2,13 +2,13 @@
   <div class="row" ng-hide="showActionBar">
     <div class="col-md-4" ui-on-Drop="$ctrl.onDropFamily($event,$data,family)">
       Families
-      <div ng-repeat="family in $ctrl.data.families track by family._id" ui-draggable="true" drag="family" on-drop-success="$ctrl.dropFamilySuccessHandler($event,$index,f)">
+      <div ng-repeat="family in $ctrl.data.families track by $index" ui-draggable="true" drag="family" on-drop-success="$ctrl.dropFamilySuccessHandler($event,$index,f)">
         {{family.name}}
       </div>
     </div>
     <div class="col-md-4" ui-on-Drop="$ctrl.onDropVolunteer($event,$data,volunteer)">
       Volunteers
-      <div ng-repeat="volunteer in $ctrl.data.volunteers track by volunteer._id" ui-draggable="true" drag="volunteer" on-drop-success="$ctrl.dropVolunteerSuccessHandler($event,$index,f)">
+      <div ng-repeat="volunteer in $ctrl.data.volunteers track by $index" ui-draggable="true" drag="volunteer" on-drop-success="$ctrl.dropVolunteerSuccessHandler($event,$index,f)">
         {{volunteer.name}}
       </div>
     </div>

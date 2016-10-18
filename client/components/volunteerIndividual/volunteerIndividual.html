@@ -9,13 +9,13 @@
     <span ng-show="$ctrl.individual.phoneNumber">
       Phone number: {{$ctrl.individual.phoneNumber}}
     </span>
-    <span ng-show="$ctrl.individual.address && $ctrl.individual.phoneNumber">
+    <span ng-show="$ctrl.individual.address.name && $ctrl.individual.phoneNumber">
       ,
     </span>
-    <span ng-show="$ctrl.individual.address">
-      Address: {{$ctrl.individual.address}}
+    <span ng-show="$ctrl.individual.address.name">
+      Address: {{$ctrl.individual.address.name}}
     </span>
-    <span ng-show="!$ctrl.individual.address && !$ctrl.individual.phoneNumber && !$ctrl.individual.name">
+    <span ng-show="!$ctrl.individual.address.name && !$ctrl.individual.phoneNumber && !$ctrl.individual.name">
       Basic details are not present
     </span>
   </v-pane-header>
