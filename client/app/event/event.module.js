@@ -2,7 +2,6 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import routing from './event.routes';
 import event from './event.component';
-import 'angular-drag-and-drop-lists';
 import eventPastList from '../../components/eventModule/eventPastList/eventPastList.component';
 import eventCover from '../../components/eventModule/eventCover/eventCover.component';
 import eventData from '../../components/eventModule/eventData/eventData.component';
@@ -13,7 +12,9 @@ import eventRoute from '../../components/eventModule/eventRoute/eventRoute.compo
 import newevent from '../../components/eventModule/newEvent/newEvent.component';
 import eventService from '../../components/eventModule/eventService/eventService.service';
 
-export default angular.module('b7beetApp.event', [uiRouter, 'dndLists'])
+import dragDrop from 'angular-native-dragdrop';
+
+export default angular.module('b7beetApp.event', [uiRouter, dragDrop])
   .config(routing)
   .service(eventService.name, eventService.service)
   .component(event.name, event.component)

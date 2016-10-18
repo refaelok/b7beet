@@ -1,15 +1,14 @@
 'use strict';
-import * as auth from '../../auth/auth.service';
+
 var express = require('express');
-var controller = require('./event.controller');
+var controller = require('./route.controller');
 
 var router = express.Router();
 
 router.get('/', controller.index);
-router.get('/byState/:state', controller.indexWithState);
 router.get('/:id', controller.show);
+router.get('/parent/:id', controller.showByParent);
 router.post('/', controller.create);
-router.post('/addRoute/:sketch', controller.attachRoute);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);

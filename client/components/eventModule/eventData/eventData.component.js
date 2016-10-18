@@ -5,6 +5,7 @@ export class EventDataController {
     const ctrl = this;
     this.$state = $state;
     this.eventService = eventService;
+    eventService.enableFabNewEvent();
     let state = $state.$current.url.source.split('/').reverse()[0];
     if($stateParams.id){
       eventService.getData($stateParams.id)

@@ -42,13 +42,8 @@
 						</div>
 					</div>
 					<div class="row">
-							<div class="col-md-8">
+							<div class="col-md-12">
 								<textarea ng-model="$ctrl.additionalDetails" class="form-control" placeholder="Additional data (notes)"></textarea>
-							</div>
-							<div class="col-md-3">
-								<button type="button" class="btn btn-default" ng-click="$ctrl.suggetRoutes()">
-									Suggest routes
-								</button>
 							</div>
 					</div>
 				</div>
@@ -65,6 +60,21 @@
 			</div>
 		</div>
 	</div>
+	<div class="row action-bar">
+    <div class="col-md-1">
+      <sticky-icon class="action-bar-stick-to-left"  both-size="52" base-icon="group" on-toggle-icon="fast_rewind" base-icon-color="fill: #9C27B0" on-toggle-set-color="fill: #2196F3" on-toggle="$ctrl.toggleFamilies(state)"></sticky-icon>
+    </div>
+    <div class="col-md-10 action-bar-buttons">
+      <span >
+				<button type="button" class="seleq-flat-button" ng-click="$ctrl.suggetRoutes()">
+					Suggest routes
+				</button>
+      </span>
+    </div>
+    <div class="col-md-1">
+      <sticky-icon class="action-bar-stick-to-right" both-size="52" base-icon="account_box" on-toggle-icon="fast_forward" base-icon-color="fill: #9C27B0" on-toggle-set-color="fill: #2196F3" on-toggle="$ctrl.toggleVolunteers(state)"></sticky-icon>
+    </div>
+  </div>
 	<div class="row">
 		<div class="col-md-12 statistics-map-container">
 			<ng-map  center="31.2509633,34.7953221" zoom="14" class="map" ng-click="$ctrl.mapClicked()">
@@ -82,15 +92,5 @@
 
 			</ng-map>
 		</div>
-	</div>
-</div>
-<div class="stick-to-left row">
-	<div class="col-md-3">
-		<ng-md-icon icon="{{$ctrl.icons.families.shape}}" style="{{$ctrl.icons.families.color}}" size="52" ng-click="$ctrl.toggleFamilies()"></ng-md-icon>
-	</div>
-</div>
-<div class="stick-to-right row">
-	<div class="col-md-3">
-		<ng-md-icon icon="{{$ctrl.icons.volunteers.shape}}" style="{{$ctrl.icons.volunteers.color}}"  size="52" ng-click="$ctrl.toggleVolunteers()"></ng-md-icon>
 	</div>
 </div>

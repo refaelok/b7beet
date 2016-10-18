@@ -1,13 +1,24 @@
-<div class="route-border">
-  <div class="row">
-    <div class="col-md-4">
+<div class="route-card">
+  <div class="row" ng-hide="showActionBar">
+    <div class="col-md-4" ui-on-Drop="$ctrl.onDropFamily($event,$data,family)">
       Families
+      <div ng-repeat="family in $ctrl.data.families track by family._id" ui-draggable="true" drag="family" on-drop-success="$ctrl.dropFamilySuccessHandler($event,$index,f)">
+        {{family.name}}
+      </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" ui-on-Drop="$ctrl.onDropVolunteer($event,$data,volunteer)">
       Volunteers
+      <div ng-repeat="volunteer in $ctrl.data.volunteers track by volunteer._id" ui-draggable="true" drag="volunteer" on-drop-success="$ctrl.dropVolunteerSuccessHandler($event,$index,f)">
+        {{volunteer.name}}
+      </div>
     </div>
     <div class="col-md-4">
-      Data
+      <p>
+        <ng-md-icon class="cursor-pointer" size="30" icon="send" style="fill: #9C27B0" ng-click="$ctrl.onSend()"></ng-md-icon>
+        <ng-md-icon class="cursor-pointer" size="30" icon="details" style="fill: #00BCD4" ng-click="$ctrl.onMore()"></ng-md-icon>
+        <ng-md-icon class="cursor-pointer" size="30" icon="delete" style="fill: #F44336" ng-click="$ctrl.removeRoute()"></ng-md-icon>
+      </p>
     </div>
   </div>
+
 </div>

@@ -1,32 +1,92 @@
-<div class="container-fluid">
-  <div class="row routes-holder">
-    <div class="col-md-2">
-      Families
+<div class="container-fluid loading-sketch fx-fade-up fx-dur-600 fx-ease-none" ng-show="$ctrl.isLoading">
+  <div class="windows8">
+  	<div class="wBall" id="wBall_1">
+  		<div class="wInnerBall"></div>
+  	</div>
+  	<div class="wBall" id="wBall_2">
+  		<div class="wInnerBall"></div>
+  	</div>
+  	<div class="wBall" id="wBall_3">
+  		<div class="wInnerBall"></div>
+  	</div>
+  	<div class="wBall" id="wBall_4">
+  		<div class="wInnerBall"></div>
+  	</div>
+  	<div class="wBall" id="wBall_5">
+  		<div class="wInnerBall"></div>
+  	</div>
+  </div>
+</div>
+
+<div class="container-fluid" ng-hide="$ctrl.isLoading">
+  <div class="row hidden-detilas fx-fade-down fx-dur-600 fx-ease-none" ng-show="$ctrl.showDetailsAboutRoute" >
+    <ng-md-icon class="cursor-pointer action-bar-stick-to-right" size="54" icon="close" style="fill: #000000" ng-click="$ctrl.closeRouteDetailsDialog()"></ng-md-icon>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="row">
+        <div class="col-md-6">
+          {{$ctrl.route}}
+        </div>
+        <div class="col-md-6">
+
+        </div>
+
+      </div>
     </div>
-    <div class="col-md-8">
+  </div>
+  <div class="row routes-holder">
+    <div class="col-md-2 fx-bounce-left fx-dur-680 fx-ease-none height-45-overflow-scroll" ng-show="$ctrl.showFamilies">
+      Families
+      <div class="height-5"  ui-on-Drop="$ctrl.onDropNonAttachedFamily($event,$data,family)">
+        drop family here
+      </div>
+      <div ng-repeat="family in $ctrl.nonAttachhedFamilies track by $index" ui-draggable="true" drag="family" on-drop-success="$ctrl.dropNonAttachedFamilySuccessHandler($event,$index,f)">
+        {{family.name}}
+      </div>
+    </div>
+    <div ng-class="$ctrl.routesClass">
       <div class="row route-holder">
         <div class="col-md-6" ng-repeat="route in $ctrl.routes">
-          <event-route data="route"></event-route>
+          <event-route on-update="$ctrl.updateRoute($index, route, updatedRoute)" data="route" on-remove="$ctrl.onRemoveRoute(families, volunteers, $index)" on-more="$ctrl.showDetails($index)" on-send="$ctrl.sendRoute($index)"></event-route>
         </div>
       </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 fx-bounce-right fx-dur-680 fx-ease-none height-45-overflow-scroll" ng-show="$ctrl.showVolunteers">
       Volunteers
+      <div class="height-5"  ui-on-Drop="$ctrl.onDropNonAttachedVolunteer($event,$data,volunteer)">
+        drop volunteer here
+      </div>
+      <div ng-repeat="volunteer in $ctrl.nonAttachedVolunteers track by $index" ui-draggable="true" drag="volunteer" on-drop-success="$ctrl.dropNonAttachedVolunteerSuccessHandler($event,$index,v)">
+        {{volunteer.name}}
+      </div>
+    </div>
+  </div>
+  <div class="row action-bar">
+    <div class="col-md-1">
+      <sticky-icon class="action-bar-stick-to-left" both-size="52" base-icon="group" on-toggle-icon="fast_rewind" base-icon-color="fill: #9C27B0" on-toggle-set-color="fill: #2196F3" on-toggle="$ctrl.toggleFamilies(state,a,b,c)"></sticky-icon>
+    </div>
+    <div class="col-md-10 action-bar-buttons">
+      <button type="button" class="seleq-flat-button" ng-click="$ctrl.addEmptyRoute()">
+        Add route
+      </button>
+      <button type="button" class="seleq-flat-button" ng-click="$ctrl.saveEvent()">
+        Save event
+      </button>
+    </div>
+    <div class="col-md-1">
+      <sticky-icon class="action-bar-stick-to-right" both-size="52" base-icon="account_box" on-toggle-icon="fast_forward" base-icon-color="fill: #9C27B0" on-toggle-set-color="fill: #2196F3" on-toggle="$ctrl.toggleVolunteers(state)"></sticky-icon>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-        <ng-map class="map-route-holder"></ng-map>
+        <ng-map center="{{$ctrl.model.map.center}}" zoom="14" class="map-route-holder">
+          <directions
+            draggable="true"
+            travel-mode="{{$ctrl.model.map.travelMode}}"
+            waypoints="{{$ctrl.model.map.wayPoints}}"
+            origin="{{$ctrl.model.map.origin}}"
+            destination="{{$ctrl.model.map.destination}}">
+          </directions>
+      </ng-map>
     </div>
   </div>
-</div>
-<div class="stick-to-left row">
-	<div class="col-md-3">
-		<ng-md-icon icon="{{$ctrl.icons.families.shape}}" style="{{$ctrl.icons.families.color}}" size="52" ng-click="$ctrl.toggleFamilies()"></ng-md-icon>
-	</div>
-</div>
-<div class="stick-to-right row">
-	<div class="col-md-3">
-		<ng-md-icon icon="{{$ctrl.icons.volunteers.shape}}" style="{{$ctrl.icons.volunteers.color}}"  size="52" ng-click="$ctrl.toggleVolunteers()"></ng-md-icon>
-	</div>
 </div>

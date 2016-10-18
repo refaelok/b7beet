@@ -18,7 +18,7 @@
        return baseUri + path;
      },
      POST: function(endPoint, data) {
-       return $http.post(this.buildPath() + endPoint, data)
+       return $http.post(this.buildPath() + endPoint, data).then(handleResponse)
      },
      GET: function(endPoint) {
        return $http.get(this.buildPath() + endPoint).then(handleResponse)

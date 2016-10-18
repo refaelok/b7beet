@@ -24,6 +24,10 @@ export class eventController {
   newEvent(){
     return this.$state.go('event.new')
   }
+
+  showFab(){
+    return this.eventService.getFabNewEventStatus()
+  }
 }
 
 export default {

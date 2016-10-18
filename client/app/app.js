@@ -12,11 +12,16 @@ import uiBootstrap from 'angular-ui-bootstrap';
 // import ngMessages from 'angular-messages';
 //import ngValidationMatch from 'angular-validation-match';
 import angularFx from 'ng-fx';
+import notification from 'angular-ui-notification';
 import mdIcons from 'angular-material-icons';
+import clipBoard from 'ngclipboard';
 
 import {
-  routeConfig
+  routeConfig,
+  cacheConfig
 } from './app.config';
+
+import angularCache from 'angular-cache';
 import 'ng-autocomplete';
 import _Auth from '../components/auth/auth.module';
 import account from './account';
@@ -33,6 +38,7 @@ import family from './family/family.module';
 import volunteer from './volunteer/volunteer.module';
 import eventModule from './event/event.module';
 import cardModule from '../components/card/card.module';
+import stickyIcon from '../components/stickyIcon/stickyIcon.module';
 import loaderModule from '../components/loader/loader.module';
 
 import './app.scss';
@@ -41,12 +47,13 @@ angular.module('b7beetApp', [
     ngAnimate,
     ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter, uiBootstrap,
     // ngMessages,
-    ngMap, 'ngAutocomplete', accordion, cardModule, angularFx, mdIcons,
+    ngMap, 'ngAutocomplete', accordion, cardModule, angularFx, mdIcons, notification, clipBoard, angularCache,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    family, volunteer, eventModule, loaderModule
+    family, volunteer, eventModule, loaderModule, stickyIcon
   ])
   .config(routeConfig)
+  .config(cacheConfig)
   .run(function($rootScope, $location, Auth) {
     'ngInject';
     // Redirect to login if route requires auth and you're not logged in

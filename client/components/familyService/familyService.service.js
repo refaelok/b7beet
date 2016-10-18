@@ -1,19 +1,23 @@
 'use strict';
 
 function familyServiceService(networkService) {
-  this.getAllFamilies = function(){
+  this.getAllFamilies = function() {
     return networkService.GET('families');
   }
 
-  this.addNewFamily = function(family){
+  this.getFamilyById = function(id) {
+    return networkService.GET('families/' + id);
+  }
+
+  this.addNewFamily = function(family) {
     return networkService.POST('families', family)
   }
 
-  this.removeFamily = function(family){
-  	return networkService.DELETE('families', family._id)
+  this.removeFamily = function(family) {
+    return networkService.DELETE('families', family._id)
   }
 
-  this.updateFamily = function(family){
+  this.updateFamily = function(family) {
     return networkService.PUT('families', family._id, family)
   }
 

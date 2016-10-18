@@ -5,6 +5,7 @@ export class EventPastListController {
     const ctrl = this;
     this.$state = $state;
     this.eventService = eventService;
+    eventService.enableFabNewEvent();
     eventService.getPastEvents()
     .then(events => {
       this.eventList = events;

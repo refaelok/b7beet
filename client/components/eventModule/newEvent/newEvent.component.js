@@ -6,6 +6,7 @@ export class NewEventController{
   constructor(NgMap, $timeout, $uibModal, familyService, eventService, $state){
     const ctrl = this;
     this.$state = $state;
+    eventService.disableFabNewEvent();
     eventService.getAllFamilies()
     .then((families) => {
       this.families = families;
@@ -93,36 +94,32 @@ export class NewEventController{
       else this.statisticsClass = 'col-md-9';
   }
 
-  toggleFamilies(){
-    this.showFamilies = !this.showFamilies
-    if(this.showFamilies){
-      this.icons.families.shape = 'fast_rewind';
-      this.icons.families.color = 'fill: #2196F3';
+  toggleFamilies(state){
+    let showFamilies = this.showFamilies = !state
+    if(showFamilies){
       this.updateStatisticsClass();
     }
     else {
-      this.icons.families.shape = 'group';
-      this.icons.families.color = 'fill: #9C27B0';
       this.$timeout(() => {
         this.updateStatisticsClass();
       }, 1000);
     }
   }
 
-  toggleVolunteers(){
-    this.showVolunteers = !this.showVolunteers;
+  toggleVolunteers(state){
+    let showVolunteers = this.showVolunteers = !state;
     if(this.showVolunteers){
-       this.icons.volunteers.shape = 'fast_forward';
-       this.icons.volunteers.color = 'fill: #2196F3';
        this.updateStatisticsClass();
      }
     else {
-      this.icons.volunteers.shape = 'account_box';
-      this.icons.volunteers.color = 'fill: #9C27B0';
       this.$timeout(() => {
         this.updateStatisticsClass();
       }, 1000);
     }
+  }
+
+  iconToggled(a){
+    console.log(a);
   }
 }
 

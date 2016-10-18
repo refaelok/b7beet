@@ -1,15 +1,15 @@
-/**handleError
- * Family model events
+/**
+ * Route model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-import Family from './family.model';
-var FamilyEvents = new EventEmitter();
+import Route from './route.model';
+var RouteEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-FamilyEvents.setMaxListeners(0);
+RouteEvents.setMaxListeners(0);
 
 // Model events
 var events = {
@@ -20,14 +20,14 @@ var events = {
 // Register the event emitter to the model events
 for(var e in events) {
   let event = events[e];
-  Family.schema.post(e, emitEvent(event));
+  Route.schema.post(e, emitEvent(event));
 }
 
 function emitEvent(event) {
   return function(doc) {
-    FamilyEvents.emit(event + ':' + doc._id, doc);
-    FamilyEvents.emit(event, doc);
+    RouteEvents.emit(event + ':' + doc._id, doc);
+    RouteEvents.emit(event, doc);
   };
 }
 
-export default FamilyEvents;
+export default RouteEvents;

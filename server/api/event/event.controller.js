@@ -12,6 +12,9 @@
 
 import jsonpatch from 'fast-json-patch';
 import Event from './event.model';
+import Route from '../route/route.model';
+import _ from 'lodash';
+import mongoose from 'mongoose';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -20,6 +23,17 @@ function respondWithResult(res, statusCode) {
       return res.status(statusCode).json(entity);
     }
     return null;
+  };
+}
+
+function saveUpdates(updates) {
+  return function(entity) {
+    var updated = _.merge(entity, updates);
+    return updated.save()
+      .then(updated => {
+        console.log('doc saved', updated);
+        return updated;
+      });
   };
 }
 
@@ -59,6 +73,7 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
+    console.error('error', err);
     res.status(statusCode).send(err);
   };
 }
@@ -71,7 +86,7 @@ export function index(req, res) {
 }
 
 export function indexWithState(req, res) {
-  if (req.params.state && ['close', 'upcoming', 'ongoing'].indexOf(req.params.state) != -1)
+  if (req.params.state && ['close', 'upcoming', 'ongoing', 'sketch'].indexOf(req.params.state) != -1)
     return Event.find({
         state: req.params.state
       }).exec()
@@ -92,6 +107,13 @@ export function show(req, res) {
 
 // Creates a new Event in the DB
 export function create(req, res) {
+  Event.find({
+      state: 'sketch'
+    }).exec()
+    .then(routes => {
+      console.log(routes);
+      routes.forEach(route => route.remove())
+    })
   return Event.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
@@ -102,13 +124,23 @@ export function upsert(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  return Event.findOneAndUpdate(req.params.id, req.body, {
-    upsert: true,
-    setDefaultsOnInsert: true,
-    runValidators: true
-  }).exec()
 
-  .then(respondWithResult(res))
+  // return Event.findOneAndUpdate(req.params.id, req.body, {
+  //   upsert: true,
+  //   setDefaultsOnInsert: true,
+  //   runValidators: true
+  // }).exec()
+  // .then(e => {
+  //   return e.save().then(a => {
+  //     console.log('doc saved', a);
+  //     return a;
+  //   });
+  // })
+  Event.findById(req.params.id)
+    .then(handleEntityNotFound(res))
+    .then(convertStringsToObjectIds(req.body))
+    .then(saveUpdates(req.body))
+    .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
@@ -130,4 +162,35 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function attachRoute(req, res) {
+  return Event.findById(req.params.sketch).exec()
+    .then(handleEntityNotFound(res))
+    .then(sketch => {
+      if (sketch) {
+        req.body.route.parent = req.body.sketchId;
+        return Promise.all([Route.create(req.body.route), sketch]);
+      }
+      return null;
+    })
+    .then(pushRouteToEvent)
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+function pushRouteToEvent(routeEventPair) {
+  let sketch = routeEventPair[1];
+  let route = routeEventPair[0];
+  sketch.routes.push(route._id);
+  sketch.save()
+  return route;
+}
+
+function convertStringsToObjectIds(data) {
+  return function(eventEntity) {
+      data.nonAttachedVolunteers && data.nonAttachedVolunteers.map(v_id => eventEntity.nonAttachedVolunteers.push(mongoose.Types.ObjectId(v_id)))
+      data.nonAttachhedFamilies && data.nonAttachhedFamilies.map(f_id => eventEntity.nonAttachhedFamilies.push(mongoose.Types.ObjectId(f_id)))
+      return eventEntity.save().then(a => {console.log('saved' , a); return a;})
+  }
 }
