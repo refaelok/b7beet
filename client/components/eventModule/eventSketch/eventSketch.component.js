@@ -79,7 +79,24 @@ export class EventSketchController {
           ctrl.isLoading = false;
           ctrl.eventSketch = eventSketch;
           let len = ctrl.families.length > ctrl.volunteers.length ? ctrl.volunteers.length : ctrl.families.length
-          this.eventService.clusterize(ctrl.families, ctrl.volunteers)
+          let fLen = ctrl.families.length;
+          this.eventService
+          .clusterize(ctrl.families, ctrl.volunteers, Math.floor(fLen/3))
+          .then(clusterizedArray => {
+            clusterizedArray.groups.forEach(group => {
+              let families = [];
+              group.clusterInd.forEach(ind => {
+                families.push(ctrl.families[ind])
+              })
+              ctrl.eventService.attachRouteToEvent(eventSketch, {
+                families: families,
+                volunteers: []
+              })
+              .then(route => {
+                ctrl.routes.push(route)
+              })
+            })
+          })
           // for (var i = 0; i < len; i++) {
           //   ctrl.eventService.attachRouteToEvent(eventSketch, {
           //       families: [ctrl.families.shift()],
@@ -89,10 +106,10 @@ export class EventSketchController {
           //       ctrl.routes.push(route)
           //     })
           // }
-          // syncRoutes.call(this)
-          // this.eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
-          // ctrl.families && ctrl.families.forEach(_ => ctrl.eventSketch.nonAttachhedFamilies.push(ctrl.families.shift()))
-          // ctrl.volunteers && ctrl.volunteers.forEach(_ => ctrl.eventSketch.nonAttachedVolunteers.push(ctrl.volunteers.shift()))
+          syncRoutes.call(this)
+          this.eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
+          ctrl.families && ctrl.families.forEach(_ => ctrl.eventSketch.nonAttachhedFamilies.push(ctrl.families.shift()))
+          ctrl.volunteers && ctrl.volunteers.forEach(_ => ctrl.eventSketch.nonAttachedVolunteers.push(ctrl.volunteers.shift()))
         })
     }
 

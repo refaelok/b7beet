@@ -1,5 +1,6 @@
 'use strict';
 import kMeans from 'node-kmeans';
+
 function eventService(networkService, familyService, volunteerService, locationService) {
 
   this.getAllVolunteers = volunteerService.getAllVolunteers;
@@ -67,20 +68,24 @@ function eventService(networkService, familyService, volunteerService, locationS
     return networkService.PUT('events', sketchId, data)
   }
 
-  this.clusterize = function(families, volunteers){
+  this.clusterize = function(families, volunteers, clusteres) {
+    console.log(clusteres);
     let vectors = new Array();
     families.forEach(f => {
       let ll = f.address.latlng;
-      vectors.push([ll.lat, ll.lng, f])
+      vectors.push([ll.lat, ll.lng])
     })
-    volunteers.forEach(v => {
-      let ll = v.address.latlng;
-      vectors.push([ll.lat, ll.lng, v])
-    })
-    kMeans.clusterize(vectors, {k: 4}, (err,res) => {
-      if (err) console.error(err);
-      else console.log('%o',res);
+    let clus = new Promise(function(resolve, reject) {
+      return resolve(kMeans.clusterize(vectors, {
+        k: clusteres
+      }, (err, res) => {
+        if (err) return Promise.reject(err)
+        return Promise.resolve(res)
+          // if (err) console.error(err);
+          // else console.log('%o',res);
+      }))
     });
+    return clus;
   }
 
   function attachFamilies(route) {
