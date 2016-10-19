@@ -2,7 +2,26 @@
 
 function volunteerServiceService(networkService, locationService) {
   this.getAllVolunteers = function() {
-    return networkService.GET('volunteers');
+    return networkService.GET('volunteers')
+    /*temporary*/
+    .then(volunteers => {
+      let p = [];
+      volunteers.forEach(volunteer => {
+        volunteer && volunteer.address && !volunteer.address.name &&
+        p.push(locationService.getLocationByAddress(volunteer.address)
+              .then(location => {
+                let address = {
+                  name: volunteer.address,
+                  latlng: location
+                }
+                volunteer.address = address
+                return networkService.PUT('volunteers', volunteer._id, volunteer)
+              }))
+      })
+      return Promise.all(p).then(_ => {
+        return volunteers
+      })
+    })
   }
 
   this.getVolunteerById = function(id) {

@@ -2,7 +2,26 @@
 
 function familyServiceService(networkService, locationService) {
   this.getAllFamilies = function() {
-    return networkService.GET('families');
+    return networkService.GET('families')
+    /*temporary*/
+    .then(families => {
+      let p = [];
+      families.forEach(family => {
+        family && family.address && !family.address.name &&
+        p.push(locationService.getLocationByAddress(family.address)
+              .then(location => {
+                let address = {
+                  name: family.address,
+                  latlng: location
+                }
+                family.address = address
+                return networkService.PUT('families', family._id, family)
+              }))
+      })
+      return Promise.all(p).then(_ => {
+        return families
+      })
+    })
   }
 
   this.getFamilyById = function(id) {

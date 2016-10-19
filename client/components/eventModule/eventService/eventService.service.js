@@ -69,7 +69,6 @@ function eventService(networkService, familyService, volunteerService, locationS
   }
 
   this.clusterize = function(families, volunteers, clusteres) {
-    console.log(clusteres);
     let vectors = new Array();
     families.forEach(f => {
       let ll = f.address.latlng;
