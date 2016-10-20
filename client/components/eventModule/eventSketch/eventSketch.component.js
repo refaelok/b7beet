@@ -236,7 +236,11 @@ export class EventSketchController {
   sendRoute(index) {
     this.Notification
       .success({
-        message: '',
+        message: `
+        <button class="btn" ngclipboard data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
+            Copy to clipboard
+        </button>
+        `,
         title: 'Ready',
         onClose: (a, b, c, d) => {
           console.log(a, b, c, d);
