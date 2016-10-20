@@ -25,11 +25,15 @@
       <div class="row">
         <div class="col-md-6">
           <b>Destination </b>
-          {{$ctrl.model.map.destination}}
+          {{$ctrl.model.map.destination.name}}
           <select ng-model="$ctrl.model.map.destination" ng-init="$ctrl.selectedRoute.volunteers[0].address">
-            <option ng-repeat="v in $ctrl.selectedRoute.volunteers" value="{{v.address}}">{{v.name}}</option>
+            <option ng-repeat="v in $ctrl.selectedRoute.volunteers" value="{{v.address.latlng}}">{{v.name}} - {{v.address.name}}</option>
           </select>
-          <!-- {{$ctrl.selectedRoute.families}} -->
+          Directions path length:
+          {{map.directionsRenderers[0].directions.routes[0].legs[0].distance.text}}
+          Optimized: {{!$ctrl.model.map.optimize}}
+          <input type="checkbox" ng-model="$ctrl.model.map.optimize"
+          ng-true-value="false" ng-false-value="true">
         </div>
         <div class="col-md-6">
           <div id="directions-panel" class="directions">
@@ -39,6 +43,7 @@
       </div>
     </div>
   </div>
+
   <div class="row routes-holder">
     <div class="col-md-2 fx-bounce-left fx-dur-680 fx-ease-none height-45-overflow-scroll" ng-show="$ctrl.showFamilies">
       Families
@@ -85,7 +90,7 @@
   <div class="row">
     <div class="col-md-12">
       <ng-map id="routesMap" center="{{$ctrl.model.map.center}}" zoom="14" class="map-route-holder">
-        <directions draggable="true" panel="directions-panel" travel-mode="{{$ctrl.model.map.travelMode}}" waypoints="{{$ctrl.model.map.wayPoints}}" origin="{{$ctrl.model.map.origin}}" optimize-waypoints="true" destination="{{$ctrl.model.map.destination}}">
+        <directions draggable="true" panel="directions-panel" travel-mode="{{$ctrl.model.map.travelMode}}" waypoints="{{$ctrl.model.map.wayPoints}}" origin="{{$ctrl.model.map.origin}}" optimize-waypoints="{{$ctrl.model.map.optimize}}" destination="{{$ctrl.model.map.destination}}">
         </directions>
       </ng-map>
     </div>

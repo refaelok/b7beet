@@ -39,7 +39,8 @@ export class EventSketchController {
       wayPoints: [],
       origin: '31.2539446,34.7925381',
       destination: null,
-      center: [31.2509633, 34.7953221]
+      center: [31.2509633, 34.7953221],
+      optimize: true
     }
     ctrl.$timeout = $timeout;
     ctrl.NgMap = NgMap;
@@ -80,43 +81,53 @@ export class EventSketchController {
           let len = ctrl.families.length > ctrl.volunteers.length ? ctrl.volunteers.length : ctrl.families.length
           let fLen = ctrl.families.length;
           this.eventService
-          .clusterize(ctrl.families, ctrl.volunteers, Math.floor(fLen/3))
-          .then(clusterizedArray => {
-            clusterizedArray.groups.forEach(group => {
-              let families = [];
-              group.clusterInd.forEach(ind => {
-                families.push(ctrl.families[ind])
+            .clusterize(ctrl.families, ctrl.volunteers, Math.floor(fLen / 3))
+            .then(clusterizedArray => {
+              clusterizedArray.groups.forEach(group => {
+                let families = [];
+                let arrays = [];
+                group.clusterInd.forEach(ind => {
+                  families.push(ctrl.families[ind])
+                })
+                if (families.length > 3) {
+                  let size = 3
+                  while (families.length > 0)
+                    arrays.push(families.splice(0, size));
+                } else {
+                  arrays.push(families)
+                }
+                arrays.forEach(array => {
+                  ctrl.eventService.attachRouteToEvent(eventSketch, {
+                      families: array,
+                      volunteers: []
+                    })
+                    .then(route => {
+                      ctrl.routes.push(route)
+                    })
+                })
               })
-              ctrl.eventService.attachRouteToEvent(eventSketch, {
-                families: families,
-                volunteers: []
-              })
-              .then(route => {
-                ctrl.routes.push(route)
-              })
+              return clusterizedArray;
             })
-            return clusterizedArray;
-          })
-          .then(clusterizedArray => {
-            let familiesToPop = []
-            clusterizedArray.groups.forEach(group => {
-              group.clusterInd.forEach(ind => {
-                familiesToPop.push(ctrl.families[ind]);
+            .then(clusterizedArray => {
+              let familiesToPop = []
+              clusterizedArray.groups.forEach(group => {
+                group.clusterInd.forEach(ind => {
+                  familiesToPop.push(ctrl.families[ind]);
+                })
               })
+              return familiesToPop
             })
-            return familiesToPop
-          })
-          .then(families => {
-            families.forEach(family => {
-              let index = ctrl.families.indexOf(family);
-              if(index > -1)
-                ctrl.families.pop(index)
+            .then(families => {
+              families.forEach(family => {
+                let index = ctrl.families.indexOf(family);
+                if (index > -1)
+                  ctrl.families.pop(index)
+              })
+              ctrl.families && ctrl.families.forEach(_ => ctrl.eventSketch.nonAttachhedFamilies.push(ctrl.families.shift()))
+              ctrl.isLoading = false;
             })
-            ctrl.families && ctrl.families.forEach(_ => ctrl.eventSketch.nonAttachhedFamilies.push(ctrl.families.shift()))
-            ctrl.isLoading = false;
-          })
           syncRoutes.call(this)
-          // this.eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
+            // this.eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
           ctrl.volunteers && ctrl.volunteers.forEach(_ => ctrl.eventSketch.nonAttachedVolunteers.push(ctrl.volunteers.shift()))
         })
     }
@@ -246,12 +257,12 @@ export class EventSketchController {
     this.selectedRoute = this.routes[index];
     this.selectedRoute.families.forEach(family => {
       this.model.map.wayPoints.push({
-        location: family.address,
+        location: family.address.latlng,
         stopover: true
       })
     })
 
-    this.model.map.destination = this.selectedRoute.volunteers[0].address;
+    this.model.map.destination = this.selectedRoute.volunteers[0].address.latlng;
     this.triggerResize()
   }
 
@@ -261,8 +272,10 @@ export class EventSketchController {
     this.model.map.destination = null;
   }
 
-  triggerResize(){
-    this.NgMap.getMap({id: 'routesMap'})
+  triggerResize() {
+    this.NgMap.getMap({
+        id: 'routesMap'
+      })
       .then(map => {
         google.maps.event.trigger(map, "resize");
         map.setZoom(14);
