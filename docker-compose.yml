@@ -4,6 +4,11 @@ services:
     build: .
     image: web
     ports:
-      - 3001:3000
+      - 3000
+  proxy:
+    build: ./nginx
+    ports:
+      - 80:80
   mongo:
     image: mongo
+    ports:
