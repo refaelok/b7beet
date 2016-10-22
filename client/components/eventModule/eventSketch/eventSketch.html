@@ -18,6 +18,42 @@
   </div>
 </div>
 
+<div  ng-show="$ctrl.loadMoreVolunteers" class="pop-up-full-screen fx-fade-normal fx-dur-600 fx-ease-none">
+  <ng-md-icon class="cursor-pointer action-bar-stick-to-right" size="54" icon="close" style="fill: #000000" ng-click="$ctrl.loadMore()"></ng-md-icon>
+  <div class="row">
+    <input type="text" ng-model="volunteerSearch" placeholder="Search" class="form-control input-md" uib-tooltip="ניתן לחפש לפי כל שדה" required="">
+  </div>
+  <table class="table table-condensed table-hover table-striped">
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Address
+        </th>
+        <th>
+          Add to sketch
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="volunteer in $ctrl.volunteers | filter:volunteerSearch track by $index">
+        <td>
+          {{volunteer.name}}
+        </td>
+        <td>
+          {{volunteer.address.name}}
+        </td>
+        <td>
+          <ng-md-icon class="cursor-pointer" size="30" icon="playlist_add" style="fill: #9C27B0" ng-click="$ctrl.addVolunteerToSketch(volunteer)"></ng-md-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
 <div class="container-fluid" ng-hide="$ctrl.isLoading">
   <div class="row hidden-detilas fx-fade-down fx-dur-600 fx-ease-none" ng-show="$ctrl.showDetailsAboutRoute">
     <ng-md-icon class="cursor-pointer action-bar-stick-to-right" size="54" icon="close" style="fill: #000000" ng-click="$ctrl.closeRouteDetailsDialog()"></ng-md-icon>
@@ -46,29 +82,54 @@
 
   <div class="row routes-holder">
     <div class="col-md-2 fx-bounce-left fx-dur-680 fx-ease-none height-45-overflow-scroll" ng-show="$ctrl.showFamilies">
-      Families
       <div class="height-5" ui-on-Drop="$ctrl.onDropNonAttachedFamily($event,$data,family)">
         drop family here
       </div>
-      <div ng-repeat="family in $ctrl.eventSketch.nonAttachhedFamilies track by $index" ui-draggable="true" drag="family" on-drop-success="$ctrl.dropNonAttachedFamilySuccessHandler($event,$index,f)">
-        {{family.name}}
-      </div>
+      <table class="table table-condensed table-hover table-striped">
+        <thead>
+          <tr>
+            <th>
+              Families
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="family in $ctrl.eventSketch.nonAttachhedFamilies track by $index" ui-draggable="true" drag="family" on-drop-success="$ctrl.dropNonAttachedFamilySuccessHandler($event,$index,f)">
+            <td>
+              {{family.name}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div ng-class="$ctrl.routesClass">
       <div class="row route-holder">
-        <div class="col-md-6" ng-repeat="route in $ctrl.routes">
+        <div class="col-md-6" ng-repeat="route in $ctrl.eventSketch.routes">
           <event-route on-update="$ctrl.updateRoute($index, route, updatedRoute)" data="route" on-remove="$ctrl.onRemoveRoute(families, volunteers, $index)" on-more="$ctrl.showDetails($index)" on-send="$ctrl.sendRoute($index)"></event-route>
         </div>
       </div>
     </div>
     <div class="col-md-2 fx-bounce-right fx-dur-680 fx-ease-none height-45-overflow-scroll" ng-show="$ctrl.showVolunteers">
-      Volunteers
-      <div class="height-5" ui-on-Drop="$ctrl.onDropNonAttachedVolunteer($event,$data,volunteer)">
+      <div class="height-5 drop-box" ui-on-Drop="$ctrl.onDropNonAttachedVolunteer($event,$data,volunteer)">
         drop volunteer here
+        <ng-md-icon class="cursor-pointer" size="30" icon="more" style="fill: #00BCD4" ng-click="$ctrl.loadMore()"></ng-md-icon>
       </div>
-      <div ng-repeat="volunteer in $ctrl.eventSketch.nonAttachedVolunteers track by $index" ui-draggable="true" drag="volunteer" on-drop-success="$ctrl.dropNonAttachedVolunteerSuccessHandler($event,$index,v)">
-        {{volunteer.name}}
-      </div>
+      <table class="table table-condensed table-hover table-striped">
+        <thead>
+          <tr>
+            <th>
+              Volunteers
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="volunteer in $ctrl.eventSketch.nonAttachedVolunteers track by $index" ui-draggable="true" drag="volunteer" on-drop-success="$ctrl.dropNonAttachedVolunteerSuccessHandler($event,$index,v)">
+            <td>
+              {{volunteer.name}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="row action-bar">

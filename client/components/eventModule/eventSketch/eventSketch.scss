@@ -4,6 +4,31 @@
   margin: 10px;
 }
 
+.pop-up-full-screen {
+  position: absolute;
+  height: 70%;
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  z-index: 100;
+  width: 80%;
+  left: 10%;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  overflow-y: scroll;
+}
+
+.drop-box {
+  -webkit-box-shadow: inset 10px 10px 40px 20px rgba(237,237,237,1);
+  -moz-box-shadow: inset 10px 10px 40px 20px rgba(237,237,237,1);
+  box-shadow: inset 10px 10px 40px 20px rgba(237,237,237,1);
+}
+
+.drop-box > ng-md-icon {
+  position: relative;
+  top: 7px;
+  float: right;
+}
+
 .routes-holder > div {
   padding-left: 0;
   padding-right: 0;
@@ -29,7 +54,6 @@
 
 .height-5 {
   height: 5vh;
-  background-color: red;
 }
 
 .action-bar-stick-to-left {

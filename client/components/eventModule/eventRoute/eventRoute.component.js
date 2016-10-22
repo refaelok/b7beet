@@ -10,6 +10,10 @@ export class EventRouteController {
 
   $onInit() {}
 
+  $onChanges(obj){
+    console.log(obj);
+  }
+
 
   //index that was drop from the out route
   dropFamilySuccessHandler($event, index) {
@@ -48,6 +52,10 @@ export class EventRouteController {
       families: this.data.families,
       volunteers: this.data.volunteers
     })
+  }
+
+  makeUrl() {
+    return this.data.url;
   }
 }
 

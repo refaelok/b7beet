@@ -15,7 +15,6 @@ import angularFx from 'ng-fx';
 import notification from 'angular-ui-notification';
 import mdIcons from 'angular-material-icons';
 import clipBoard from 'ngclipboard';
-
 import {
   routeConfig,
   cacheConfig

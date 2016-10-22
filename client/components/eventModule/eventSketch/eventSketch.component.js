@@ -14,7 +14,7 @@ const emptyRoute = {
 }
 
 export class EventSketchController {
-  constructor(NgMap, familyService, eventService, $state, $stateParams, $timeout, Notification, $scope, socket) {
+  constructor(NgMap, familyService, eventService, $state, $stateParams, $timeout, Notification, $scope, socket, navbarService) {
     const ctrl = this;
     ctrl.icons = {
       families: {
@@ -44,6 +44,7 @@ export class EventSketchController {
     }
     ctrl.$timeout = $timeout;
     ctrl.NgMap = NgMap;
+    this.navbarService = navbarService;
     ctrl.Notification = Notification;
     ctrl.showDetailsAboutRoute = false;
     eventService.disableFabNewEvent();
@@ -78,7 +79,6 @@ export class EventSketchController {
       this.eventService.createSketch()
         .then(eventSketch => {
           ctrl.eventSketch = eventSketch;
-          let len = ctrl.families.length > ctrl.volunteers.length ? ctrl.volunteers.length : ctrl.families.length
           let fLen = ctrl.families.length;
           this.eventService
             .clusterize(ctrl.families, ctrl.volunteers, Math.floor(fLen / 3))
@@ -127,14 +127,18 @@ export class EventSketchController {
               ctrl.isLoading = false;
             })
           syncRoutes.call(this)
-            // this.eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
-          ctrl.volunteers && ctrl.volunteers.forEach(_ => ctrl.eventSketch.nonAttachedVolunteers.push(ctrl.volunteers.shift()))
+          this.eventService.updateNonAttachedFamiliesAndVolunteers(eventSketch._id, ctrl.families, ctrl.volunteers)
+          .then( _ => {
+            ctrl.eventSketch.nonAttachedVolunteers = ctrl.volunteers
+            // ctrl.volunteers && ctrl.volunteers.forEach(_ => ctrl.eventSketch.nonAttachedVolunteers.push(ctrl.volunteers.shift()))
+          })
         })
     }
 
     function syncRoutes() {
       this.socket.syncUpdates('route', this.eventSketch.routes, (event, object, array) => {
         (event === 'updated' || event === 'created') && (() => {
+          console.log(event);
           this.eventService.getRouteById(object._id).then((route) => {
             let index = _.findIndex(this.eventSketch.routes, ['_id', object._id])
             index > -1 && (() => {
@@ -175,7 +179,9 @@ export class EventSketchController {
 
 
 
-  saveEvent() {}
+  saveEvent() {
+    this.eventService.saveEvent(this.eventSketch)
+  }
 
   onRemoveRoute(families, volunteers, index) {
     this.routes[index].$delete()
@@ -234,18 +240,21 @@ export class EventSketchController {
   }
 
   sendRoute(index) {
+    let route = this.routes[index];
+    // TODO: Validate no of families and volunteers
     this.Notification
       .success({
         message: `
-        <button class="btn" ngclipboard data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
-            Copy to clipboard
-        </button>
+          Url has been copied, send it to the volunteers
         `,
         title: 'Ready',
         onClose: (a, b, c, d) => {
-          console.log(a, b, c, d);
         }
       });
+
+      route.state = 'passed';
+      route.$update()
+
   }
 
   updateRoute(index, route, updatedRoute) {
@@ -286,12 +295,42 @@ export class EventSketchController {
       })
   }
 
+  loadMore(){
+    this.loadMoreVolunteers = !this.loadMoreVolunteers;
+    this.eventService.getAllVolunteers().then((volunteers) => {
+      let vols = [];
+      volunteers.forEach(v => {
+        if(this.eventSketch.nonAttachedVolunteers.map(nav => { return nav._id }).indexOf(v._id) === -1 && !volunteerExistInSomeRoute.call(this,v)){
+          vols.push(v)
+        }
+      })
+      this.volunteers = vols;
+    })
+
+    function volunteerExistInSomeRoute(volunteer){
+      let result = false;
+      this.routes.forEach(r => {
+        if(r.volunteers.map(nav => { return nav._id }).indexOf(volunteer._id) > -1)
+          result = true;
+      })
+      return result
+    }
+  }
+
+  addVolunteerToSketch(volunteer){
+    let index = this.volunteers.indexOf(volunteer),
+        v = this.volunteers[index];
+    this.volunteers.splice(index,1);
+    this.eventSketch.nonAttachedVolunteers.push(v);
+    this.eventService.updateNonAttachedFamiliesAndVolunteers(this.eventSketch._id, [], this.eventSketch.nonAttachedVolunteers)
+  }
+
 }
 
 export default {
   component: {
     template: require('./eventSketch.html'),
-    controller: ['NgMap', 'familyService', 'eventService', '$state', '$stateParams', '$timeout', 'Notification', '$scope', 'socket', EventSketchController],
+    controller: ['NgMap', 'familyService', 'eventService', '$state', '$stateParams', '$timeout', 'Notification', '$scope', 'socket', 'navbarService', EventSketchController],
     bindings: {}
   },
   name: 'eventSketch'

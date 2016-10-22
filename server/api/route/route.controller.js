@@ -15,10 +15,11 @@ import Route from './route.model';
 import Event from '../event/event.model';
 import _ from 'lodash';
 import mongoose from 'mongoose';
-
+Route.schema.tree.state.enum
 
 function saveUpdates(updates) {
   return function(route) {
+    if (!route) return null;
     var updated = _.merge(route, updates);
     let families = [],
       volunteers = [];
@@ -118,7 +119,6 @@ export function create(req, res) {
 
 // Upserts the given Route in the DB at the specified ID
 export function upsert(req, res) {
-  console.log('updates', req.body);
   if (req.body._id) {
     delete req.body._id;
   }
@@ -168,22 +168,34 @@ export function showByParent(req, res) {
 export function addToSet(req, res) {
   return Route.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
+    .then(validateState(req.body, res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
+}
+
+function validateState(updates, res) {
+  const enumeration = (Route.schema.tree && Route.schema.tree.state && Route.schema.tree.state.enum) ? Route.schema.tree.state.enum : undefined;
+  return function(entity) {
+    if (updates.state && enumeration && enumeration.indexOf(updates.state) >= enumeration.indexOf(entity.state)) {
+      return entity;
+    }
+    res.status(401).end();
+    return null;
+  }
 }
 
 function removeFromEvent(routeToRemove) {
   if (!routeToRemove) return null
 
   return Event.update({
-    _id: mongoose.Types.ObjectId(routeToRemove.parent)
-  }, {
-    $pull: {
-      routes: mongoose.Types.ObjectId(routeToRemove._id)
-    }
-  })
-  .then(_ => {
-    return routeToRemove
-  })
+      _id: mongoose.Types.ObjectId(routeToRemove.parent)
+    }, {
+      $pull: {
+        routes: mongoose.Types.ObjectId(routeToRemove._id)
+      }
+    })
+    .then(_ => {
+      return routeToRemove
+    })
 }

@@ -22,7 +22,7 @@ export class NavbarComponent {
     isAdmin: Function;
     getCurrentUser: Function;
     isCollapsed = true;
-    constructor(Auth, $state) {
+    constructor(Auth, $state, navbarService) {
         'ngInject';
         this.hasRoleSync = Auth.hasRoleSync
         this.isLoggedIn = Auth.isLoggedInSync;
@@ -30,6 +30,7 @@ export class NavbarComponent {
         this.getCurrentUser = Auth.getCurrentUserSync;
         this.$state = $state;
         this.toggleDropDownEvent = false;
+        this.navbarState = navbarService.getNavbarState;
     }
 
      toggleDropDown(){
@@ -59,5 +60,17 @@ default angular.module('directives.navbar', [])
     .component('navbar', {
         template: require('./navbar.html'),
         controller: NavbarComponent
+    })
+    .service('navbarService', function(){
+      this.showNavbar = true;
+      this.getNavbarState = () => {
+        return this.showNavbar
+      }
+      this.disableNavbar = () => {
+        this.showNavbar = false;
+      }
+      this.enableNavbar = () => {
+        this.showNavbar = true;
+      }
     })
     .name;

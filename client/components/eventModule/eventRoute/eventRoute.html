@@ -14,9 +14,13 @@
     </div>
     <div class="col-md-4">
       <p>
-        <ng-md-icon class="cursor-pointer" size="30" icon="send" style="fill: #9C27B0" ng-click="$ctrl.onSend()" ngclipboard data-clipboard-text="hi"></ng-md-icon>
+        <ng-md-icon ng-hide="{{$ctrl.data.families.length === 0 || $ctrl.data.volunteers.length === 0}}" class="cursor-pointer" size="30" icon="send" style="fill: #9C27B0" ng-click="$ctrl.onSend()" ngclipboard data-clipboard-text="{{$ctrl.makeUrl()}}"></ng-md-icon>
         <ng-md-icon class="cursor-pointer" size="30" icon="details" style="fill: #00BCD4" ng-click="$ctrl.onMore()"></ng-md-icon>
-        <ng-md-icon class="cursor-pointer" size="30" icon="delete" style="fill: #F44336" ng-click="$ctrl.removeRoute()"></ng-md-icon>
+        <ng-md-icon ng-hide="$ctrl.data.state !== 'created'" class="cursor-pointer" size="30" icon="delete" style="fill: #F44336" ng-click="$ctrl.removeRoute()"></ng-md-icon>
+      </p>
+      <p>
+        <ng-md-icon ng-show="$ctrl.data.state === 'passed'" class="cursor-pointer" size="30" icon="done" style="fill: #9C27B0"></ng-md-icon>
+        <ng-md-icon ng-show="$ctrl.data.state === 'done'" class="cursor-pointer" size="30" icon="done_all" style="fill: #9C27B0"></ng-md-icon>
       </p>
     </div>
   </div>

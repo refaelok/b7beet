@@ -3,10 +3,11 @@
 import familyInfo from '../../familyInfo/familyInfo.component';
 
 export class NewEventController{
-  constructor(NgMap, $timeout, $uibModal, familyService, eventService, $state){
+  constructor(NgMap, $timeout, $uibModal, familyService, eventService, $state, navbarService){
     const ctrl = this;
     this.$state = $state;
     eventService.disableFabNewEvent();
+    navbarService.enableNavbar();
     eventService.getAllFamilies()
     .then((families) => {
       this.families = families;
@@ -126,7 +127,7 @@ export class NewEventController{
 export default {
   component: {
     template: require('./newEvent.html'),
-    controller: ['NgMap', '$timeout','$uibModal' ,'familyService', 'eventService', '$state', NewEventController],
+    controller: ['NgMap', '$timeout','$uibModal' ,'familyService', 'eventService', '$state', 'navbarService', NewEventController],
     bindings: {
     }
   },

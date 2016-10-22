@@ -87,6 +87,14 @@ function eventService(networkService, familyService, volunteerService, locationS
     return clus;
   }
 
+  this.saveEvent = function(event){
+    event.routes.forEach(e => {
+      e.state = 'passed';
+      e.$update()
+    })
+    console.log(event);
+  }
+
   function attachFamilies(route) {
     if (!route) {
       return
@@ -174,6 +182,7 @@ function eventService(networkService, familyService, volunteerService, locationS
     route.$delete = function() {
       return networkService.DELETE('routes', route._id)
     }
+    route.url = networkService.buildPath() + 'routes/' + route._id;
     return route
   }
 }
