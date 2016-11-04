@@ -1,4 +1,7 @@
 version: '2'
+volumes:
+  mongodata:
+  static-data:
 services:
   web:
     build: .
@@ -9,5 +12,17 @@ services:
     build: ./nginx
     ports:
       - 80:80
+    volumes_from:
+      - static-data
   mongo:
     image: mongo
+    volumes_from:
+      - mongodata
+  static-data:
+    image: ubuntu
+    volumes:
+      - /root:/root
+  mongodata:
+    image: tianon/true
+    volumes:
+      - /data/db

@@ -318,6 +318,13 @@ gulp.task('start:server:prod', () => {
     nodemon(`-w ${paths.dist}/${serverPath} ${paths.dist}/${serverPath}`)
         .on('log', onServerLog);
 });
+gulp.task('start:server:prod:docker', () => {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+    process.env.MONGO_DOCKER = 'mongo/b7beet';
+    config = require(`./${paths.dist}/${serverPath}/config/environment`);
+    nodemon(`-w ${paths.dist}/${serverPath} ${paths.dist}/${serverPath}`)
+        .on('log', onServerLog);
+});
 
 gulp.task('start:inspector', () => {
     gulp.src([])
@@ -364,19 +371,17 @@ gulp.task('serve', cb => {
 gulp.task('serve:docker', cb => {
     runSequence(
         [
-            'clean:tmp',
-            'lint:scripts',
-            'inject',
-            'copy:fonts:dev',
-            'env:all',
-            'env:docker'
+          'build',
+          'env:all',
+          'env:prod',
         ],
         // 'webpack:dev',
-        ['start:server', 'start:client'],
-        'watch',
+        ['start:server:prod:docker', 'start:client'],
         cb
     );
 });
+
+
 
 gulp.task('serve:debug', cb => {
     runSequence(
