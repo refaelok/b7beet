@@ -1,0 +1,16 @@
+version: '2'
+volumes:
+  mongo-data:
+services:
+  mongo:
+    image: mongo
+    volumes_from:
+      - mongo-data
+    ports:
+      - 27017:27017
+  mongo-data:
+    image: ubuntu
+    volumes:
+      - /data/db:/data/db
+  web-data:
+    image: ubuntu
