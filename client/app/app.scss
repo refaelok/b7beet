@@ -37,6 +37,7 @@ div.navbar-collapse.collapse.in {
 @import 'event/event';
 @import 'family/family';
 @import 'main/main';
+@import 'route/route';
 @import 'volunteer/volunteer';
 @import '../components/card/card';
 @import '../components/eventModule/eventCover/eventCover';
@@ -51,5 +52,7 @@ div.navbar-collapse.collapse.in {
 @import '../components/modal/modal';
 @import '../components/newFamily/newFamily';
 @import '../components/newVolunteer/newVolunteer';
+@import '../components/routeModule/routeData/routeData';
+@import '../components/routeModule/searchRoute/searchRoute';
 @import '../components/stickyIcon/stickyIcon';
 /* endinject */

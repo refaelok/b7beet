@@ -13,7 +13,8 @@ import http from 'http';
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
-  console.error('MongoDB connection error: ' + err);
+  console.log('connection faild, tried to connect to uri ', config.mongo.uri)
+  console.error('MongoDB connection error: ' + err , config.mongo.uri);
   process.exit(-1);
 });
 

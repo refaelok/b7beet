@@ -36,6 +36,7 @@ import accordion from 'v-accordion';
 import family from './family/family.module';
 import volunteer from './volunteer/volunteer.module';
 import eventModule from './event/event.module';
+import routeModule from './route/route.module';
 import cardModule from '../components/card/card.module';
 import stickyIcon from '../components/stickyIcon/stickyIcon.module';
 import loaderModule from '../components/loader/loader.module';
@@ -49,7 +50,7 @@ angular.module('b7beetApp', [
     ngMap, 'ngAutocomplete', accordion, cardModule, angularFx, mdIcons, notification, clipBoard, angularCache,
     // ngValidationMatch,
     _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    family, volunteer, eventModule, loaderModule, stickyIcon
+    family, volunteer, eventModule, loaderModule, stickyIcon, routeModule
   ])
   .config(routeConfig)
   .config(cacheConfig)

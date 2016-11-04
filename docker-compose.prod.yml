@@ -1,0 +1,21 @@
+version: '2'
+volumes:
+  mongo-data:
+services:
+  web:
+    build: .
+    image: web
+    ports:
+      - 3000
+  proxy:
+    build: ./nginx
+    ports:
+      - 80:80
+  mongo:
+    image: mongo
+    volumes_from:
+      - mongo-data
+  mongo-data:
+    image: ubuntu
+    volumes:
+      - /data/db:/data/db

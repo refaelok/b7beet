@@ -173,6 +173,17 @@ gulp.task('env:all', () => {
         vars: localConfig
     });
 });
+gulp.task('env:docker', () => {
+    let localConfig;
+    try {
+        localConfig = require(`./${serverPath}/config/local.env.docker`);
+    } catch (e) {
+        localConfig = {};
+    }
+    plugins.env({
+        vars: localConfig
+    });
+});
 gulp.task('env:test', () => {
     plugins.env({
         vars: {NODE_ENV: 'test'}
@@ -342,6 +353,23 @@ gulp.task('serve', cb => {
             'inject',
             'copy:fonts:dev',
             'env:all'
+        ],
+        // 'webpack:dev',
+        ['start:server', 'start:client'],
+        'watch',
+        cb
+    );
+});
+
+gulp.task('serve:docker', cb => {
+    runSequence(
+        [
+            'clean:tmp',
+            'lint:scripts',
+            'inject',
+            'copy:fonts:dev',
+            'env:all',
+            'env:docker'
         ],
         // 'webpack:dev',
         ['start:server', 'start:client'],
