@@ -1,3 +1,19 @@
-<div>
-  im search route
+<div class="container search-container">
+  <div class="row">
+      <div class="col-sm-12">
+          <h1 class="title-search">
+            סל"ק מסלולים
+          </h1>
+      </div>
+    </div>
+  <div class="row">
+      <div class="col-sm-12 height-20">
+        <form dir="rtl" name="form" ng-submit="$ctrl.find()" novalidate>
+          <div class="form-search">
+            <input type="text"  placeholder="הזן מספר טלפון" ng-model="$ctrl.phone" required/>
+            <input type="submit" value="מצא מסלול" />
+          </div>
+        </form>
+      </div>
+  </div>
 </div>

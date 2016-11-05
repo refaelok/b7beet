@@ -1,3 +1,21 @@
-<div>
-  im route data
+<div class="container route-data-container">
+  <div class="row route-data-header">
+      <div class="col-sm-12">
+      </div>
+  </div>
+  <div class="row route-data">
+    <v-accordion class="vAccordion--default" multiple id="accordionA">
+      <v-pane class="family-accordion" ng-repeat="family in $ctrl.route.families" >
+        <v-pane-header>
+          {{family.name}}
+        </v-pane-header>
+        <v-pane-content>
+
+        </v-pane-content>
+      </v-pane>
+    </v-accordion>
+  </div>
+  <div class="route-data-footer">
+  <!--Show here done button  -->
+  </div>
 </div>

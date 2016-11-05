@@ -12,5 +12,3 @@ services:
     image: ubuntu
     volumes:
       - /data/db:/data/db
-  web-data:
-    image: ubuntu

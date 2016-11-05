@@ -1,0 +1,39 @@
+.route-data-container {
+  background: #673AB7;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.route-data-header{
+  height: 20vh;
+}
+
+.route-data{
+  text-align: center;
+}
+
+.route-data > v-accordion {
+  align-items: center;
+}
+
+.route-data-footer{
+  display:none;
+  background-color: red;
+  height: 8%;
+  bottom: 0;
+  left:0;
+  position: absolute;
+  width: 100%;
+}
+
+.family-accordion{
+  box-shadow: 0 3px 10px rgba(0,0,0,.30);
+  border-radius: 2px;
+  padding: 0 24px;
+  background: #fff;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 85vw;
+  display: inline-block;
+}

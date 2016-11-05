@@ -1,15 +1,19 @@
 'use strict';
 
 export class SearchRouteController {
-  constructor() {
-    console.log("search route")
+  constructor(navbarService) {
+    navbarService.disableNavbar();
+  }
+
+  find(){
+    console.log(this);
   }
 }
 
 export default {
   component: {
     template: require('./searchRoute.html'),
-    controller: [SearchRouteController],
+    controller: ['navbarService', SearchRouteController],
     bindings: {}
   },
   name: 'searchRoute'

@@ -95,6 +95,8 @@ function eventService(networkService, familyService, volunteerService, locationS
     console.log(event);
   }
 
+  this.getRouteById = getRouteById;
+
   function attachFamilies(route) {
     if (!route) {
       return

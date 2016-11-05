@@ -174,6 +174,22 @@ export function addToSet(req, res) {
     .catch(handleError(res));
 }
 
+export function showNoAuthRoute(req, res){
+  if(req.params.phone){
+
+  }
+  else if(req.params.id){
+    return Route.findById(req.params.id)
+      .populate('volunteers')
+      .populate('families')
+      .exec()
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
+  respondWithResult(res)({})
+}
+
 function validateState(updates, res) {
   const enumeration = (Route.schema.tree && Route.schema.tree.state && Route.schema.tree.state.enum) ? Route.schema.tree.state.enum : undefined;
   return function(entity) {
