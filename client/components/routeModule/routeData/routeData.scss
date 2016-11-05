@@ -37,3 +37,21 @@
   width: 85vw;
   display: inline-block;
 }
+input[type="button"] {
+  display: block;
+  background: #D1C4E9;
+  width: 80%;
+  padding: 12px;
+  cursor: pointer;
+  border: 0;
+  margin: auto;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background: #E040FB;
+}

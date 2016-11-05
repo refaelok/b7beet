@@ -10,7 +10,9 @@
           {{family.name}}
         </v-pane-header>
         <v-pane-content>
-
+          {{family.address.name}}
+          {{family.details}}
+          <input type="button" value="waze נווט עם" ng-click="$ctrl.waze(family)" />
         </v-pane-content>
       </v-pane>
     </v-accordion>
