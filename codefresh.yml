@@ -1,10 +1,21 @@
 version: '1.0'
 
 steps:
-  build-mongo:
-    type: build
-    description: build mongo image
-    image: mongo
+  build-all:
+    type: compoisition
+    description: build it all 
+    composition:
+    version: '2'
+      services:
+        mongo:
+          image: mongo
+      composition-candidate:
+        b7beet:
+          image: 'olsynt/b7beet:master'
+          ports:
+            - 3000
+          environment:
+            MONGO_URI_DEV: 'mongodb://mongo/b7beet'
     
   
   
