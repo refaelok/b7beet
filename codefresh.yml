@@ -1,0 +1,10 @@
+version: '1.0'
+
+steps:
+  build-mongo:
+    type: build
+    description: build mongo image
+    image: mongo
+    
+  
+  
