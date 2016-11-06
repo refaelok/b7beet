@@ -6,20 +6,15 @@ steps:
     image-name: b7beet
     dockerfile: Dockerfile
   spin-up:
-    type: composition
-    description: build it all
+    type: launch-composition
     composition:
       version: '2'
       services:
         mongo:
           image: mongo
-    composition-candidates:
-      b7beet:
-        image: ${{build-step}}
-        ports:
-          - 3000
-        environment:
-          MONGO_URI_DEV: 'mongodb://mongo/b7beet'
-    
-  
-  
+        b7beet:
+          image: ${{build-step}}
+          ports:
+            - 3000
+          environment:
+            MONGO_URI_DEV: 'mongodb://mongo/b7beet'
