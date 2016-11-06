@@ -1,9 +1,10 @@
 'use strict';
 
 export class RouteDataController {
-  constructor(navbarService, routeService, $stateParams, $state) {
+  constructor(navbarService, routeService, $stateParams, $state, $window) {
     navbarService.disableNavbar();
     const ctrl = this;
+    ctrl.$window = $window;
     ctrl.route = {};
     // TODO: in case that route not found return to search page
     if($stateParams.id == 'oleg')
@@ -13,12 +14,15 @@ export class RouteDataController {
       ctrl.route = route;
     })
   }
+  waze(family){
+    this.$window.location.href ='http://waze.to/?ll=' + family.address.latlng.lat + ',' + family.address.latlng.lng +  '&navigate=yes'
+  }
 }
 
 export default {
   component: {
     template: require('./routeData.html'),
-    controller: ['navbarService', 'routeService', '$stateParams', '$state', RouteDataController],
+    controller: ['navbarService', 'routeService', '$stateParams', '$state', '$window', RouteDataController],
     bindings: {}
   },
   name: 'routeData'
