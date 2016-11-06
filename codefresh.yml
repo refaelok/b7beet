@@ -6,9 +6,9 @@ steps:
     description: build it all 
     composition:
       version: '2'
-        services:
-          mongo:
-            image: mongo
+      services:
+        mongo:
+          image: mongo
     composition-candidate:
       b7beet:
         image: 'olsynt/b7beet:master'
