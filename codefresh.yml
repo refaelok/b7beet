@@ -9,7 +9,7 @@ steps:
       services:
         mongo:
           image: mongo
-    composition-candidate:
+    composition-candidates:
       b7beet:
         image: 'olsynt/b7beet:master'
         ports:
