@@ -11,7 +11,7 @@ steps:
           image: mongo
     composition-candidates:
       b7beet:
-        image: 'olsynt/b7beet:master'
+        image: ${{initial-clone}}
         ports:
           - 3000
         environment:
