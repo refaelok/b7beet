@@ -1,7 +1,11 @@
 version: '1.0'
 
 steps:
-  build-all:
+  build-step:
+    type: build
+    image-name: b7beet
+    dockerfile: Dockerfile
+  spin-up:
     type: composition
     description: build it all 
     composition:
@@ -11,7 +15,7 @@ steps:
           image: mongo
     composition-candidates:
       b7beet:
-        image: ${{initial-clone}}
+        image: ${{build-step}}
         ports:
           - 3000
         environment:
