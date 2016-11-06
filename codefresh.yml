@@ -11,15 +11,15 @@ steps:
     composition:
       version: '2'
       services:
-        b7beet:
-          image: ${{build-step}}
-          ports:
-            - 3000
-          environment:
-            MONGO_URI_DEV: 'mongodb://mongo/b7beet'
+        mongo:
+          image: mongo
     composition-candidates:
-      mongo:
-        image: mongo
+      b7beet:
+        image: ${{build-step}}
+        ports:
+          - 3000
+        environment:
+          MONGO_URI_DEV: 'mongodb://mongo/b7beet'
     
   
   
