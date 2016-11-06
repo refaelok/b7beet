@@ -7,7 +7,8 @@ steps:
     dockerfile: Dockerfile
   spin-up:
     type: composition
-    description: build it all 
+    description: build it all
+    working-directory: ${{initial-clone}}
     composition:
       version: '2'
       services:
