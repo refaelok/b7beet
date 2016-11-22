@@ -5,6 +5,12 @@ steps:
     type: build
     image-name: b7beet
     dockerfile: Dockerfile
+    context: .
+  build-nginx:
+    type: build
+    image-name: beet-nginx
+    dockerfile: nginx/Dockerfile
+    context: nginx/
   spin-up:
     type: launch-composition
     composition:
