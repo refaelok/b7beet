@@ -39,7 +39,7 @@
    /* we just need the lat lng to k means */
    function formatData(data) {
      let newData = [];
-     data.forEach(location => {
+     data && data.forEach(location => {
        if(location.geometry && location.geometry.location){
          newData = location.geometry.location
        } else {
