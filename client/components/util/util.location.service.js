@@ -1,6 +1,7 @@
 'use strict';
 /**
  * This service is encapsulate all the rest requet to the server
+ * 
  */
  function locationService($http, $location) {
   //  const _ = lodash;
